@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldErrorDisplayComponent } from './_components/field-error-display/field-error-display.component';
+import { AuthService } from './_services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,10 @@ import { FieldErrorDisplayComponent } from './_components/field-error-display/fi
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [EnvServiceProvider],
+  providers: [EnvServiceProvider, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

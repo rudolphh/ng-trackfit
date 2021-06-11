@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StorageService } from './_services/storage.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AuthService } from './_services/auth.service';
+import { LandingComponent } from './dashboard/landing/landing.component';
 
 const routes: Routes = [
-  //{ path: '', component: DashboardComponent },
+  { path: '', component: LandingComponent },
   //{ path: 'home', component: DashboardComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
@@ -22,6 +23,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [StorageService]
+  providers: []
 })
 export class AppRoutingModule { }
