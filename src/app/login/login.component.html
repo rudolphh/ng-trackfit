@@ -1,1 +1,78 @@
-<p>login works!</p>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">Login</div>
+
+      <div class="card-body">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate >
+
+          <div class="form-group row">
+            <label for="email" class="col-md-4 col-form-label text-md-right"
+              >E-Mail Address</label
+            >
+
+            <div class="col-md-6">
+              <input
+                id="email"
+                type="email"
+                class="form-control"
+                formControlName="email"
+                [ngClass]="displayFieldCss('email')"
+                value=""
+                required
+                autocomplete="email"
+              />
+              <app-field-error-display
+                [displayError]="isRequiredFieldValid('email')"
+                errorMsg="Email is required" >
+              </app-field-error-display>
+              <app-field-error-display
+                [displayError]="isPatternFieldValid('email')"
+                errorMsg="Email is invalid" >
+              </app-field-error-display>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="password" class="col-md-4 col-form-label text-md-right"
+              >Password</label
+            >
+
+            <div class="col-md-6">
+              <input
+                id="password"
+                type="password"
+                class="form-control"
+                formControlName="password"
+                [ngClass]="displayFieldCss('password')"
+                required
+                autocomplete="new-password"
+              />
+              <app-field-error-display
+                [displayError]="isRequiredFieldValid('password')"
+                errorMsg="Password is required" >
+              </app-field-error-display>
+              <app-field-error-display
+                [displayError]="isMinLengthFieldValid('password')"
+                errorMsg="Phone needs to be at least 6 characters long" >
+              </app-field-error-display>
+            </div>
+          </div>
+
+          <div class="form-group row mb-0">
+            <div class="col-md-8 offset-md-4">
+              <button type="submit" class="btn btn-primary">Login</button>
+
+              <a
+                (click)="navigateToReset()"
+                class="btn btn-link"
+              >
+                Forgot Your Password?
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

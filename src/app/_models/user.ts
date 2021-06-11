@@ -1,12 +1,16 @@
+import { Settings } from "./settings";
 
 export interface User {
-  id ?: number;
-  name ?: string;
+  _id ?: number;
+  username ?: string;
   email ?: string;
-  email_verified_at ?: string;
-  created_at ?: string;
-  updated_at ?: string;
-  api_token ?: string;
+  email_verified_at ?: Date;
   password ?: string;
-  password_confirmation ?: string;
+  passwordConfirm ?: string;
+  role ?: string;
+  settings ?: Settings;
+  created_at ?: Date;
+  updated_at ?: Date;
+  token ?: string;
+  expiresIn ?: Date;
 }
