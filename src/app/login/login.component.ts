@@ -6,8 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from '../_models/user';
-import { Router } from '@angular/router';
-import { AuthService } from '../_auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,16 +18,25 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   public user: User = {};
   public attemptedSubmit: boolean = false;
-
   public authError: any;
+  loading = false;
+  returnUrl ?: string;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+
+    // reset login status
+    this.authService.logout();
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
     this.loginForm = this.fb.group({
       email: [
         this.user.email,
@@ -48,17 +57,17 @@ export class LoginComponent implements OnInit {
       this.user.email = this.email!.value;
       this.user.password = this.password!.value;
 
+      this.loading = true;
       this.authService
         .login(this.user.email!, this.user.password!)
         .subscribe((res) => {
-          if (res.data) {
-            console.log(res.data);
-            //this.storageService.setItem('currentUser', JSON.stringify(res.data));// save user in storage
-            this.router.navigate(['/home']);
-          } else {
-            console.log(res);
+          if (!res.data) {
             this.authError = res.message;
+            return;
           }
+          // login successful so redirect to return url
+          this.router.navigateByUrl(this.returnUrl!);
+
         });
     } else {
       // validate all form fields

@@ -8,16 +8,19 @@ import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from './_auth/auth.service';
+import { AuthService } from './_services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './login/login.module';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { SettingsComponent } from './settings/settings/settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,7 @@ import { LoginModule } from './login/login.module';
     HttpClientModule,
     LoginModule
   ],
-  providers: [EnvServiceProvider, AuthService],
+  providers: [EnvServiceProvider, AuthService, ErrorInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
