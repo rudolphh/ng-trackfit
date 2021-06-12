@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnvService } from './env.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+const helper = new JwtHelperService();
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -10,7 +13,10 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
-  constructor(private http: HttpClient, private env: EnvService) {
+  constructor(
+    private http: HttpClient,
+    private env: EnvService
+    ) {
 
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('currentUser')!)
@@ -27,19 +33,20 @@ export class AuthService {
       .set('username', username)
       .set('email', username)
       .set('password', password);
-      console.log(body.toString());
 
     return this.http
-      .post<any>(`${this.env.apiUrl}/login`, { username, password },{
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-      })
+      .post<any>(`${this.env.apiUrl}/login`, body)
       .pipe(
-        map((user) => {
+        map((response) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+          if(response.data) {
+            response.data.token = response.token;
+            response.data.expiresIn = response.expiresIn;
+            localStorage.setItem('currentUser', JSON.stringify(response.data));
+            this.currentUserSubject.next(response.data);
+          }
+
+          return response;
         })
       );
   }
@@ -48,5 +55,12 @@ export class AuthService {
     // remove user from local storage and set current user to null
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+
+  isAuthenticated() {
+    const token = this.currentUserValue?.token;
+    // Check whether the token is expired and return
+    // true or false
+    return !helper.isTokenExpired(token);
   }
 }

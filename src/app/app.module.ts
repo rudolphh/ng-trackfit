@@ -6,29 +6,36 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldErrorDisplayComponent } from './_components/field-error-display/field-error-display.component';
 import { AuthService } from './_services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginModule } from './login/login.module';
+import { errorInterceptorProviders } from './_helpers/error.interceptor';
+import { SettingsModule } from './settings/settings.module';
+import { authInterceptorProviders } from './_helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     RegisterComponent,
-    LoginComponent,
     ForgotPasswordComponent,
-    FieldErrorDisplayComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoginModule,
+    SettingsModule
   ],
-  providers: [EnvServiceProvider, AuthService],
-  bootstrap: [AppComponent]
+  providers: [
+    EnvServiceProvider,
+    AuthService,
+    authInterceptorProviders,
+    errorInterceptorProviders,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

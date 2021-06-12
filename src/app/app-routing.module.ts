@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { AuthService } from './_services/auth.service';
 import { LandingComponent } from './dashboard/landing/landing.component';
+import { SettingsComponent } from './settings/settings/settings.component';
+import { AuthGuard } from './_helpers/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -12,7 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   //{ path: 'profile', component: ProfileComponent },
-  //{ path: 'settings', component: SettingsComponent },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'reset', component: ForgotPasswordComponent},
   //{ path: 'friends', component: FriendsComponent},
  // { path: 'measurements/:id', component: MeasurementDetailsComponent },
