@@ -19,7 +19,6 @@ export class NavComponent implements OnInit {
       // this will call whenever your localStorage data changes
       // use localStorage code here and set your data here for ngFor
       //this.currentUser = JSON.parse(data);
-      console.log(user);
       this.currentUser = user;
     });
   }

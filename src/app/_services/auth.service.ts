@@ -3,6 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnvService } from './env.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+const helper = new JwtHelperService();
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -10,7 +13,10 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
-  constructor(private http: HttpClient, private env: EnvService) {
+  constructor(
+    private http: HttpClient,
+    private env: EnvService
+    ) {
 
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('currentUser')!)
@@ -49,5 +55,12 @@ export class AuthService {
     // remove user from local storage and set current user to null
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+
+  isAuthenticated() {
+    const token = this.currentUserValue?.token;
+    // Check whether the token is expired and return
+    // true or false
+    return !helper.isTokenExpired(token);
   }
 }

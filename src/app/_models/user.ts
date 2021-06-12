@@ -13,4 +13,5 @@ export interface User {
   updated_at ?: Date;
   token ?: string;
   expiresIn ?: Date;
+  id ?: string;
 }
