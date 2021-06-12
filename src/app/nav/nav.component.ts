@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../_models/user';
-import { AuthService } from '../_services/auth.service';
-import { StorageService } from '../_services/storage.service';
+import { AuthService } from '../_auth/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -16,12 +15,12 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.authService.currentUser.subscribe((data:User) => {
+    this.authService.currentUser.subscribe((user:User) => {
       // this will call whenever your localStorage data changes
       // use localStorage code here and set your data here for ngFor
       //this.currentUser = JSON.parse(data);
-      //console.log(data);
-      this.currentUser = data;
+      console.log(user);
+      this.currentUser = user;
     });
   }
 

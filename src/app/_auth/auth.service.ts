@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EnvService } from './env.service';
+import { EnvService } from '../_services/env.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -27,19 +27,21 @@ export class AuthService {
       .set('username', username)
       .set('email', username)
       .set('password', password);
-      console.log(body.toString());
+      console.log(body);
 
     return this.http
-      .post<any>(`${this.env.apiUrl}/login`, { username, password },{
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-      })
+      .post<any>(`${this.env.apiUrl}/login`, body)
       .pipe(
-        map((user) => {
+        map((response) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+          if(response.data) {
+            response.data.token = response.token;
+            response.data.expiresIn = response.expiresIn;
+            localStorage.setItem('currentUser', JSON.stringify(response.data));
+            this.currentUserSubject.next(response.data);
+          }
+
+          return response;
         })
       );
   }

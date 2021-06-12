@@ -6,27 +6,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldErrorDisplayComponent } from './_components/field-error-display/field-error-display.component';
-import { AuthService } from './_services/auth.service';
+import { AuthService } from './_auth/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     RegisterComponent,
-    LoginComponent,
-    ForgotPasswordComponent,
-    FieldErrorDisplayComponent
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoginModule
   ],
   providers: [EnvServiceProvider, AuthService],
   bootstrap: [AppComponent]
