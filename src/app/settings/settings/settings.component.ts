@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Settings } from 'src/app/_models/settings';
 import { User } from 'src/app/_models/user';
+import { ApiResponse } from 'src/app/_models/api-response';
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -12,7 +13,7 @@ import { UserService } from 'src/app/_services/user.service';
 export class SettingsComponent implements OnInit {
 
   currentUser : User = {};
-  userSettings : Settings = {};
+  userSettings !: Settings;
 
   constructor(
     private userService: UserService,
@@ -22,9 +23,16 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
 
     this.currentUser = this.authService.currentUserValue;
-    this.userService.settings(this.currentUser).subscribe((response) => {
-      console.log(response);
-    });
+    this.userService.settings(this.currentUser)
+      .then((apiResponse: ApiResponse) => {
+        console.log(apiResponse);
+        if(apiResponse.data) {
+          this.userSettings = <Settings> apiResponse.data;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
 }

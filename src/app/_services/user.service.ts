@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EnvService } from './env.service';
 import { User } from '../_models/user';
+import { Observable } from 'rxjs';
+import { ApiResponse } from '../_models/api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +36,8 @@ export class UserService {
       );
   }// end register
 
-  settings(user : User) {
-    return this.http.get<any>(`${this.env.apiUrl}/users/${user.id}/settings`);
+  settings(user : User) : Promise<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.env.apiUrl}/users/${user.id}/settings`).toPromise();
   }
 
 }
