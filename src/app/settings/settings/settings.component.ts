@@ -12,7 +12,7 @@ import { UserService } from 'src/app/_services/user.service';
 export class SettingsComponent implements OnInit {
 
   currentUser : User = {};
-  userSettings : Settings = {};
+  userSettings !: Settings;
 
   constructor(
     private userService: UserService,
@@ -22,9 +22,16 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
 
     this.currentUser = this.authService.currentUserValue;
-    this.userService.settings(this.currentUser).subscribe((response) => {
-      console.log(response);
-    });
+    this.userService.settings(this.currentUser)
+      .then((settings : Settings) => {
+        console.log(settings);
+        if(settings) {
+          this.userSettings = settings;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
 }
