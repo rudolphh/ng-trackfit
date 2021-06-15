@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnvService } from './env.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ApiResponse } from '../_models/api-response';
+import { User } from '../_models/user';
 
 const helper = new JwtHelperService();
 
@@ -11,7 +13,7 @@ const helper = new JwtHelperService();
 export class AuthService {
 
   private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  public currentUser: Observable<User>;
 
   constructor(
     private http: HttpClient,
@@ -28,24 +30,26 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username :string, password: string) {
+  login(username :string, password: string) : Observable<ApiResponse> {
     const body = new HttpParams()
       .set('username', username)
       .set('email', username)
       .set('password', password);
 
     return this.http
-      .post<any>(`${this.env.apiUrl}/login`, body)
+      .post<ApiResponse>(`${this.env.apiUrl}/login`, body)
       .pipe(
         map((response) => {
+          console.log(response);
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           if(response.data) {
-            response.data.token = response.token;
-            response.data.expiresIn = response.expiresIn;
-            localStorage.setItem('currentUser', JSON.stringify(response.data));
-            this.currentUserSubject.next(response.data);
-          }
+            let userReturned : User = <User> response.data;
+            userReturned.token = response.token;
+            userReturned.expiresIn = response.expiresIn;
 
+            localStorage.setItem('currentUser', JSON.stringify(userReturned));
+            this.currentUserSubject.next(userReturned);
+          }
           return response;
         })
       );
@@ -59,8 +63,7 @@ export class AuthService {
 
   isAuthenticated() {
     const token = this.currentUserValue?.token;
-    // Check whether the token is expired and return
-    // true or false
+    // Check whether the token is expired and return true or false
     return !helper.isTokenExpired(token);
   }
 }

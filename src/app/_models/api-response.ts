@@ -6,4 +6,6 @@ export interface ApiResponse {
   message: string;
   data ?: object | User | Settings | Array<User>;
   fields ?: Array<string>;
+  token ?: string;
+  expiresIn ?: Date;
 }

@@ -8,6 +8,7 @@ import {
 import { User } from '../_models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
+import { ApiResponse } from '../_models/api-response';
 
 @Component({
   selector: 'app-login',
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.authService
         .login(this.user.email!, this.user.password!)
-        .subscribe((res) => {
+        .subscribe((res : ApiResponse) => {
           if (!res.data) {
             this.authError = res.message;
             return;

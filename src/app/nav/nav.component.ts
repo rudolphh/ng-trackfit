@@ -10,7 +10,8 @@ import { AuthService } from '../_services/auth.service';
 export class NavComponent implements OnInit {
 
   currentUser : User = {};
-
+  objectKeys = Object.keys;
+  
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
