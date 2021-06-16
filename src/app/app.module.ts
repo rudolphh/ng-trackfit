@@ -14,6 +14,8 @@ import { LoginModule } from './login/login.module';
 import { errorInterceptorProviders } from './_helpers/error.interceptor';
 import { SettingsModule } from './settings/settings.module';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     LoginModule,
-    SettingsModule
+    SettingsModule,
+    BrowserAnimationsModule,
+    DashboardModule
   ],
   providers: [
     EnvServiceProvider,

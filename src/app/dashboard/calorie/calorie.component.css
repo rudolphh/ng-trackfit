@@ -1,0 +1,22 @@
+/******************** Section 1 ****************/
+.firstsection {
+    height: 100px;
+    color: #d33682;
+}
+
+.firstsection-2{
+    height: 100px;
+    color: #d58900
+}
+
+.first{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-bar{
+    height: 15px;
+}
+
