@@ -1,0 +1,41 @@
+<!------------ second section with input and button and using local reference to pass data --------->
+<div class="container">
+    <div class="row sec2 justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-12 foodlabel ">
+            <label class="col-form-label col-form-label-lg">Food:</label>
+            <input class="form-control form-control-lg" placeholder="Name of Food" type="text" id="" name="" #nameInput>
+        </div>
+        <div class="col-sm-12 col-md-12 calorielabel ">
+            <label class="col-form-label col-form-label-lg">Calories:</label>
+            <input class=" form-control form-control-lg" placeholder="Amount of Calories" type="number" id="" name="" #calorieInput>
+        </div>
+    </div>
+    <div class="row sec2-2 justify-content-center align-items-center ">
+        <div class="addbutton col-sm-6 col-md-6">
+            <button type="button" (click)="onAddCalories(calorieInput, nameInput)" class="btn btn-primary">Add to Diary</button>
+        </div>
+    </div>
+    <!------------------------- third section show food that was eaten ---------------------------------->
+    <div class="row thirdsec justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-6">
+            <ul class="list-group">
+                <!-- display list of foods with calories -->
+                <li *ngFor="let food of dbFoods" class=" list-group-item d-flex justify-content-between align-items-center">
+                    Food:<span class="badge bg-primary rounded-pill">{{food.name}}</span>
+                    Calories<span class="badge bg-primary rounded-pill">{{food.calories}}</span>
+                    <!-- <button (click)="onDeleteFood(food)" type="button" class="btn foodbutton btn-danger">Delete</button> -->
+                    <!-- ng add @angular/material  -->
+                    <button mat-icon-button class="btn btn-warning" (click)="onDeleteFood(food)" type="button">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!------------------------ history button -------------------------------------->
+    <div class="row historybutton justify-content-center align-items-center ">
+        <div class="addbutton col-sm-12 col-md-12">
+            <button type="button" class="btn btn-success">View History</button>
+        </div>
+    </div>
+</div>
