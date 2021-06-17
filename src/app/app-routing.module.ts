@@ -6,10 +6,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LandingComponent } from './dashboard/landing/landing.component';
 import { SettingsComponent } from './settings/settings/settings.component';
 import { AuthGuard } from './_helpers/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  //{ path: 'home', component: DashboardComponent },
+  { path: 'home', component: DashboardComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   //{ path: 'profile', component: ProfileComponent },

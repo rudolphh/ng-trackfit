@@ -14,7 +14,7 @@ import { UserService } from 'src/app/_services/user.service';
 export class SettingsComponent implements OnInit {
 
   currentUser : User = {};
-  userSettings : Settings = {};
+  userSettings !: Settings;
 
   settingsForm = new FormGroup({
     gender : new FormControl(''),
