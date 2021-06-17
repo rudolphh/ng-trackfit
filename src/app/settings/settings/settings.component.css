@@ -2,12 +2,8 @@
   border: springgreen 1px solid;
 }
 
-.row {
+.form-group {
   border: red 1px solid;
-}
-
-.col-md-2 {
-  border: pink 1px solid;
 }
 
 .radio-btn-label {
