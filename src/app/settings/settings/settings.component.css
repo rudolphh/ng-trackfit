@@ -1,0 +1,20 @@
+.container {
+  border: springgreen 1px solid;
+}
+
+.row {
+  border: red 1px solid;
+}
+
+.col-md-2 {
+  border: pink 1px solid;
+}
+
+.radio-btn-label {
+  margin-left: 1em;
+}
+
+.last-submitted-settings {
+  color: silver;
+  margin-left: 1rem;
+}

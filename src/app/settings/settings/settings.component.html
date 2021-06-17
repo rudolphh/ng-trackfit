@@ -1,1 +1,74 @@
-<p>settings works!</p>
+<form>
+  <h2>Settings</h2>
+
+  <div class="form-group">
+    <label for="gender">Gender: </label>
+    <div class="gender-options-list">
+      <label><input type="radio" name="gender-option" checked><span class="radio-btn-label">Male</span></label>
+    </div>
+    <div>
+      <label><input type="radio" name="gender-option" checked><span class="radio-btn-label">Female</span></label>
+    </div>
+    <p class="last-submitted-settings">Gender: {{ userSettings.gender }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="birthDate">Date of Birth: </label>
+    <div>
+      <input type="date" id="birthdate-picker" name="birthDate"
+        [value]="userSettings.birthDate"
+        min="1980-01-01" max="2025-12-31">
+    </div>
+    <input type="text" class="form-control" id="birthDate" [value]="userSettings.birthDate">
+    <p class="last-submitted-settings">Date of Birth: {{ userSettings.birthDate }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="height">Height: </label>
+    <input type="text" class="form-control" id="height" [value]="userSettings.height">
+    <p class="last-submitted-settings">Height: {{ userSettings.height }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="unit">Unit: </label>
+    <div class="unit-options-list">
+      <label><input type="radio" name="unit-option" checked><span class="radio-btn-label">Imperial</span></label>
+    </div>
+    <div>
+      <label><input type="radio" name="unit-option" checked><span class="radio-btn-label">Metric</span></label>
+    </div>
+    <p class="last-submitted-settings">Unit: {{ userSettings.unit }} </p>
+  </div>
+
+  <div class="form-group">
+    <label for="dietType">Diet Type: </label>
+    <div class="dietType-options-list">
+      <label><input type="radio" name="dietType-option" checked><span class="radio-btn-label">Cut</span></label>
+    </div>
+    <div>
+      <label><input type="radio" name="dietType-option" checked><span class="radio-btn-label">Bulk</span></label>
+    </div>
+    <p class="last-submitted-settings">Diet Type: {{ userSettings.dietType }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="rate">Rate: </label>
+    <input type="text" class="form-control" id="rate" [value]="userSettings.rate">
+    <p class="last-submitted-settings">Rate: {{ userSettings.rate }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="reminderFrequency">Reminder Frequency: </label>
+    <select class="form-control" id="reminderFrequency">
+      <option>Daily</option>
+      <option>Weekly</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+    <p class="last-submitted-settings">Reminder Frequency: {{ userSettings.reminderFrequency }}</p>
+  </div>
+
+  <button class="btn btn-light" type="submit" (click)="updateSettings">Update Settings</button>
+
+</form>

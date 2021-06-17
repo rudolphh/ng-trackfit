@@ -35,7 +35,7 @@ export class UserService {
   }// end register
 
   settings(user : User) {
-    return this.http.get<any>(`${this.env.apiUrl}/users/${user.id}/settings`);
+    return this.http.get<any>(`${this.env.apiUrl}/users/${user.id}/settings`).toPromise();
   }
 
 }
