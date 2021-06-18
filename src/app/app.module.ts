@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './_services/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginModule } from './login/login.module';
@@ -32,7 +32,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     LoginModule,
     SettingsModule,
     BrowserAnimationsModule,
-    DashboardModule
+    DashboardModule,
+    FormsModule
   ],
   providers: [
     EnvServiceProvider,

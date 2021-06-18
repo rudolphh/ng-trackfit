@@ -15,12 +15,12 @@ export class UserService {
   getAll() {
     return this.http.get<any[]>(`${this.env.apiUrl}/users`);
   }
-
+ 
   register(user: User) {
-    const body = new HttpParams()
-      .set('username', user.username!)
-      .set('email', user.email!)
-      .set('password', user.password!)
+     const body = new HttpParams()
+       .set('username', user.username!)
+       .set('email', user.email!)
+       .set('password', user.password!)
       .set('passwordConfirm', user.passwordConfirm!);
 
     return this.http.post(`${this.env.apiUrl}/register`, body.toString(), {
