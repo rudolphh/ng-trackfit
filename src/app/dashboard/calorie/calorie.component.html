@@ -1,0 +1,26 @@
+<!------------ nav bar selector needs to be created ----------------->
+<div class="container">
+  <!---------------- first section with bf and calories ----------------------------------->
+  <div class="row firstsection justify-content-center align-items-center">
+    <div class="col-sm-12 col-md-6 first">
+      <h2>Latest Body Fat: {{ latestBF }} %</h2>
+      <h2>Daily Calories: {{ dailyCal }}</h2>
+    </div>
+  </div>
+  <div class="row firstsection-2 justify-content-center align-items-center">
+    <div class="col-sm-12 col-md-12 first">
+      <h3>Daily Calories Remaining: {{ leftCal }}</h3>
+    </div>
+    <!-- progress bar -->
+    <div class="progress">
+      <div
+        class="progress-bar progress-bar-striped progress-bar-animated"
+        role="progressbar"
+        aria-valuenow="50"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [style.width]="onUpdatePercent()"
+      ></div>
+    </div>
+  </div>
+</div>

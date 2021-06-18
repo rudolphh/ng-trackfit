@@ -1,32 +1,58 @@
-<form>
-<fieldset>
-<legend>Legend</legend>
-<div class="container-fluid">
-<!-- Enter UserName -->
-<div class="form-group">
-    <label for="exampleInputEmail1" class="form-label" class="text-warning">User Name</label>
-    <input type="email" class="form-control fluid" id="userName" aria-describedby="emailHelp" placeholder="Enter User Name">
-    
-  </div>
-  <!-- Enter Email Address -->
-  <div class="form-group">
-    <label for="exampleInputEmail1" class="form-label mt-4" class="text-danger">Email address</label>
-    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <!-- Enter Password -->
-  <div class="form-group">
-    <label for="exampleInputPassword1" class="form-label mt-4" class="text-success">Password</label>
-    <input type="password" class="form-control" id="password" placeholder="Password">
-  </div>
-  <!-- Confrm Password -->
-  <div class="form-group">
-    <label for="exampleInputPassword1" class="form-label mt-4" class="text-info">Re-Enter Password</label>
-    <input type="password" class="form-control" id="reEnterPassword" placeholder="Re-Enter Password">
-  </div>
-</div>
-</fieldset>
-</form>
-<hr>
-<hr>
 
+  <fieldset>
+  <div class="card">
+    <div class="card-header bg-success text-light">Register</div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="container-fluid">
+  <!-- Enter UserName -->
+  <div class="form-group">
+      <label for="username" class="text-warning">User Name</label>
+      <input type="text" 
+      name="username" 
+      class="form-control fluid"
+      formControlName="username" 
+      placeholder="Enter User Name" 
+      >
+
+    </div>
+    <!-- Enter Email Address -->
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-label mt-4" class="text-danger">Email address</label>
+      <input type="email" 
+      class="form-control" 
+      id="email" 
+      formControlName = "email" 
+      placeholder="Enter email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <!-- Enter Password -->
+    <div class="form-group">
+      <label for="exampleInputPassword1" class="form-label mt-4" class="text-success">Password</label>
+      <input type="password" 
+             class="form-control" 
+              id="password" 
+              formControlName="password"
+              placeholder="Password">
+    </div>
+    <!-- Confrm Password -->
+    <div class="form-group">
+      <label for="exampleInputPassword1" class="form-label mt-4" class="text-info">Re-Enter Password</label>
+      <input type="password" 
+      class="form-control" 
+      id="reEnterPassword" 
+      formControlName="passwordConfirm"
+      placeholder="Re-Enter Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-8">
+      <button type="submit" class="btn btn-primary" >Register</button>
+    </div>
+  </div>
+</form>
+</div>
+
+  </fieldset>
+  
+  <hr>
+  <hr>
