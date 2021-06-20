@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './_components/nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,7 +16,6 @@ import { SettingsModule } from './settings/settings.module';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { MeasurementComponent } from './_services/measurement/measurement.component';
 import { MeasurementModule } from './measurement/measurement.module';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { MeasurementModule } from './measurement/measurement.module';
     NavComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    MeasurementComponent,
   ],
   imports: [
     BrowserModule,

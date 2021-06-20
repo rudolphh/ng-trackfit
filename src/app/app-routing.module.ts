@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'reset', component: ForgotPasswordComponent},
   //{ path: 'friends', component: FriendsComponent},
-  { path: 'measurements', component: MeasurementListComponent },
+  { path: 'measurements', component: MeasurementListComponent, canActivate: [AuthGuard]},
  // { path: 'measurements/:id', component: MeasurementDetailsComponent },
  // { path: 'contact', component: ContactComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }

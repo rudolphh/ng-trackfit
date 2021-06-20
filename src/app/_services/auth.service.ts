@@ -40,7 +40,6 @@ export class AuthService {
       .post<ApiResponse>(`${this.env.apiUrl}/login`, body)
       .pipe(
         map((response) => {
-          console.log(response);
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           if(response.data) {
             let userReturned : User = <User> response.data;

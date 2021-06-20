@@ -5,24 +5,16 @@
       <th scope="col">Weight</th>
       <th scope="col">Neck</th>
       <th scope="col">Waist</th>
-      <th *ngIf="userSettings?.gender === 'female'" scope="col">Hip</th>
+      <th *ngIf="isFemale" scope="col">Hip</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td *ngIf='isFemale'>@mdo</td>
-
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td *ngIf='isFemale'>@mdo</td>
+    <tr *ngFor="let measurement of measurements">
+      <th scope="row">{{measurement.date | date:'mediumDate' }}</th>
+      <td>{{ measurement.weight + ' ' + weightUnit }}</td>
+      <td>{{ measurement.neck ? measurement.neck + ' ' + lengthUnit : '---' }}</td>
+      <td>{{ measurement.waist ? measurement.waist + ' ' + lengthUnit : '---' }}</td>
+      <td *ngIf='isFemale'>{{ measurement.hips }}</td>
     </tr>
   </tbody>
 </table>
