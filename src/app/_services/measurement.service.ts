@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from '../_models/api-response';
 import { Measurement } from '../_models/measurement';
-import { User } from '../_models/user';
 import { AuthService } from './auth.service';
 import { EnvService } from './env.service';
 
