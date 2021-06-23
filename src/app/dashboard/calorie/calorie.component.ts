@@ -16,10 +16,10 @@ export class CalorieComponent implements OnInit {
   leftCal = 0 ; 
 
   ngOnInit(): void {
-
+    this.ongetFoods(); 
     this.dashService.calorieChanged.subscribe( cal => {
-      this.leftCal = cal;
-      console.log(this.leftCal);
+    this.leftCal = cal;
+    console.log(this.leftCal);
     })
 
     // check to see if there there is data to update progress bar and calories left 
@@ -48,6 +48,9 @@ export class CalorieComponent implements OnInit {
     return prevCal; 
   }
  
+  ongetFoods(){
+    this.dashService.getFoods();
+  }
 
 }
 

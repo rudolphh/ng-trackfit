@@ -15,8 +15,7 @@ export class CalorieIntakeComponent implements OnInit {
 
   constructor( private dashService : DashboardService ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onAddCalories(calorieInput: HTMLInputElement, nameInput: HTMLInputElement){
     const nameFood = nameInput.value; 
@@ -50,6 +49,5 @@ export class CalorieIntakeComponent implements OnInit {
     }
   }
 }
-
    
 }
