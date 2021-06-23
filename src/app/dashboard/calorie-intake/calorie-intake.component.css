@@ -1,41 +1,32 @@
 /********************* Section 2 ************/
 .sec2{
-    height: 200px ;
-    color: #d33682;
-}
-
-.foodlabel input , .calorielabel input {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-.foodlabel label , .calorielabel label {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-
-.sec2 input{
-    width: 100%;
-}
-
-.addbutton{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin: 20px; 
+    min-height: 200px ;
+    /* color: #d33682; */
+    padding: 12px;
+    margin: 12px; 
 }
 
 .addbutton button{
     width: 100% ;
 }
 
+.sec2-2{
+    margin: 12px;
+    padding: 12px;
+}
+
+.cardContent{
+    padding: 0px;
+}
+
 /********************* Section 3 ****************/
-.thirdsec{
+.sec3{
     min-height: 200px;
+    margin: 12px; 
+}
+
+.cardBody{
+    padding: 5px;
 }
 
 ul{
@@ -50,16 +41,14 @@ li {
 
 span{
     font-size: 1em;
+    margin: 5px;
 }
 
-/************** Hitory button  **********************/
-.historybutton{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+.sec3-2{
+    margin: 12px ;
+    padding: 12px; 
 }
 
-.historybutton button{
-    width: 100% ;
+.lessPad{
+    padding: 5px; 
 }

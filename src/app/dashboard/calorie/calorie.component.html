@@ -1,26 +1,26 @@
 <!------------ nav bar selector needs to be created ----------------->
 <div class="container">
   <!---------------- first section with bf and calories ----------------------------------->
-  <div class="row firstsection justify-content-center align-items-center">
-    <div class="col-sm-12 col-md-6 first">
-      <h2>Latest Body Fat: {{ latestBF }} %</h2>
-      <h2>Daily Calories: {{ dailyCal }}</h2>
-    </div>
+  <div class="row firstsec justify-content-center align-items-center">
+      <div class="col-sm-12 col-md-12 userInfo">
+          <div class="card text-center">
+              <div class="card-header bg-success text-light"> User Information </div>
+              <div class="card-body">
+                  <div class="col-sm-12 col-md-12">
+                      <h3>Latest Body Fat Percentage: <span class="badge bg-info rounded-pill">{{latestBF}} %</span></h3>  
+                      <h3>Daily Calories: <span class="badge bg-info rounded-pill">{{dailyCal}} Calories</span></h3> 
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
-  <div class="row firstsection-2 justify-content-center align-items-center">
-    <div class="col-sm-12 col-md-12 first">
-      <h3>Daily Calories Remaining: {{ leftCal }}</h3>
-    </div>
-    <!-- progress bar -->
-    <div class="progress">
-      <div
-        class="progress-bar progress-bar-striped progress-bar-animated"
-        role="progressbar"
-        aria-valuenow="50"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        [style.width]="onUpdatePercent()"
-      ></div>
-    </div>
+  <div class="row firstsec-2 justify-content-around align-items-center">
+      <div class="col-sm-12 col-md-12 first ">
+          <h3>Daily Calories Remaining: <span class="badge bg-info rounded-pill">{{leftCal}}</span></h3>
+      </div>
+      <!-- progress bar -->
+      <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" [style.width]="onUpdatePercent()"></div>
+      </div>
   </div>
 </div>

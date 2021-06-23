@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LandingComponent } from './landing/landing.component';
 import { DashboardService } from './dashboard.service';
 import { DashboardComponent } from './dashboard.component';
-//import { AlertModule } from './_alert';
+
 
 @NgModule({
   declarations: [

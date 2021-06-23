@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardService } from '../dashboard.service'; 
+import { DashboardService } from '../dashboard.service' ; 
 
 @Component({
   selector: 'app-calorie',
@@ -13,9 +13,15 @@ export class CalorieComponent implements OnInit {
 
   latestBF = this.dashService.latestBodyFat;
   dailyCal = this.dashService.dailyCalories;
-  leftCal = this.dashService.leftCalories; 
+  leftCal = 0 ; 
 
   ngOnInit(): void {
+
+    this.dashService.calorieChanged.subscribe( cal => {
+      this.leftCal = cal;
+      console.log(this.leftCal);
+    })
+
     // check to see if there there is data to update progress bar and calories left 
     if( this.dashService.foodsDB.length ){
         this.leftCal = this.dailyCal - this.previousStoredCalories(); 
@@ -44,3 +50,4 @@ export class CalorieComponent implements OnInit {
  
 
 }
+

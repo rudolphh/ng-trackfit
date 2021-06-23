@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import {mockFoods} from '../_models/mockFoods';
 
 @Injectable({
@@ -7,18 +8,27 @@ import {mockFoods} from '../_models/mockFoods';
 export class DashboardService {
 
   // data ("mock database")
-  foodsDB = mockFoods;
-  // initialized value
-  latestBodyFat: number = 25 ;
-  dailyCalories: number = 1800;
-  leftCalories: number = 0;
-  caloriePercent: string = "0%";
+  foodsDB = mockFoods; 
+  // initialized value 
+  latestBodyFat: number = 25 ; 
+  dailyCalories: number = 1800; 
+  leftCalories: number = 0; 
+  caloriePercent: string = "0%"; 
 
   constructor() { }
 
-  statusInput = new EventEmitter <string>();
+  statusInput = new EventEmitter <string>(); 
 
-  // update the percent to update the progress bar
+  private calorieSubject = new BehaviorSubject<number>(0); 
+  calorieChanged = this.calorieSubject.asObservable(); 
+
+  updateCaloriesLeft(cal: number){
+    this.leftCalories = cal; 
+    this.calorieSubject.next(this.leftCalories); 
+    console.log('Left calories ()'+this.leftCalories);
+  }
+
+  // update the perecent to update the progress bar
   updateCaloriePercent(){
     let rawPercentage = (this.dailyCalories-this.leftCalories)/this.dailyCalories*100;
     rawPercentage = Math.min(rawPercentage, 100);

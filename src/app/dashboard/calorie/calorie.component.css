@@ -1,22 +1,32 @@
 /******************** Section 1 ****************/
-.firstsection {
-    height: 100px;
-    color: #d33682;
+.firstsec {
+    min-height: 100px;
+    /* color: #d33682; */
+    padding: 12px; 
+    margin: 12px; 
 }
 
-.firstsection-2{
-    height: 100px;
-    color: #d58900
+.userInfo {
+    padding : 0px; 
 }
 
-.first{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+.firstsec-2{
+    min-height: 100px;
+    /* color: #d33682 ;    */
+    margin: 12px;
+    padding: 12px;
 }
 
 .progress-bar{
-    height: 15px;
+    height: 20px;
+
+}
+
+span{
+    color: white;
+}
+
+.progress{
+    width: 100%;
 }
 

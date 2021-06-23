@@ -19,19 +19,20 @@ export class CalorieIntakeComponent implements OnInit {
   }
 
   onAddCalories(calorieInput: HTMLInputElement, nameInput: HTMLInputElement){
-    const nameFood = nameInput.value;
-    const caloriesTaken = parseInt(calorieInput.value,10);
-    // input had to have both name and calories
+    const nameFood = nameInput.value; 
+    const caloriesTaken = parseInt(calorieInput.value,10); 
+    // input had to have both name and calories 
     if ( caloriesTaken && nameFood ){
-      console.log(nameFood);
-      console.log(caloriesTaken);
-      this.dashService.leftCalories =  this.dashService.leftCalories-caloriesTaken;
-      let idFood = this.dashService.foodsDB.length + 1;
+
+      let updatedCalories =  this.dashService.leftCalories-caloriesTaken;  
+      this.dashService.updateCaloriesLeft(updatedCalories);   
+      this.dashService.updateCaloriePercent(); 
+     
+
+      let idFood = this.dashService.foodsDB.length + 1; 
 
       const newFood = new FoodInfo(idFood,nameFood, caloriesTaken);
       this.dashService.foodsDB.push(newFood);
-
-      this.dashService.updateCaloriePercent();
     }
     else {
       console.log('Missing calories or name of food.');
@@ -40,14 +41,15 @@ export class CalorieIntakeComponent implements OnInit {
  }
 
  onDeleteFood(delFood: Food): void{
-    this.dashService.leftCalories = this.dashService.leftCalories + delFood.calories;
-    this.dashService.updateCaloriePercent();
-    for (let i =0; i <= this.dashService.foodsDB.length-1 ; i++){
-      if( delFood.id == this.dashService.foodsDB[i].id){
-        this.dashService.foodsDB.splice(i,1)
-      }
-    }// for loop
+  let newCal = this.dashService.leftCalories + delFood.calories; 
+  this.dashService.updateCaloriesLeft(newCal);
+  this.dashService.updateCaloriePercent();
+  for (let i =0; i <= this.dashService.foodsDB.length-1 ; i++){
+    if( delFood.id == this.dashService.foodsDB[i].id){
+      this.dashService.foodsDB.splice(i,1)
+    }
   }
+}
 
-
+   
 }
