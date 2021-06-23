@@ -1,122 +1,106 @@
+<mat-form-field appearance="fill">
+  <mat-label>Input</mat-label>
+  <input matInput>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Select</mat-label>
+  <mat-select>
+    <mat-option value="one">First option</mat-option>
+    <mat-option value="two">Second option</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Textarea</mat-label>
+  <textarea matInput></textarea>
+</mat-form-field>
+
+<!-- Separation -->
+
 <form class="container">
   <h2>Settings</h2>
 
+
   <div class="form-group">
-    <label for="gender"> Gender: </label>
-    <div class="gender-options-list">
-      <label>
-        <input type="radio" name="gender-option" checked />
-        <span class="radio-btn-label">Male</span>
-      </label>
-    </div>
-    <div>
-      <label>
-        <input type="radio" name="gender-option" checked />
-        <span class="radio-btn-label">Female</span>
-      </label>
-    </div>
-    <p class="last-submitted-settings">Gender: {{ userSettings.gender }}</p>
+    <p>Gender: ({{userSettings.gender}})</p>
+    <mat-button-toggle-group name="gender" aria-label="Font Style">
+      <mat-button-toggle value="male">Male</mat-button-toggle>
+      <mat-button-toggle value="female">Female</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <mat-form-field class="example-full-width form-group" appearance="fill">
+    <mat-label>Date of Birth: </mat-label>
+    <input value="{{userSettings.birthDate}}" matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker">
+      <mat-icon matDatepickerToggleIcon>cake</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+
+  <form class="form-group">
+    <mat-form-field class="example-full-width">
+      <mat-label for="height">Height: (Inches)</mat-label>
+      <input matInput class="form-control" id="height" placeholder="Height(Metric/Imperial)" value="{{userSettings.height}}">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Leave a comment</mat-label>
+      <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+    </mat-form-field>
+  </form>
+
+
+  <div class="form-group">
+    <p>Measurement Unit: ({{ userSettings.unit }})</p>
+    <mat-button-toggle-group name="unit" aria-label="Font Style">
+      <mat-button-toggle value="imperial" checked>Imperial</mat-button-toggle>
+      <mat-button-toggle value="metric">Metric</mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
 
   <div class="form-group">
-    <label for="birthDate">Date of Birth: </label>
-    <div>
-      <input
-        type="date"
-        id="birthdate-picker"
-        name="birthDate"
-        [value]="userSettings.birthDate"
-        min="1980-01-01"
-        max="2025-12-31"/>
-    </div>
-    <p class="last-submitted-settings">
-      Date of Birth: {{ userSettings.birthDate }}
-    </p>
+    <p>Diet Type: ({{ userSettings.dietType }})</p>
+    <mat-button-toggle-group name="dietType" aria-label="Font Style">
+      <mat-button-toggle value="cut" checked>Cut</mat-button-toggle>
+      <mat-button-toggle value="bulk">Bulk</mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
 
-  <div class="form-group">
-    <label for="height">Height: (Inches)</label>
-    <input
-      type="text"
-      class="form-control"
-      id="height"
-      [value]="userSettings.height"/>
-    <p class="last-submitted-settings">Height: {{ userSettings.height }}'</p>
-  </div>
+  <form class="form-group">
+    <mat-form-field class="example-full-width">
+      <mat-label for="rate">Caloric Surplus/Deficit: (Changes Dependent on Diet Type)</mat-label>
+      <input matInput class="form-control" id="rate" placeholder="Calories(Surplus/Deficit)" value="{{userSettings.rate}}">
+    </mat-form-field>
 
-  <div class="form-group">
-    <label for="unit">Unit: </label>
-    <div class="unit-options-list">
-      <label>
-        <input
-          type="radio"
-          name="unit-option"
-          checked/>
-        <span class="radio-btn-label">Imperial</span>
-      </label>
-    </div>
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="unit-option"
-          checked/>
-        <span class="radio-btn-label">Metric</span>
-      </label>
-    </div>
-    <p class="last-submitted-settings">Unit: {{ userSettings.unit }}</p>
-  </div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Leave a comment</mat-label>
+      <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+    </mat-form-field>
+  </form>
 
-  <div class="form-group">
-    <label for="dietType">Diet Type: </label>
-    <div class="dietType-options-list">
-      <label>
-        <input
-          type="radio"
-          name="dietType-option"
-          checked/>
-        <span class="radio-btn-label">Cut</span>
-      </label>
-    </div>
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="dietType-option"
-          checked/>
-        <span class="radio-btn-label">Bulk</span>
-      </label>
-    </div>
-    <p class="last-submitted-settings">
-      Diet Type: {{ userSettings.dietType }}
-    </p>
-  </div>
+<mat-divider></mat-divider>
+  <h4>Reminder Frequency: {{ userSettings.reminderFrequency }}</h4>
+<mat-form-field class="form-group" appearance="fill">
+  <mat-label for="reminderFrequency">Reminder Frequency: </mat-label>
+  <mat-select class="form-control" id="reminderFrequency">
+    <mat-option *ngFor="let reminderFrequency of reminderFrequencies" [value]="reminderFrequency.value">
+      {{reminderFrequency.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-  <div class="form-group">
-    <label for="rate">Rate: </label>
-      <input
-        type="text"
-        class="form-control"
-        id="rate"
-        [value]="userSettings.rate"/>
-    <p class="last-submitted-settings">Rate: {{ userSettings.rate }}</p>
+<mat-divider></mat-divider>
+<section>
+  <!-- <div class="example-label">Raised: Settings Button</div> -->
+  <div class="example-button-row">
+    <button mat-raised-button (click)="updateSettings">Update Settings</button>
+    <button mat-raised-button color="primary">Update Settings</button>
+    <button mat-raised-button color="accent">Update Settings</button>
+    <button mat-raised-button color="warn">Update Settings</button>
+    <button mat-raised-button disabled>Update Settings</button>
+    <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
   </div>
+</section>
 
-  <div class="form-group">
-    <label for="reminderFrequency">Reminder Frequency: </label>
-    <select class="form-control" id="reminderFrequency">
-      <option>Daily</option>
-      <option>Weekly</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-    <p class="last-submitted-settings">
-      Reminder Frequency: {{ userSettings.reminderFrequency }}
-    </p>
-  </div>
-
-  <button class="btn btn-light" type="submit" (click)="updateSettings">
-    Update Settings
-  </button>
 </form>

@@ -1,16 +1,34 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*  Separation */
+
 .container {
   border: springgreen 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-group {
   border: red 1px solid;
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
 }
 
-.radio-btn-label {
-  margin-left: 1em;
+mat-divider {
+border-color: silver;
 }
 
 .last-submitted-settings {
   color: silver;
   margin-left: 1rem;
+}
+
+.example-full-width {
+  width: 100%;
 }
