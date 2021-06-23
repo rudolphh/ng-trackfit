@@ -16,16 +16,20 @@ import { SettingsModule } from './settings/settings.module';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { FieldErrorDisplayComponent } from './_components/field-error-display/field-error-display.component';
-import { LoginComponent } from './login/login.component';
+
+import { RegisterModule } from './register/register.module';
+import { FieldErrorDisplayModule } from './_components/field-error-display/field-error-display.module';
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    
+
   ],
   imports: [
     BrowserModule,
@@ -36,10 +40,14 @@ import { LoginComponent } from './login/login.component';
     SettingsModule,
     BrowserAnimationsModule,
     DashboardModule,
-    FormsModule
-   
+    FormsModule,
+    RegisterModule,
+    FieldErrorDisplayModule
+    
+    
     
   ],
+ 
   providers: [
     EnvServiceProvider,
     AuthService,

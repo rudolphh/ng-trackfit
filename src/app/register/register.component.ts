@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UserService } from '../_services/user.service';
-import { first } from 'rxjs/operators';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../_models/user';
 import { EnvService } from '../_services/env.service';
-import { HttpClient } from '@angular/common/http';
-import { ApiResponse } from '../_models/api-response';
+
 
 
 
@@ -33,8 +32,8 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       username: [this.user.username, Validators.required],
       email: [this.user.email, Validators.required],
-      password: [this.user.password, Validators.required],
-      passwordConfirm: [this.user.passwordConfirm, Validators.required]      
+      password: [this.user.password, [Validators.required, Validators.minLength(6)]],
+      passwordConfirm: [this.user.passwordConfirm,[Validators.required, Validators.minLength(6)]]      
   }, {Validator: this.checkIfMatchingPasswords('password', 'passwordConfirm')});
 
   }

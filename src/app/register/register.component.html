@@ -67,7 +67,10 @@
       id="reEnterPassword" 
       formControlName="passwordConfirm"
       [ngClass]="displayFieldCss('passwordConfirm')"
-      placeholder="Re-Enter Password">
+      placeholder="Re-Enter Password"
+      >
+      <!-- <div *ngIf="checkIfMatchingPasswords('error')">Wrong Password</div> -->
+      
      
 
       
