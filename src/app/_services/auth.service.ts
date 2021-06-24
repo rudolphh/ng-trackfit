@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnvService } from './env.service';
@@ -9,8 +9,11 @@ import { User } from '../_models/user';
 
 const helper = new JwtHelperService();
 
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+
+ 
 
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<User>;
@@ -40,7 +43,6 @@ export class AuthService {
       .post<ApiResponse>(`${this.env.apiUrl}/login`, body)
       .pipe(
         map((response) => {
-          console.log(response);
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           if(response.data) {
             let userReturned : User = <User> response.data;
@@ -54,6 +56,8 @@ export class AuthService {
         })
       );
   }
+
+  
 
   logout() {
     // remove user from local storage and set current user to null

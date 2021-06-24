@@ -7,6 +7,8 @@ import { LandingComponent } from './dashboard/landing/landing.component';
 import { SettingsComponent } from './settings/settings/settings.component';
 import { AuthGuard } from './_helpers/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MeasurementListComponent } from './measurement/measurement-list/measurement-list.component';
+import { MeasurementCreateEditComponent } from './measurement/measurement-create-edit/measurement-create-edit.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -17,6 +19,14 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'reset', component: ForgotPasswordComponent},
   //{ path: 'friends', component: FriendsComponent},
+  { path: 'measurements', 
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', component: MeasurementListComponent },
+      { path: 'add', component: MeasurementCreateEditComponent },
+      { path: 'edit/:id', component: MeasurementCreateEditComponent }
+  ]
+  },
  // { path: 'measurements/:id', component: MeasurementDetailsComponent },
  // { path: 'contact', component: ContactComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
