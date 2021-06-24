@@ -7,7 +7,7 @@ export class EnvService {
   // be overridden by env.js
 
   // API url
-  public apiUrl = 'http://localhost:3838';
+  public apiUrl = 'https://fitapi.rudyah.com';
 
   // Whether or not to enable debug mode
   public enableDebug = true;
