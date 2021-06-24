@@ -17,31 +17,34 @@ import { MeasurementModule } from './measurement/measurement.module';
 import { RegisterModule } from './register/register.module';
 import { FieldErrorDisplayModule } from './_components/field-error-display/field-error-display.module';
 
-
+import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { errorInterceptorProviders } from './_helpers/error.interceptor';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    ForgotPasswordComponent,
-
-
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FieldErrorDisplayModule,
+    RegisterModule,
     LoginModule,
     SettingsModule,
-    BrowserAnimationsModule,
     DashboardModule,
     MeasurementModule,
-    RegisterModule,
-    FieldErrorDisplayModule
   ],
-  providers: [],
+  providers: [
+    authInterceptorProviders,
+    errorInterceptorProviders,
+    EnvServiceProvider
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
