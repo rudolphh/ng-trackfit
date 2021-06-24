@@ -8,7 +8,7 @@ import { AuthService } from '../_services/auth.service';
 const TOKEN_HEADER_KEY = 'Authorization';
 
 // Just adds the token if we have one, otherwise pass the request on without one
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) { }
 
