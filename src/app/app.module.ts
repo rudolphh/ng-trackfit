@@ -8,7 +8,6 @@ import { NavComponent } from './_components/nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from './_services/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginModule } from './login/login.module';
 import { errorInterceptorProviders } from './_helpers/error.interceptor';
@@ -34,14 +33,9 @@ import { MeasurementModule } from './measurement/measurement.module';
     SettingsModule,
     BrowserAnimationsModule,
     DashboardModule,
-    MeasurementModule
+    MeasurementModule,
   ],
-  providers: [
-    EnvServiceProvider,
-    AuthService,
-    authInterceptorProviders,
-    errorInterceptorProviders,
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
