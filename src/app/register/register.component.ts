@@ -13,9 +13,6 @@ export class RegisterComponent implements OnInit {
   loading = false;
   submitted = false;
 
-
-
-
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder) { }

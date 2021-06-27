@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Food } from 'src/app/_models/foodInterface';
 import { DashboardService } from '../dashboard.service' ; 
 
 @Component({
@@ -11,46 +12,55 @@ export class CalorieComponent implements OnInit {
   constructor( private dashService : DashboardService ) {
   }
 
+  //initializing properties 
   latestBF = this.dashService.latestBodyFat;
   dailyCal = this.dashService.dailyCalories;
   leftCal = 0 ; 
+  initDB: Food[] =[]; 
 
   ngOnInit(): void {
-    this.ongetFoods(); 
+    // calling method for initialization  
+    this.ongetFoodsInitially(); 
+    // oberservable updating calories left 
     this.dashService.calorieChanged.subscribe( cal => {
-    this.leftCal = cal;
-    console.log(this.leftCal);
+      this.leftCal = cal;
     })
 
-    // check to see if there there is data to update progress bar and calories left 
-    if( this.dashService.foodsDB.length ){
+  }
+
+  //------------- method to update calories left and progress bar on initialization ---------------//
+  async ongetFoodsInitially(){
+
+    //fetching data through GET request and store it in initDB array  
+    await this.dashService.getFoods().then( res => {this.initDB = res;});
+  
+    //if there there is data then update progress bar and calories left 
+    if( this.initDB.length ){
         this.leftCal = this.dailyCal - this.previousStoredCalories(); 
         this.dashService.leftCalories = this.leftCal; 
         this.dashService.updateCaloriePercent(); 
     }
-    // if no data initalize left calories = calories for the day 
-    else if( !this.dashService.foodsDB.length ){
+    // if no data initalize left calories = daily calories  
+    else if( !this.initDB.length ){
       this.leftCal=this.dailyCal; 
     }
   }
 
-  // return percent string to update progress bar
+  //----------- check how many calories user has already taken for the day ----------------//
+  previousStoredCalories(){
+    let prevCal = 0; 
+    for(let i=0 ; i<= this.initDB.length-1 ; i++){
+      prevCal+=this.initDB[i].calories; 
+    }
+    return prevCal; 
+  }
+
+  //------ method to return percent string to update progress bar -------------//
   onUpdatePercent(){
     return this.dashService.caloriePercent; 
   }
 
-  // check and see if there was stored data already
-  previousStoredCalories(){
-    let prevCal = 0; 
-    for(let i=0 ; i<= this.dashService.foodsDB.length-1 ; i++){
-      prevCal+=this.dashService.foodsDB[i].calories; 
-    }
-    return prevCal; 
-  }
- 
-  ongetFoods(){
-    this.dashService.getFoods();
-  }
+
 
 }
 

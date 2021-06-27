@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
-import { FoodInfo } from '../../_models/food.model';
 import { Food } from '../../_models/foodInterface';
 
 @Component({
@@ -11,43 +10,60 @@ import { Food } from '../../_models/foodInterface';
 export class CalorieIntakeComponent implements OnInit {
 
   addedFood ?: Food;
-  dbFoods = this.dashService.foodsDB;
+  dbFoods: Food[] = [];
 
   constructor( private dashService : DashboardService ) { }
 
-  ngOnInit(): void {}
+  // on initialization go to set up food intake table 
+  ngOnInit(): void {
+      this.onupdateTable(); 
+  }
 
-  onAddCalories(calorieInput: HTMLInputElement, nameInput: HTMLInputElement){
+  //-------------------- getting data and storing objects in dbfoods array ----------------------//
+  async onupdateTable(){
+    // fetching data through GET request and store it in dbfoods array 
+    await this.dashService.getFoods().then( res => {this.dbFoods = res;}); 
+  }
+
+  //---------------- ADDing Calories both to Mongo and our local food object array ---------------//
+  async onAddCalories(calorieInput: HTMLInputElement, nameInput: HTMLInputElement){
+
     const nameFood = nameInput.value; 
-    const caloriesTaken = parseInt(calorieInput.value,10); 
-    // input had to have both name and calories 
-    if ( caloriesTaken && nameFood ){
+    const caloriesFood = parseInt(calorieInput.value,10); 
+    let newFoodObj = {name: nameFood, calories: caloriesFood};
 
-      let updatedCalories =  this.dashService.leftCalories-caloriesTaken;  
+    if ( caloriesFood && nameFood ){
+      // update properties in service (calories left and Percent for progress bar)
+      let updatedCalories =  this.dashService.leftCalories-caloriesFood;  
       this.dashService.updateCaloriesLeft(updatedCalories);   
       this.dashService.updateCaloriePercent(); 
-     
-
-      let idFood = this.dashService.foodsDB.length + 1; 
-
-      const newFood = new FoodInfo(idFood,nameFood, caloriesTaken);
-      this.dashService.foodsDB.push(newFood);
+      // adding new foods object to mongo and updating table 
+      await this.dashService.addFoods(newFoodObj);
+      this.onupdateTable(); 
     }
+
+    // if no data was entered for either food or calories 
     else {
-      console.log('Missing calories or name of food.');
       this.dashService.statusInput.emit('Missing calories or name of food.');
     }
  }
 
- onDeleteFood(delFood: Food): void{
-  let newCal = this.dashService.leftCalories + delFood.calories; 
-  this.dashService.updateCaloriesLeft(newCal);
-  this.dashService.updateCaloriePercent();
-  for (let i =0; i <= this.dashService.foodsDB.length-1 ; i++){
-    if( delFood.id == this.dashService.foodsDB[i].id){
-      this.dashService.foodsDB.splice(i,1)
+ //----------------- DELETing Calories both to Mongo and our local food object array -----------------//
+  async onDeleteFood(delFood: Food){
+    // update properties in service (calories left and Percent for progress bar)
+    let newCal = this.dashService.leftCalories + delFood.calories; 
+    this.dashService.updateCaloriesLeft(newCal);
+    this.dashService.updateCaloriePercent();
+    // delete food object from from mongodb and update table 
+    for (let i =0; i <= this.dbFoods.length-1 ; i++){
+      if( delFood._id == this.dbFoods[i]._id){
+        await this.dashService.deleteFoods(delFood._id); 
+        this.onupdateTable();
+      }
     }
+    
   }
-}
+
+
    
 }
