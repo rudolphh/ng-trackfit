@@ -1,32 +1,16 @@
-<mat-form-field appearance="fill">
-  <mat-label>Input</mat-label>
-  <input matInput>
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Select</mat-label>
-  <mat-select>
-    <mat-option value="one">First option</mat-option>
-    <mat-option value="two">Second option</mat-option>
-  </mat-select>
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Textarea</mat-label>
-  <textarea matInput></textarea>
-</mat-form-field>
-
-<!-- Separation -->
-
 <form class="container">
-  <h2>Settings</h2>
+  <h1>Settings</h1>
 
-
-  <div class="form-group">
-    <p>Gender: ({{userSettings.gender}})</p>
+  <section class="form-group">
+    <h4>Gender: </h4>
     <mat-button-toggle-group name="gender" aria-label="Font Style">
+    <!-- [formControl]="fontStyleControl" Add to <mat-button-toggle-group> ?? -->
       <mat-button-toggle value="male">Male</mat-button-toggle>
       <mat-button-toggle value="female">Female</mat-button-toggle>
     </mat-button-toggle-group>
-  </div>
+    <!-- <p>Chosen value is {{fontStyleControl.value}}</p> -->
+    <p class="selected-value-paragraph">Chosen gender is: {{userSettings.gender}}</p>
+  </section>
 
   <mat-form-field class="example-full-width form-group" appearance="fill">
     <mat-label>Date of Birth: </mat-label>
@@ -39,10 +23,20 @@
 
 
   <form class="form-group">
-    <mat-form-field class="example-full-width">
+    <!-- <mat-form-field class="example-full-width" appearance="fill">
       <mat-label for="height">Height: (Inches)</mat-label>
       <input matInput class="form-control" id="height" placeholder="Height(Metric/Imperial)" value="{{userSettings.height}}">
-    </mat-form-field>
+    </mat-form-field> -->
+
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label for="height">Height: (Inches)</mat-label>
+        <span matPrefix>{{capitalizeFirstLetter( userSettings.unit )}} &nbsp;</span>
+        <input type="number" matInput id="height" placeholder="{{userSettings.height}}" value="{{userSettings.height}}">
+        <!-- add class="form-control" <input> ?? gives input => NO TRANSPARENCY-->
+        <mat-icon matSuffix>accessibility</mat-icon>
+      </mat-form-field>
+
 
     <mat-form-field class="example-full-width">
       <mat-label>Leave a comment</mat-label>
@@ -50,22 +44,27 @@
     </mat-form-field>
   </form>
 
-
-  <div class="form-group">
-    <p>Measurement Unit: ({{ userSettings.unit }})</p>
+  <section class="form-group">
+    <h4>Measurement Unit:</h4>
     <mat-button-toggle-group name="unit" aria-label="Font Style">
-      <mat-button-toggle value="imperial" checked>Imperial</mat-button-toggle>
+    <!-- [formControl]="fontStyleControl" Add to <mat-button-toggle-group> ?? -->
+      <mat-button-toggle value="imperial">Imperial</mat-button-toggle>
       <mat-button-toggle value="metric">Metric</mat-button-toggle>
     </mat-button-toggle-group>
-  </div>
+    <!-- <p>Chosen value is {{fontStyleControl.value}}</p> -->
+    <p class="selected-value-paragraph">Chosen measurement unit is: {{ userSettings.unit }}</p>
+  </section>
 
-  <div class="form-group">
-    <p>Diet Type: ({{ userSettings.dietType }})</p>
+  <section class="form-group">
+    <h4>Diet Type:</h4>
     <mat-button-toggle-group name="dietType" aria-label="Font Style">
-      <mat-button-toggle value="cut" checked>Cut</mat-button-toggle>
+    <!-- [formControl]="fontStyleControl" Add to <mat-button-toggle-group> ?? -->
+      <mat-button-toggle value="cut">Cut</mat-button-toggle>
       <mat-button-toggle value="bulk">Bulk</mat-button-toggle>
     </mat-button-toggle-group>
-  </div>
+    <!-- <p>Chosen value is {{fontStyleControl.value}}</p> -->
+    <p class="selected-value-paragraph">Chosen diet type is: {{ userSettings.dietType }}</p>
+  </section>
 
   <form class="form-group">
     <mat-form-field class="example-full-width">

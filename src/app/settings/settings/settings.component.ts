@@ -71,6 +71,11 @@ export class SettingsComponent implements OnInit {
     });
   }
 
+  capitalizeFirstLetter(string: any) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+
   // function name(params:type) {
   // this.http.patch()
   // }
