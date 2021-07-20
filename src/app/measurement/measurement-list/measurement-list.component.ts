@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Measurement } from 'src/app/_models/measurement';
 import { User } from 'src/app/_models/user';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -14,6 +15,8 @@ export class MeasurementListComponent implements OnInit {
   user !: User;
   isFemale : boolean = false;
   measurements !: Measurement [];
+
+  measurements$ !: Observable<Measurement[]>;
 
   weightUnit !: string;
   lengthUnit !: string
@@ -32,9 +35,8 @@ export class MeasurementListComponent implements OnInit {
     this.lengthUnit = this.user.settings?.unit === 'imperial' ? 'in.' : 'cm';
 
 
-    this.measurementService.getAllMeasurements()
-      .then((measurements) => this.measurements = measurements)
-      .catch((error) => console.error(error));
+    this.measurements$ = this.measurementService.getAllMeasurements();
+
   }
 
 }

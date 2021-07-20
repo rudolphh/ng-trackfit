@@ -19,13 +19,12 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'reset', component: ForgotPasswordComponent},
   //{ path: 'friends', component: FriendsComponent},
-  { path: 'measurements', 
+  { path: 'measurements', component: MeasurementListComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: MeasurementListComponent },
-      { path: 'add', component: MeasurementCreateEditComponent },
+      { path: 'new', component: MeasurementCreateEditComponent },
       { path: 'edit/:id', component: MeasurementCreateEditComponent }
-  ]
+    ]
   },
  // { path: 'measurements/:id', component: MeasurementDetailsComponent },
  // { path: 'contact', component: ContactComponent },
