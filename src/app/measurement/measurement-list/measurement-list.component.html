@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let measurement of measurements$ | async as measurements">
+    <tr *ngFor="let measurement of measurements">
       <th scope="row">{{measurement.date | date:'mediumDate' }}</th>
       <td>{{ measurement.weight + ' ' + weightUnit }}</td>
       <td>{{ measurement.neck ? measurement.neck + ' ' + lengthUnit : '---' }}</td>

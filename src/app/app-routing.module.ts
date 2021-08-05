@@ -12,7 +12,7 @@ import { MeasurementCreateEditComponent } from './measurement/measurement-create
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'home', component: DashboardComponent },
+  { path: 'home', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   //{ path: 'profile', component: ProfileComponent },

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
   <div class="container">
-    <a class="navbar-brand" routerLink="/home"> Fitnits </a>
+    <a class="navbar-brand" [routerLink]="currentUser ? '/home' : ''"> Fitnits </a>
     <button
       class="navbar-toggler"
       type="button"
