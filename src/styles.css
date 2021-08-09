@@ -3,3 +3,7 @@
 body {
   color: lightgrey;
 }
+
+.inline-img {
+  max-width: 30%;
+}
