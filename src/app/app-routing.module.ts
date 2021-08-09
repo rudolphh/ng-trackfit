@@ -12,20 +12,19 @@ import { MeasurementCreateEditComponent } from './measurement/measurement-create
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'home', component: DashboardComponent },
+  { path: 'home', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   //{ path: 'profile', component: ProfileComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'reset', component: ForgotPasswordComponent},
   //{ path: 'friends', component: FriendsComponent},
-  { path: 'measurements', 
+  { path: 'measurements', component: MeasurementListComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: MeasurementListComponent },
-      { path: 'add', component: MeasurementCreateEditComponent },
+      { path: 'new', component: MeasurementCreateEditComponent },
       { path: 'edit/:id', component: MeasurementCreateEditComponent }
-  ]
+    ]
   },
  // { path: 'measurements/:id', component: MeasurementDetailsComponent },
  // { path: 'contact', component: ContactComponent },

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { Measurement } from 'src/app/_models/measurement';
 import { User } from 'src/app/_models/user';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -15,8 +17,12 @@ export class MeasurementListComponent implements OnInit {
   isFemale : boolean = false;
   measurements !: Measurement [];
 
+  measurements$ !: Observable<Measurement[]>
+
   weightUnit !: string;
-  lengthUnit !: string
+  lengthUnit !: string;
+
+  sub !: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -31,10 +37,17 @@ export class MeasurementListComponent implements OnInit {
     this.weightUnit = this.user.settings?.unit === 'imperial' ? 'lbs.' : 'kg';
     this.lengthUnit = this.user.settings?.unit === 'imperial' ? 'in.' : 'cm';
 
+    this.measurements$ = this.measurementService.getAllMeasurements();
+    this.sub = this.measurements$.pipe(take(1)).subscribe((measurements) => {
+      this.measurements = measurements;
+    })
 
-    this.measurementService.getAllMeasurements()
-      .then((measurements) => this.measurements = measurements)
-      .catch((error) => console.error(error));
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }
+
+

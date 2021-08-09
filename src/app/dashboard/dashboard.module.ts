@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LandingComponent } from './landing/landing.component';
 import { DashboardService } from './dashboard.service';
 import { DashboardComponent } from './dashboard.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { AlertModule } from './_alert';
 
 @NgModule({
@@ -15,7 +16,12 @@ import { DashboardComponent } from './dashboard.component';
     DashboardComponent,
     LandingComponent,
   ],
-  imports: [CommonModule, MatIconModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatIconModule
+  ],
   providers: [DashboardService],
   exports: [CalorieComponent, CalorieIntakeComponent]
 })

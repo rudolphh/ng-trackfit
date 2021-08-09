@@ -5,6 +5,7 @@ import { MeasurementCreateEditComponent } from './measurement-create-edit/measur
 import { MeasurementService } from '../_services/measurement.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,6 +16,7 @@ import { AngularMaterialModule } from '../angular-material/angular-material.modu
   ],
   imports: [
     CommonModule,
+    RouterModule,
     AngularMaterialModule,
     ReactiveFormsModule
   ],
