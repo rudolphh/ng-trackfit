@@ -7,15 +7,17 @@
       alt="Card image cap"
     />
     <div class="card-body">
-      <div class="d-flex flex-column align-items-center p-3">
-        <h1 class="text-primary text-center">Be a Fitnit</h1>
-        <h3 class="text-center">
+      <div class="d-flex flex-column align-items-center p-3 text-center">
+        <h1 class="text-primary">Be a Fitnit</h1>
+        <h3>
           Welcome to the simplest way to transform your body.
         </h3>
         <br />
-        <h3 class="text-success text-info text-center">
-          <u>GUARANTEED OR YOUR BODY BACK</u>
-        </h3>
+        <h3 class="text-success">
+          GUARANTEED OR YOUR BODY BACK
+        </h3><br />
+        <p class='h3 text-danger'>Thats right</p>
+        <h3>At any point in time you can quit and have your old body fully refunded.</h3>
       </div>
     </div>
     <!-- /card-body -->
@@ -185,18 +187,7 @@
           calories
           <span class="text-secondary">you burn</span> doing nothing.
         </h3>
-        <p class="h3 text-center">
-          BMR : {{ BMR | number: "1.0-0" }}
-          <img
-            class="img-fluid"
-            [src]="
-              BMR === 0
-                ? 'assets/img/emoji-dead.png'
-                : 'assets/img/emoji-neutral.png'
-            "
-            [alt]="BMR === 0 ? 'dead' : 'neutral'"
-          />
-        </p>
+
       </div>
     </div>
     <!-- /card-body -->
