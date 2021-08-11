@@ -7,10 +7,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent implements OnInit {
-  userDetailsForm!: FormGroup;
+  userDetailsForm !: FormGroup;
   weight!: number;
   BMR: number = 0;
   TDEE: number = 0;
+
+  calCounterForm !: FormGroup;
+  caloriesConsumed : number = 0;
+  caloriesRemaining : number = 0;
 
   constructor(private fb: FormBuilder) {}
 
@@ -87,12 +91,30 @@ export class LandingComponent implements OnInit {
           case 'crazy' : this.TDEE = this.BMR * 1.9; break;
         }
 
+        this.caloriesRemaining = this.TDEE;
+        // execute after angular's data binding
+        setTimeout(() => {
+          document.getElementById('calCounter')?.scrollIntoView();
+        })
+
         console.log(this.BMR);
       } else {
         this.BMR = 0;
         this.TDEE = 0;
       }
     });
+
+    this.calCounterForm = this.fb.group({
+      cals: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.pattern(/^[0-9]*$/),
+        ],
+      ]
+    });
+
   } // end ngOnInit
 
   emojiReaction() : string {
@@ -110,5 +132,22 @@ export class LandingComponent implements OnInit {
       case 'crazy' : return 'assets/img/emoji-flexed.png';
       default: return 'assets/img/emoji-neutral.png';
     }
+  }
+
+  addCalories() : void {
+
+    if(this.calCounterForm.valid){
+      let cals = +this.calCounterForm.get('cals')?.value;
+      console.log('cals', cals);
+      this.caloriesConsumed += cals;
+      console.log('caloriesConsumed', this.caloriesConsumed)
+      this.caloriesRemaining -= cals;
+    }
+  }
+
+  progressColor() : string {
+    let percentProgress = this.caloriesConsumed/this.TDEE*100;
+    console.log('percentProgress', percentProgress)
+    return percentProgress < 50 ? 'success' : (percentProgress < 90 ? 'primary' : 'danger');
   }
 }
