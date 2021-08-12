@@ -1,90 +1,113 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-8">
+    <div class="card">
+      <div class="card-header bg-success text-light">Register</div>
 
-  
-  <div class="card">
-    <div class="card-header bg-success text-light">Register</div>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-  <div class="container-fluid">
-  <!-- Enter UserName -->
-  <div class="form-group-row">
-      <label for="username" class="text-warning">Username</label>
-      
-      <input type="text" 
-      class="form-control fluid"
-      formControlName="username" 
-      [ngClass]="displayFieldCss('username')"
-      placeholder="Enter User Name" 
-      value =""
-      required
-      />
-          <app-field-error-display
-           [displayError]="isRequiredFieldValid('username')"
-            errorMsg="Username is required"
+      <div class="card-body">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+          <!-- Enter UserName -->
+          <div class="form-group row">
+            <label for="username" class="col-4 col-md-4 col-form-label text-md-right"
+              >Username</label
             >
-            </app-field-error-display>
-      
-    </div>
 
-    <!-- Enter Email Address -->
-    <div class="form-group">
-      <label for="exampleInputEmail1" class="form-label mt-4" class="text-danger">Email address</label>
-      <input type="email" 
-      class="form-control" 
-      id="email" 
-      formControlName = "email" 
-      [ngClass]="displayFieldCss('email')"
-      placeholder="Enter email">
-      <app-field-error-display
-              [displayError]="isRequiredFieldValid('email')"
-              errorMsg="Email is required"
-         >
-              </app-field-error-display>
-      
-      
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <!-- Enter Password -->
-    <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4" class="text-success">Password</label>
-      <input type="password" 
-             class="form-control" 
-              id="password" 
-              formControlName="password"
-              [ngClass]="displayFieldCss('password')"
-              placeholder="Password">
+            <div class="col-8 col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="username"
+                [ngClass]="displayFieldCss('username')"
+                placeholder="fitnit21"
+                value=""
+                required
+              />
               <app-field-error-display
-              [displayError]="isRequiredFieldValid('password')"
-              errorMsg="Password is required"
-         >
+                [displayError]="isRequiredFieldValid('username')"
+                errorMsg="Username is required"
+              >
               </app-field-error-display>
-        
-              
-    </div>
-    <!-- Confrm Password -->
-    <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4" class="text-info">Re-Enter Password</label>
-      <input type="password" 
-      class="form-control" 
-      id="reEnterPassword" 
-      formControlName="passwordConfirm"
-      [ngClass]="displayFieldCss('passwordConfirm')"
-      placeholder="Re-Enter Password"
-      >
-      <!-- <div *ngIf="checkIfMatchingPasswords('error')">Wrong Password</div> -->
-      
-     
+            </div>
+          </div>
 
-      
+          <!-- Enter Email Address -->
+          <div class="form-group row">
+            <label
+              for="exampleInputEmail1"
+              class="col-4 col-md-4 col-form-label text-md-right"
+              >Email address</label
+            >
+            <div class="col-8 col-md-6">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                [ngClass]="displayFieldCss('email')"
+                placeholder="email@example.com"
+              />
+              <app-field-error-display
+                [displayError]="isRequiredFieldValid('email')"
+                errorMsg="Email is required"
+              >
+              </app-field-error-display>
+
+              <small id="emailHelp" class="form-text text-muted"
+                >We'll never share your email with anyone else.</small
+              >
+            </div>
+          </div>
+
+          <!-- Enter Password -->
+          <div class="form-group row">
+            <label
+              for="exampleInputPassword1"
+              class="col-4 col-md-4 col-form-label text-md-right"
+              >Password</label
+            >
+            <div class="col-8 col-md-6">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                [ngClass]="displayFieldCss('password')"
+                placeholder="Password"
+              />
+              <app-field-error-display
+                [displayError]="isRequiredFieldValid('password')"
+                errorMsg="Password is required"
+              >
+              </app-field-error-display>
+            </div>
+          </div>
+
+          <!-- Confrm Password -->
+          <div class="form-group row">
+            <label
+              for="exampleInputPassword1"
+              class="col-4 col-md-4 col-form-label text-md-right"
+              >Confirm Password</label
+            >
+            <div class="col-8 col-md-6">
+              <input
+                type="password"
+                class="form-control"
+                id="reEnterPassword"
+                formControlName="passwordConfirm"
+                [ngClass]="displayFieldCss('passwordConfirm')"
+                placeholder="Confirmation"
+              />
+              <!-- <div *ngIf="checkIfMatchingPasswords('error')">Wrong Password</div> -->
+            </div>
+          </div>
+          <div class="form-group row mt-4 mb-2 ">
+            <div class="col-md-4 offset-md-4">
+              <button type="submit" class="btn btn-primary w-100">Register</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- end card -->
     </div>
   </div>
-  <div class="form-group">
-    <div class="col-md-8">
-      <button type="submit" class="btn btn-primary" >Register</button>
-    </div>
-  </div>
-</form>
 </div>
-
- 
-  
-  <hr>
-  <hr>
