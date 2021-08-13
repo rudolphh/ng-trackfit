@@ -1,5 +1,10 @@
 <div class="row justify-content-center">
   <div class="col-md-12 col-lg-8">
+
+    <div *ngIf="authError" class="alert alert-danger text-center">
+      <strong>Oh snap!&nbsp;</strong> {{authError}}
+    </div>
+
     <div class="card">
       <div class="card-header bg-success text-light">Register</div>
 

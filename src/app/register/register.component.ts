@@ -5,6 +5,7 @@ import { UserService } from '../_services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../_models/user';
 import { EnvService } from '../_services/env.service';
+import { ApiResponse } from '../_models/api-response';
 
 
 
@@ -19,10 +20,12 @@ export class RegisterComponent implements OnInit {
   user: User = {};
   submitted = false;
   attemptedSubmit: boolean = false;
- 
+  authError: any;
+
+
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private env: EnvService,
     private router: Router,
     private route: ActivatedRoute
@@ -33,7 +36,7 @@ export class RegisterComponent implements OnInit {
       username: [this.user.username, Validators.required],
       email: [this.user.email, Validators.required],
       password: [this.user.password, [Validators.required, Validators.minLength(6)]],
-      passwordConfirm: [this.user.passwordConfirm,[Validators.required, Validators.minLength(6)]]      
+      passwordConfirm: [this.user.passwordConfirm,[Validators.required, Validators.minLength(6)]]
   }, {Validator: this.checkIfMatchingPasswords('password', 'passwordConfirm')});
 
   }
@@ -49,30 +52,34 @@ export class RegisterComponent implements OnInit {
           return passwordConfirmationInput.setErrors(null);
       }
     }
-  }  
+  }
    /// get f() {return this.form.controls}
 
-    onSubmit(){    
+    onSubmit(){
       if(this.registerForm.valid){
-         
-      
+
+
       this.submitted = true;
       this.userService
        .register(this.registerForm.value)
-       .subscribe((ApiResponse)=>{
+       .subscribe((res: ApiResponse)=>{
+          if (!res.data) {
+            this.authError = res.message;
+            return;
+          }
           this.router.navigate(['../login'])
-          console.log(ApiResponse)
-       }) 
+          console.log(res.message)
+       })
 
       } else {
         this.attemptedSubmit = true;
         this.validateAllFormFields(this.registerForm)
       }
-       
-        
+
+
 
     ///console.log(this.registerForm.value)
-    }     
+    }
 
     isRequiredFieldValid(field: string){
         return(
@@ -114,6 +121,6 @@ export class RegisterComponent implements OnInit {
       });
     }
 
-    
+
 }
 

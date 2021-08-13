@@ -7,3 +7,7 @@ body {
 .inline-img {
   max-width: 30%;
 }
+
+.card-body-bg {
+  background-color: #002b36;
+}
