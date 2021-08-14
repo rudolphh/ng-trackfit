@@ -7,9 +7,6 @@ import { User } from '../_models/user';
 import { EnvService } from '../_services/env.service';
 import { ApiResponse } from '../_models/api-response';
 
-
-
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -63,12 +60,11 @@ export class RegisterComponent implements OnInit {
       this.userService
        .register(this.registerForm.value)
        .subscribe((res: ApiResponse)=>{
-          if (!res.data) {
-            this.authError = res.message;
-            return;
-          }
           this.router.navigate(['../login'])
           console.log(res.message)
+       }, error => {
+          this.authError = error;
+          return;
        })
 
       } else {
