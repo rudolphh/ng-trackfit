@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-md-8">
+  <div class="col-md-12 col-lg-8">
 
     <div *ngIf="authError" class="alert alert-danger text-center">
       <strong>Oh snap!&nbsp;</strong> {{authError}}
@@ -69,7 +69,7 @@
 
           <div class="form-group row mb-0">
             <div class="col-md-8 offset-md-4">
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="submit" class="btn btn-primary w-25">Login</button>
 
               <a (click)="navigateToReset()" class="btn btn-link">
                 Forgot Your Password?

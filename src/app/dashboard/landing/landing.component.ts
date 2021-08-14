@@ -7,10 +7,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent implements OnInit {
-  userDetailsForm!: FormGroup;
+  userDetailsForm !: FormGroup;
   weight!: number;
   BMR: number = 0;
   TDEE: number = 0;
+
+  calCounterForm !: FormGroup;
+  caloriesConsumed : number = 350;
+  caloriesRemaining : number = 0;
+
+  dietTypeForm !: FormGroup;
+  trackingCalories : number = 0;
+
+  stepOne : boolean = true;
+  stepTwo : boolean = true;
 
   constructor(private fb: FormBuilder) {}
 
@@ -87,12 +97,48 @@ export class LandingComponent implements OnInit {
           case 'crazy' : this.TDEE = this.BMR * 1.9; break;
         }
 
+        this.caloriesRemaining = this.TDEE;
+        this.trackingCalories = this.TDEE;
+
+        // execute after angular's data binding
+        setTimeout(() => {
+          document.getElementById('top')?.scrollIntoView({ behavior: 'smooth'});
+          //this.stepOne = false;
+
+          setTimeout(() => { this.stepTwo = true; }, 500)
+        }, 500);
+
         console.log(this.BMR);
       } else {
         this.BMR = 0;
         this.TDEE = 0;
+        this.stepOne = true;
+        this.stepTwo = false;
       }
     });
+
+    // cal counter form
+    this.calCounterForm = this.fb.group({
+      item: ['', [Validators.required]],
+      cals: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.pattern(/^[0-9]*$/),
+        ],
+      ]
+    });
+
+    // diet type forms
+    this.dietTypeForm = this.fb.group({
+      dietType: [ 'lose',
+      [
+        Validators.required
+      ]
+    ]
+    })
+
   } // end ngOnInit
 
   emojiReaction() : string {
@@ -110,5 +156,47 @@ export class LandingComponent implements OnInit {
       case 'crazy' : return 'assets/img/emoji-flexed.png';
       default: return 'assets/img/emoji-neutral.png';
     }
+  }
+
+  addCalories() : void {
+
+    if(this.calCounterForm.valid){
+      let item = this.calCounterForm.get('item')?.value;
+      let cals = +this.calCounterForm.get('cals')?.value;
+
+      this.caloriesConsumed += cals;
+      this.caloriesRemaining -= cals;
+
+      var ul = document.getElementById("item-list");
+      var li = document.createElement("li");
+      var i = document.createElement("i");
+
+      i.className = "fas fa-times float-right"
+      i.style.marginTop = '3px';
+
+      li.className = 'list-group-item';
+      li.appendChild(document.createTextNode(item + ' : ' + cals));
+      li.appendChild(i);
+      ul?.appendChild(li);
+
+      this.calCounterForm.get('cals')?.setValue('');
+      this.calCounterForm.get('item')?.setValue('');
+
+    }
+  }
+
+  dietTypeAmount(amount : number) {
+    let dietType = this.dietTypeForm.get('dietType')?.value;
+    if(dietType === 'lose'){
+      this.trackingCalories = this.TDEE - 500*amount;
+    } else {
+      this.trackingCalories = this.TDEE + 500*amount;
+    }
+    console.log('trackingCalories', this.trackingCalories);
+  }
+
+  goToStepTwo(){
+    this.stepOne = false;
+    document.getElementById('stepTwo')?.scrollIntoView({ behavior: 'smooth'});
   }
 }
