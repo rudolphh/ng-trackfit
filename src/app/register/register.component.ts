@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UserService } from '../_services/user.service';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../_models/user';
-import { EnvService } from '../_services/env.service';
 import { ApiResponse } from '../_models/api-response';
 
 @Component({
@@ -23,9 +22,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private env: EnvService,
     private router: Router,
-    private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
