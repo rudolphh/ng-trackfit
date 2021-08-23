@@ -1,0 +1,21 @@
+<router-outlet></router-outlet>
+<table class="table  table-bordered table-striped">
+  <thead class="table-success">
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Weight</th>
+      <th scope="col">Neck</th>
+      <th scope="col">Waist</th>
+      <th *ngIf="isFemale" scope="col">Hip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let measurement of measurements">
+      <th scope="row">{{measurement.date | date:'mediumDate' }}</th>
+      <td>{{ measurement.weight + ' ' + weightUnit }}</td>
+      <td>{{ measurement.neck ? measurement.neck + ' ' + lengthUnit : '---' }}</td>
+      <td>{{ measurement.waist ? measurement.waist + ' ' + lengthUnit : '---' }}</td>
+      <td *ngIf='isFemale'>{{ measurement.hips }}</td>
+    </tr>
+  </tbody>
+</table>

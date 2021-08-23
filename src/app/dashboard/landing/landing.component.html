@@ -1,0 +1,411 @@
+
+
+<ng-container *ngIf="userDetailsForm.valid">
+  <!-- <ng-container *ngIf="true"> -->
+    <div class="alert alert-dismissible alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>You are now a Fitnit!</strong> You have taken the first step
+      <a style="cursor:pointer" (click)="goToStepTwo()" class="alert-link float-right">STEP 2</a>
+    </div>
+</ng-container>
+
+<!-- Step 1 -->
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Step #1 - Fitnit Profile
+        </button>
+      </h5>
+    </div>
+    <div id="collapseOne" [ngClass]="{ 'collapse multi-collapse' : true, 'show': stepOne }" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body card-body-bg">
+<div class="card-deck">
+  <div class="card m-3" style="min-width: 18rem">
+    <div class="card-header bg-success text-light"></div>
+    <img
+      class="card-img-top"
+      src="https://images.unsplash.com/photo-1611077543575-445af69a7adf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3450&q=80"
+      alt="Card image cap"
+    />
+    <div class="card-body">
+      <div class="d-flex flex-column align-items-center p-3 text-center">
+        <h1 class="text-primary">Be a Fitnit</h1>
+        <h3>Welcome to the simplest way to transform your body.</h3>
+        <br />
+        <h3 class="text-success">GUARANTEED OR YOUR BODY BACK</h3>
+        <br />
+        <p class="h3 text-danger">Thats right</p>
+        <h3>
+          At any point in time you can quit and have your old body fully
+          refunded.
+        </h3>
+      </div>
+    </div>
+    <!-- /card-body -->
+  </div>
+  <!-- /card -->
+
+  <div class="card m-3" style="min-width: 18rem">
+    <div class="card-body">
+      <div class="d-flex flex-column align-items-center p-3">
+        <h1 class="text-primary">Here's How</h1>
+        <h3 class="text-center">
+          <!-- <span class="text-secondary">Let's </span>
+          nit <span class="text-secondary">for a bit.</span>
+          <br /> -->
+          Enter a few details below.
+        </h3>
+        <form class="form-row" [formGroup]="userDetailsForm">
+          <!-- age -->
+          <div class="form-group col-12">
+            <input
+              class="form-control form-control-lg"
+              type="text"
+              placeholder="Age"
+              id="age"
+              formControlName="age"
+              required
+            />
+          </div>
+          <!-- gender -->
+          <div class="form-group col-12">
+            <select
+              class="form-control form-control-lg"
+              id="gender"
+              formControlName="gender"
+              required
+            >
+              <option selected value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <!-- height (feet) -->
+          <div class="form-group col-6">
+            <input
+              class="form-control form-inline form-control-lg"
+              type="text"
+              placeholder="Feet"
+              id="feet"
+              formControlName="heightFeet"
+              required
+            />
+          </div>
+          <!-- height (inches) -->
+          <div class="form-group col-6">
+            <input
+              class="form-control form-control-lg"
+              type="text"
+              placeholder="Inches"
+              id="inches"
+              formControlName="heightInches"
+              required
+            />
+          </div>
+          <!-- weight -->
+          <div class="form-group col-12">
+            <input
+              class="form-control form-control-lg"
+              type="text"
+              placeholder="Weight"
+              id="weight"
+              formControlName="weight"
+              required
+            />
+          </div>
+          <div class="form-group col-12 text-center">
+            <h3>
+              <p>
+                <span class="text-primary h5 mr-1">Exercise</span> elevated
+                heart rate activity
+              </p>
+            </h3>
+            <select
+              class="form-control form-control-lg"
+              id="activity"
+              formControlName="activity"
+              required
+            >
+              <option selected value="lazy">Unabashedly Lazy</option>
+              <option value="resolute">Regular 1-3 times/week</option>
+              <option value="fit">Regular 4-5 times/week</option>
+              <option value="fitter">Daily or intense 3-4 times/week</option>
+              <option value="olympic">Intense 6-7 times/week</option>
+              <option value="crazy">
+                Very intense daily, or physical job
+              </option></select
+            ><br />
+
+            <p>
+              <span class="text-success h5 mr-1">Regular</span> : 15 - 30
+              minutes
+            </p>
+            <p></p>
+            <p>
+              <span class="text-success h5 mr-1">Intense</span> : 45 - 120
+              minutes
+            </p>
+            <p></p>
+            <p>
+              <span class="text-success h5 mr-1">Very Intense</span> : 2+ hours
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /card-body -->
+    <div class="card-footer bg-success text-light"></div>
+  </div>
+  <!-- /card -->
+
+  <div class="card m-3" style="min-width: 18rem">
+    <div class="card-header bg-success text-light"></div>
+
+    <div class="card-body">
+      <div class="d-flex flex-column align-items-center p-3">
+        <h1 class="text-primary">Your Initial Profile</h1>
+        <h3 class="text-center">
+          BMR, <span class="text-secondary">or </span> Basal Metabolic Rate,
+          <span class="text-secondary">is how many</span>
+          calories
+          <span class="text-secondary">you burn</span> doing nothing.
+        </h3>
+        <p class="h3 text-center m-0">
+          <span class="text-success">BMR</span
+          ><span class="text-secondary"> : </span>
+          {{ BMR | number: "1.0-0" }}
+          <span class="h5 text-secondary">calories</span>
+          <img
+            style="max-width: 274px"
+            class="img-fluid"
+            [src]="emojiReaction()"
+            [alt]="BMR === 0 ? 'dead' : 'neutral'"
+          />
+        </p>
+        <p class="h3 text-center">
+          <span class="text-success">TDEE</span
+          ><span class="text-secondary"> : </span>
+          {{ TDEE | number: "1.0-0" }}
+          <span class="h5 text-secondary">calories</span>
+        </p>
+        <h3 class="text-center">
+          TDEE, <span class="text-secondary">or </span> Total Daily Energy
+          Expenditure,
+          <span class="text-secondary">is our final estimate once </span>
+          activity level
+          <span class="text-secondary">is</span> taken into account.
+        </h3>
+      </div>
+    </div>
+    <!-- /card-body -->
+  </div>
+  <!-- /card -->
+</div>
+</div>
+</div>
+</div>
+
+<ng-container *ngIf="userDetailsForm.valid">
+<div id="stepTwo" class="card">
+  <div class="card-header" id="headingTwo">
+    <h5 class="mb-0">
+      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Step #2 - Goals and Getting Started
+      </button>
+    </h5>
+  </div>
+  <div id="collapseTwo" [ngClass]="{ 'collapse multi-collapse' : true, 'show': stepTwo }" aria-labelledby="headingTwo" data-parent="#accordion">
+    <div class="card-body card-body-bg">
+
+<!-- step 2 -->
+
+  <!-- <ng-container *ngIf="true"> -->
+
+    <div class="card-deck">
+      <div class="card m-3" style="min-width: 18rem">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center p-3">
+            <h1 class="text-primary">What Now?</h1>
+            <h3>
+              <span class="text-secondary">You now have an </span>
+              estimate
+              <span class="text-secondary">of the </span>
+              amount of calories
+              <span class="text-secondary">you can have and will </span>
+              NOT gain or lose
+              <span class="text-secondary"> weight.</span>
+            </h3>
+            <h1 class="text-primary">Choose</h1>
+            <h3 class="">
+              Whether<span class="text-secondary"> you want to </span> cut or
+              bulk <span class="text-secondary">and </span> how much
+            </h3>
+            <p class="h6">
+              <span class="text-primary">One pound</span> is roughly
+              <span class="text-primary">3500 calories</span>
+            </p>
+            <form [formGroup]='dietTypeForm' class="form-row">
+              <div class="form-group col-12">
+                <select
+                  class="form-control form-control-lg"
+                  id="dietType"
+                  formControlName="dietType"
+                  required
+                >
+                  <option selected value="lose">Lose = Cut</option>
+                  <option value="gain">Gain = Bulk</option>
+                </select>
+              </div>
+
+              <!-- desired pounds -->
+              <div class="form-group col-12 d-flex align-items-end">
+                <button
+                  class="btn btn-lg btn-primary text-light mr-3"
+                  type="button"
+                  (click)="dietTypeAmount(1)"
+                >
+                  1
+                </button>
+                <button
+                  class="btn btn-lg btn-primary text-light mr-3"
+                  type="button"
+                  (click)="dietTypeAmount(2)"
+                >
+                  2
+                </button>
+                <span class="text-success h4">pounds/wk</span>
+              </div>
+            </form>
+            <a
+              href="https://www.healthline.com/nutrition/losing-weight-too-fast"
+              target="_blank"
+              class="alert-link text-danger"
+              >why not more?</a
+            >
+          </div>
+        </div>
+        <!-- /card-body -->
+      </div>
+      <!-- /card -->
+
+      <div class="card m-3" style="min-width: 18rem">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center p-3">
+            <h1 class="text-primary">Track Your Day</h1>
+            <h3>It's as easy as reading a nutrition label and entering the calories</h3>
+
+            <hr class="w-100 bg-success" />
+
+            <div class="d-flex justify-content-center col-12 rounded">
+              <div class="progress w-100">
+                <div
+                  [ngClass]="{
+                    'progress-bar progress-bar-striped': true,
+                    'bg-success': (caloriesConsumed / trackingCalories) * 100 < 50,
+                    'bg-primary': (caloriesConsumed / trackingCalories) * 100 < 90,
+                    'bg-danger': (caloriesConsumed / trackingCalories) * 100 > 90
+                  }"
+                  role="progressbar"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [ngStyle]="{ width: (caloriesConsumed / trackingCalories) * 100 + '%' }"
+                ></div>
+              </div>
+            </div>
+
+            <div class="h4 mt-3 mb-1">
+              {{ caloriesConsumed }} / {{ trackingCalories | number: "1.0-0" }}
+            </div>
+
+            <hr class="w-100 bg-success" />
+
+            <!-- cal counter form -->
+            <form
+              class="form-row mt-2"
+              [formGroup]="calCounterForm"
+              (ngSubmit)="addCalories()"
+            >
+              <!-- calories -->
+              <div class="form-group col-12 form-inline">
+                <input
+                class="form-control form-control-lg col-6"
+                type="text"
+                placeholder="Item"
+                id="item"
+                formControlName="item"
+                required
+              />
+                <input
+                  class="form-control form-control-lg col-4"
+                  type="text"
+                  placeholder="Cals"
+                  id="cals"
+                  formControlName="cals"
+                  required
+                />
+                <button
+                  class="btn btn-lg btn-primary text-light col-2"
+                  type="submit"
+                >
+                  <i class="fas fa-utensils"></i>
+                </button>
+              </div>
+            </form>
+            <ul id="item-list" class="w-100 p-0 bg-success rounded">
+              <li class="list-group-item">soda : 150<i class="fas fa-times float-right" style="margin-top: 3px;"></i></li>
+              <li class="list-group-item">bread : 200<i class="fas fa-times float-right" style="margin-top: 3px;"></i></li>
+            </ul>
+          </div>
+        </div>
+        <!-- /card-body -->
+      </div>
+      <!-- /card -->
+
+      <div class="card m-3" style="min-width: 18rem">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center p-3">
+            <h1 class="text-primary">And Much More</h1>
+            <h3>
+              <a class="text-light" routerLink="/register">Register Here</a></h3>
+            <ul class="list-group list-group-flush w-100 bg-success text-dark">
+              <li class="list-group-item">Track Measurements</li>
+              <li class="list-group-item">Add Regular Foods</li>
+              <li class="list-group-item">Friend Challenges</li>
+              <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light">
+                Challenger Updates
+                <span class="badge badge-primary badge-pill">14</span>
+              </li>
+              <li class="list-group-item">Share On Social Media</li>
+            </ul>
+
+
+            <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 align-items-center">
+                  <img class="img-fluid rounded-circle" style="width: 30px" src="https://media-exp1.licdn.com/dms/image/C5603AQHoRAlsmbcXZw/profile-displayphoto-shrink_800_800/0/1607104110874?e=1634169600&v=beta&t=gORqhLBc8DcpKzjZROREGYG9dkCpnN2UCtOR7I5Gfqg" alt="">
+                  <h5 class="mt-2 ml-2">rudyah leads</h5>
+                  <small class="ml-auto">3 days ago</small>
+                </div>
+                <p class="mb-1">With 3 days to go, rudyah has now lost 12 lbs and 2 inches.</p>
+                <hr class="bg-success mt-3 mb-2">
+                <small>8:17 PM · Aug 10, 2021</small>
+              </a>
+
+            </div>
+
+
+          </div>
+        </div>
+        <!-- /card-body -->
+      </div>
+      <!-- /card -->
+    </div>
+    <!-- end card-deck -->
+</div>
+</div>
+</div>
+</ng-container>
+
+</div>
