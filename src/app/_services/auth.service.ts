@@ -13,8 +13,6 @@ const helper = new JwtHelperService();
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
- 
-
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<User>;
 
@@ -57,7 +55,7 @@ export class AuthService {
       );
   }
 
-  
+
 
   logout() {
     // remove user from local storage and set current user to null
