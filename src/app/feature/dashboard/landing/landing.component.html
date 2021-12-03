@@ -5,22 +5,18 @@
     <div class="alert alert-dismissible alert-success">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>You are now a Fitnit!</strong> You have taken the first step
-      <a style="cursor:pointer" (click)="goToStepTwo()" class="alert-link float-right">STEP 2</a>
+      <a style="cursor:pointer" (click)="stepper.next()" class="alert-link float-right">STEP 2</a>
     </div>
 </ng-container>
 
+<mat-stepper [linear]="!userDetailsForm.valid" #stepper
+class="bg-dark">
+  <button mat-button matStepperNext>Next</button>
+<mat-step [stepControl]="userDetailsForm">
+  <ng-template matStepLabel>Your Details</ng-template>
+
 <!-- Step 1 -->
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Step #1 - Fitnit Profile
-        </button>
-      </h5>
-    </div>
-    <div id="collapseOne" [ngClass]="{ 'collapse multi-collapse' : true, 'show': stepOne }" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body card-body-bg">
+
 <div class="card-deck">
   <div class="card m-3" style="min-width: 18rem">
     <div class="card-header bg-success text-light"></div>
@@ -202,21 +198,10 @@
   </div>
   <!-- /card -->
 </div>
-</div>
-</div>
-</div>
 
-<ng-container *ngIf="userDetailsForm.valid">
-<div id="stepTwo" class="card">
-  <div class="card-header" id="headingTwo">
-    <h5 class="mb-0">
-      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Step #2 - Goals and Getting Started
-      </button>
-    </h5>
-  </div>
-  <div id="collapseTwo" [ngClass]="{ 'collapse multi-collapse' : true, 'show': stepTwo }" aria-labelledby="headingTwo" data-parent="#accordion">
-    <div class="card-body card-body-bg">
+</mat-step>
+
+<mat-step [stepControl]="dietTypeForm" label="Set Your Goals">
 
 <!-- step 2 -->
 
@@ -403,9 +388,5 @@
       <!-- /card -->
     </div>
     <!-- end card-deck -->
-</div>
-</div>
-</div>
-</ng-container>
 
-</div>
+

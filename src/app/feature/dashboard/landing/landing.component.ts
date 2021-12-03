@@ -9,18 +9,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LandingComponent implements OnInit {
   userDetailsForm !: FormGroup;
   weight!: number;
-  BMR: number = 0;
-  TDEE: number = 0;
+  BMR = 0;
+  TDEE = 0;
 
   calCounterForm !: FormGroup;
-  caloriesConsumed : number = 350;
-  caloriesRemaining : number = 0;
+  caloriesConsumed = 350;
+  caloriesRemaining = 0;
 
   dietTypeForm !: FormGroup;
-  trackingCalories : number = 0;
+  trackingCalories = 0;
 
-  stepOne : boolean = true;
-  stepTwo : boolean = true;
+  stepOne = true;
+  stepTwo = true;
 
   constructor(private fb: FormBuilder) {}
 
@@ -75,18 +75,18 @@ export class LandingComponent implements OnInit {
           For women: BMR = 10W + 6.25H - 5A - 161
         *********************************/
 
-        let weightKg = this.userDetailsForm.get('weight')?.value / 2.205;
-        let heightFeet = +this.userDetailsForm.get('heightFeet')?.value;
-        let heightInches = +this.userDetailsForm.get('heightInches')?.value;
-        let heightCm = (12 * heightFeet + heightInches) * 2.54;
+        const weightKg = this.userDetailsForm.get('weight')?.value / 2.205;
+        const heightFeet = +this.userDetailsForm.get('heightFeet')?.value;
+        const heightInches = +this.userDetailsForm.get('heightInches')?.value;
+        const heightCm = (12 * heightFeet + heightInches) * 2.54;
 
         this.BMR =
           10 * weightKg +
           6.25 * heightCm -
           5 * this.userDetailsForm.get('age')?.value;
 
-        if (this.userDetailsForm.get('gender')?.value === 'male') this.BMR += 5;
-        else this.BMR -= 161;
+        if (this.userDetailsForm.get('gender')?.value === 'male') { this.BMR += 5; }
+        else { this.BMR -= 161; }
 
         switch (this.userDetailsForm.get('activity')?.value) {
           case 'lazy' : this.TDEE = this.BMR * 1.2; break;
@@ -103,9 +103,7 @@ export class LandingComponent implements OnInit {
         // execute after angular's data binding
         setTimeout(() => {
           document.getElementById('top')?.scrollIntoView({ behavior: 'smooth'});
-          //this.stepOne = false;
-
-          setTimeout(() => { this.stepTwo = true; }, 500)
+          setTimeout(() => { this.stepTwo = true; }, 500);
         }, 500);
 
         console.log(this.BMR);
@@ -137,16 +135,17 @@ export class LandingComponent implements OnInit {
         Validators.required
       ]
     ]
-    })
+    });
 
   } // end ngOnInit
 
-  emojiReaction() : string {
+  emojiReaction(): string {
 
-    if(this.BMR === 0)
-      return 'assets/img/emoji-dead.png'
+    if (this.BMR === 0) {
+      return 'assets/img/emoji-dead.png';
+    }
 
-    let activity = this.userDetailsForm.get('activity')?.value;
+    const activity = this.userDetailsForm.get('activity')?.value;
 
     switch (activity) {
       case 'resolute' : return 'assets/img/emoji-slight-smile.png';
@@ -158,20 +157,20 @@ export class LandingComponent implements OnInit {
     }
   }
 
-  addCalories() : void {
+  addCalories(): void {
 
-    if(this.calCounterForm.valid){
-      let item = this.calCounterForm.get('item')?.value;
-      let cals = +this.calCounterForm.get('cals')?.value;
+    if (this.calCounterForm.valid){
+      const item = this.calCounterForm.get('item')?.value;
+      const cals = +this.calCounterForm.get('cals')?.value;
 
       this.caloriesConsumed += cals;
       this.caloriesRemaining -= cals;
 
-      var ul = document.getElementById("item-list");
-      var li = document.createElement("li");
-      var i = document.createElement("i");
+      const ul = document.getElementById('item-list');
+      const li = document.createElement('li');
+      const i = document.createElement('i');
 
-      i.className = "fas fa-times float-right"
+      i.className = 'fas fa-times float-right';
       i.style.marginTop = '3px';
 
       li.className = 'list-group-item';
@@ -185,17 +184,17 @@ export class LandingComponent implements OnInit {
     }
   }
 
-  dietTypeAmount(amount : number) {
-    let dietType = this.dietTypeForm.get('dietType')?.value;
-    if(dietType === 'lose'){
-      this.trackingCalories = this.TDEE - 500*amount;
+  dietTypeAmount(amount: number): void {
+    const dietType = this.dietTypeForm.get('dietType')?.value;
+    if (dietType === 'lose'){
+      this.trackingCalories = this.TDEE - 500 * amount;
     } else {
-      this.trackingCalories = this.TDEE + 500*amount;
+      this.trackingCalories = this.TDEE + 500 * amount;
     }
     console.log('trackingCalories', this.trackingCalories);
   }
 
-  goToStepTwo(){
+  goToStepTwo(): void{
     this.stepOne = false;
     document.getElementById('stepTwo')?.scrollIntoView({ behavior: 'smooth'});
   }

@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './_helpers/auth.guard';
+import { AuthGuard } from './core/_helpers/auth.guard';
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './feature/forgot-password/forgot-password.component';
 import { LandingComponent } from './feature/dashboard/landing/landing.component';

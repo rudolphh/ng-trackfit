@@ -12,13 +12,14 @@ import { take } from 'rxjs/operators';
   templateUrl: './measurement-list.component.html',
   styleUrls: ['./measurement-list.component.css']
 })
-export class MeasurementListComponent implements OnInit {
+export class MeasurementListComponent implements OnInit, OnDestroy {
 
   user !: User;
-  isFemale : boolean = false;
+  isFemale = false;
+  loading = true;
   measurements !: Measurement [];
 
-  measurements$ !: Observable<Measurement[]>
+  measurements$ !: Observable<Measurement[]>;
 
   weightUnit !: string;
   lengthUnit !: string;
@@ -41,11 +42,14 @@ export class MeasurementListComponent implements OnInit {
     this.measurements$ = this.measurementService.getAllMeasurements();
     this.sub = this.measurements$.pipe(take(1)).subscribe((measurements) => {
       this.measurements = measurements;
-    })
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+    });
 
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 

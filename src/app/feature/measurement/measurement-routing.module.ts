@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from 'src/app/_helpers/auth.guard';
+import { AuthGuard } from 'src/app/core/_helpers/auth.guard';
 import { MeasurementCreateEditComponent } from './measurement-create-edit/measurement-create-edit.component';
 import { MeasurementListComponent } from './measurement-list/measurement-list.component';
 import { NgModule } from '@angular/core';

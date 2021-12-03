@@ -15,6 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
      FieldErrorDisplayComponent,
      CommonModule,
      ReactiveFormsModule
-    ]
+  ]
 })
 export class SharedModule {}

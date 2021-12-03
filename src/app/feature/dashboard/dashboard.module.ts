@@ -3,7 +3,9 @@ import { CalorieIntakeComponent } from './calorie-intake/calorie-intake.componen
 import { DashboardComponent } from './dashboard.component';
 import { DashboardService } from './dashboard.service';
 import { LandingComponent } from './landing/landing.component';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatStepperModule } from '@angular/material/stepper';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -18,7 +20,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     SharedModule,
     RouterModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatStepperModule,
   ],
   providers: [DashboardService],
   exports: [CalorieComponent, CalorieIntakeComponent]
