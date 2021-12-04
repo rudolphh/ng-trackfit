@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
-import {mockFoods} from '../../_models/mockFoods';
+import {mockFoods} from '../../core/_models/mockFoods';
 
 @Injectable({
   providedIn: 'root'

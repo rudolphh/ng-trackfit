@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DashboardService } from '../dashboard.service';
-import { Food } from '../../../_models/foodInterface';
-import { FoodInfo } from '../../../_models/food.model';
+import { Food } from '../../../core/_models/foodInterface';
+import { FoodInfo } from '../../../core/_models/food.model';
 
 @Component({
   selector: 'app-calorie-intake',

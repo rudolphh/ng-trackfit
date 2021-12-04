@@ -1,0 +1,33 @@
+<div class="d-flex">
+  <a href="" (click)="subDay()"><i class="fas fa-caret-left"></i></a>
+  <span class="date-text text-center">
+    <a style="cursor: pointer" data-toggle="modal" data-target="#datePicker">
+      {{ currentDate | date: "fullDate" }}
+    </a>
+  </span>
+  <a href="" (click)="addDay()">
+    <i class="fas fa-caret-right"></i>
+  </a>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="datePicker"
+  tabindex="-1"
+  aria-labelledby="datePickerLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <mat-card class="inline-calendar-card p-0">
+          <mat-calendar
+            class="bg-light"
+            (selectedChange)="selectDate($event)"
+          ></mat-calendar>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

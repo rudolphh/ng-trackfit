@@ -1,0 +1,17 @@
+li.nav-item {
+  border-radius: 25px;
+  min-width: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+li.nav-item:hover {
+  background-color: #d6a103;
+}
+
+.dropdown-item {
+  color: white;
+}
+.dropdown-item i {
+  width: 35px;
+}

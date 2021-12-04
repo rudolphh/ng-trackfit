@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/core/services/auth.service';
-import { Measurement } from 'src/app/_models/measurement';
+import { Measurement } from 'src/app/core/_models/measurement';
 import { MeasurementService } from 'src/app/feature/measurement/measurement.service';
 import { User } from 'src/app/core/models/user';
 import { take } from 'rxjs/operators';
@@ -40,6 +40,7 @@ export class MeasurementListComponent implements OnInit, OnDestroy {
     this.lengthUnit = this.user.settings?.unit === 'imperial' ? 'in.' : 'cm';
 
     this.measurements$ = this.measurementService.getAllMeasurements();
+
     this.sub = this.measurements$.pipe(take(1)).subscribe((measurements) => {
       this.measurements = measurements;
       setTimeout(() => {

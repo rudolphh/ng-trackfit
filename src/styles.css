@@ -11,3 +11,15 @@ body {
 .card-body-bg {
   background-color: #002b36;
 }
+
+*:focus {
+  outline: 0;
+}
+
+.light-text-primary {
+  color: #d6a103;
+}
+
+.light-text-success {
+  color: #38d5c9 !important
+}

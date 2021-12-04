@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { errorInterceptorProviders } from './_helpers/error.interceptor';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { errorInterceptorProviders } from './_helpers/error.interceptor';
     RouterModule,
     CommonModule,
     HttpClientModule,
+    MatIconModule
   ],
   providers: [
     EnvServiceProvider,

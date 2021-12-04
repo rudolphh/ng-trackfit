@@ -1,7 +1,7 @@
 /******************** Section 1 ****************/
 .firstsection {
     height: 100px;
-    color: #d33682;
+    color: white;
 }
 
 .firstsection-2{
@@ -11,12 +11,25 @@
 
 .first{
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: bottom;
     justify-content: center;
 }
 
 .progress-bar{
     height: 15px;
+    color: white;
 }
 
+.flex-right {
+  margin-left: auto;
+}
+
+.card-body {
+  /* border-bottom: 1px solid; */
+}
+
+::ng-deep .mat-tooltip {
+  /* your own custom styles here */
+  /* e.g. */
+  background-color: #b58900 !important
+}

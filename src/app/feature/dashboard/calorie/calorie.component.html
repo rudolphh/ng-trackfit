@@ -1,26 +1,77 @@
 <!------------ nav bar selector needs to be created ----------------->
-<div class="container">
-  <!---------------- first section with bf and calories ----------------------------------->
-  <div class="row firstsection justify-content-center align-items-center">
-    <div class="col-sm-12 col-md-6 first">
-      <h2>Latest Body Fat: {{ latestBF }} %</h2>
-      <h2>Daily Calories: {{ dailyCal }}</h2>
+
+<!---------------- first section with bf and calories ----------------------------------->
+<div class="row">
+  <div class="col-12 col-sm-12 col-md pb-3">
+    <div class="card">
+      <div class="card-header d-flex">
+        <span class="text-white">Dashboard</span>
+        <i
+          class="fas fa-weight flex-right"
+          matTooltip="View Measurements"
+          matTooltipPosition="left"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="1000"
+        ></i>
+      </div>
+      <div class="card-body d-flex">
+        <div>
+          <p>
+            Last Weigh-in :<span class="light-text-primary"> 217 lbs.</span>
+            <i class="fas fa-caret-down text-success ml-2"></i>
+          </p>
+          <p>
+            Latest BF :<span class="light-text-primary"> {{ latestBF }} %</span>
+            <i class="fas fa-caret-down text-success ml-2"></i>
+          </p>
+        </div>
+        <div class="flex-right">
+          <p>
+            Daily Cals : <span class="light-text-primary"> {{ dailyCal }}</span>
+          </p>
+          <p>Strategy : <span class="light-text-success"> CUT</span></p>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row firstsection-2 justify-content-center align-items-center">
-    <div class="col-sm-12 col-md-12 first">
-      <h3>Daily Calories Remaining: {{ leftCal }}</h3>
+
+  <div class="col-12 col-sm-12 col-md pb-3">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <app-custom-date-picker
+          [currentDate]="selected"
+          (newDateSelectedEvent)="setSelected($event)"
+        ></app-custom-date-picker>
+
+        <i
+          class="fas fa-utensils flex-right"
+          matTooltip="View Foods"
+          matTooltipPosition="left"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="1000"
+        ></i>
+      </div>
+      <div class="card-body">
+        <p>Remaining</p>
+
+        <!-- progress bar -->
+        <div class="progress w-100">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="50"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [style.width]="onUpdatePercent()"
+          >
+            {{ leftCal }}
+          </div>
+        </div>
+        <!-- end progress-->
+      </div>
+      <!-- end card-body-->
     </div>
-    <!-- progress bar -->
-    <div class="progress">
-      <div
-        class="progress-bar progress-bar-striped progress-bar-animated"
-        role="progressbar"
-        aria-valuenow="50"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        [style.width]="onUpdatePercent()"
-      ></div>
-    </div>
+    <!-- end card -->
   </div>
 </div>
+<!-- end row -->
