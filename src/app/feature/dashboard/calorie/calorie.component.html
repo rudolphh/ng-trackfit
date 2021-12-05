@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-12 col-sm-12 col-md pb-3">
     <div class="card">
-      <div class="card-header d-flex">
+      <div class="card-header d-flex align-items-center">
         <span class="text-white">Dashboard</span>
         <i
           class="fas fa-weight flex-right"
@@ -52,22 +52,44 @@
         ></i>
       </div>
       <div class="card-body">
-        <p>Remaining</p>
+        <div class="d-flex">
+          <span class="w-100">
+            <mat-form-field
+              class="example-full-width"
+              class="w-100"
+              appearance="fill"
+            >
+              <mat-label>Food</mat-label>
+              <input matInput placeholder="Ex. Pizza" #nameInput />
+            </mat-form-field>
+          </span>
+
+          <span class="ml-2">
+            <mat-form-field style="width: 100px" appearance="fill">
+              <mat-label>Calories</mat-label>
+              <input matInput placeholder="250" #calorieInput />
+            </mat-form-field>
+          </span>
+
+          <span class="ml-2">
+            <button mat-flat-button class="bg-success" style="height: 51px">
+              <i class="fas fa-2x fa-cookie-bite"></i>
+            </button>
+          </span>
+        </div>
 
         <!-- progress bar -->
-        <div class="progress w-100">
-          <div
-            class="progress-bar"
-            role="progressbar"
-            aria-valuenow="50"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            [style.width]="onUpdatePercent()"
+        <mat-progress-bar
+          mode="determinate"
+          [value]="onUpdatePercent()"
+        ></mat-progress-bar>
+
+        <div class="d-flex mt-1">
+          <span class="ml-auto"
+            >Remaining :
+            <span class="light-text-success">{{ leftCal }}</span></span
           >
-            {{ leftCal }}
-          </div>
         </div>
-        <!-- end progress-->
       </div>
       <!-- end card-body-->
     </div>

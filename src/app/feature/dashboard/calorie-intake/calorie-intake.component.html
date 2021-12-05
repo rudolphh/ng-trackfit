@@ -1,13 +1,20 @@
 <!------------ second section with input and button and using local reference to pass data --------->
 <div class="container">
     <div class="row sec2 justify-content-center align-items-center">
-        <div class="col-sm-12 col-md-12 foodlabel ">
-            <label class="col-form-label col-form-label-lg">Food:</label>
-            <input class="form-control form-control-lg" placeholder="Name of Food" type="text" id="" name="" #nameInput>
-        </div>
-        <div class="col-sm-12 col-md-12 calorielabel ">
-            <label class="col-form-label col-form-label-lg">Calories:</label>
-            <input class=" form-control form-control-lg" placeholder="Amount of Calories" type="number" id="" name="" #calorieInput>
+        <div class="col-6 offset-1 foodlabel d-flex">
+          <span>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Food</mat-label>
+              <input matInput placeholder="Ex. Pizza" #nameInput>
+            </mat-form-field>
+          </span>
+
+          <span class="ml-auto">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Calories</mat-label>
+              <input matInput placeholder="250" #calorieInput>
+            </mat-form-field>
+          </span>
         </div>
     </div>
     <div class="row sec2-2 justify-content-center align-items-center ">
@@ -18,18 +25,40 @@
     <!------------------------- third section show food that was eaten ---------------------------------->
     <div class="row thirdsec justify-content-center align-items-center">
         <div class="col-sm-12 col-md-6">
-            <ul class="list-group">
-                <!-- display list of foods with calories -->
-                <li *ngFor="let food of dbFoods" class=" list-group-item d-flex justify-content-between align-items-center">
-                    Food:<span class="badge bg-primary rounded-pill">{{food.name}}</span>
-                    Calories<span class="badge bg-primary rounded-pill">{{food.calories}}</span>
-                    <!-- <button (click)="onDeleteFood(food)" type="button" class="btn foodbutton btn-danger">Delete</button> -->
-                    <!-- ng add @angular/material  -->
-                    <button mat-icon-button class="btn btn-warning" (click)="onDeleteFood(food)" type="button">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </li>
-            </ul>
+
+          <table matSort (matSortChange)="sortData($event)" class="w-100">
+            <tr>
+
+              <th mat-sort-header="date">Date</th>
+              <th mat-sort-header="name">Food</th>
+              <th mat-sort-header="calories">Calories</th>
+              <!-- <th mat-sort-header="fat">Fat (g)</th>
+              <th mat-sort-header="carbs">Carbs (g)</th>
+              <th mat-sort-header="protein">Protein (g)</th> -->
+            </tr>
+
+            <tr *ngFor="let dessert of sortedData">
+              <td>{{ dessert.date | date:'mediumTime' }}</td>
+              <td>{{dessert.name}}</td>
+              <td>{{dessert.calories}}</td>
+              <!-- <td>{{dessert.fat}}</td>
+              <td>{{dessert.carbs}}</td>
+              <td>{{dessert.protein}}</td> -->
+            </tr>
+          </table>
+
+          <mat-selection-list #foods>
+            <mat-list-option *ngFor="let food of dbFoods.reverse()">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <span>{{ food.name }}</span>
+                  <small> 08:25pm</small>
+                </div>
+                <span>{{ food.calories }}</span>
+              </div>
+            </mat-list-option>
+          </mat-selection-list>
+
         </div>
     </div>
     <!------------------------ history button -------------------------------------->

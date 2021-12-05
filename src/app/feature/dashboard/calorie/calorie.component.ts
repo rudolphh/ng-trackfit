@@ -36,8 +36,9 @@ export class CalorieComponent implements OnInit {
   }
 
   // return percent string to update progress bar
-  onUpdatePercent(): string{
-    return this.dashService.caloriePercent;
+  onUpdatePercent(): number{
+    const value = this.dashService.caloriePercent;
+    return parseInt(value.slice(0, -1), 10);
   }
 
   // check and see if there was stored data already

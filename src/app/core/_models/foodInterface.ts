@@ -1,7 +1,8 @@
 //---------------- interface for food being consumed --------------------//
 
 export interface Food{
-    id: number; 
+    id: number;
+    date: string;
     name: string;
-    calories: number; 
+    calories: number;
 }

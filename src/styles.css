@@ -12,7 +12,7 @@ body {
   background-color: #002b36;
 }
 
-*:focus {
+*:focus, button:focus {
   outline: 0;
 }
 

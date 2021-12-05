@@ -1,11 +1,9 @@
 li.nav-item {
-  border-radius: 25px;
-  min-width: 60px;
-  display: flex;
-  justify-content: center;
+  margin-left: 10px;
 }
 
-li.nav-item:hover {
+li.nav-item a:hover {
+  border-radius: 15px;
   background-color: #d6a103;
 }
 
@@ -13,5 +11,18 @@ li.nav-item:hover {
   color: white;
 }
 .dropdown-item i {
-  width: 35px;
+  width: 25px;
+}
+
+::ng-deep .mat-menu-content {
+
+}
+
+.mat-menu-item{
+  line-height:35px;
+  height:35px;
+}
+
+.mat-menu-item:hover {
+  background-color: #002b36;
 }

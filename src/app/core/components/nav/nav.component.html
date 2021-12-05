@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+<nav class="navbar navbar-expand navbar-dark bg-primary shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="currentUser ? '/home' : ''">
       Fitnits
@@ -6,11 +6,6 @@
     <button
       class="navbar-toggler"
       type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,60 +17,69 @@
       <!-- Right Side Of Navbar -->
       <ul
         *ngIf="currentUser; else showLoginRegister"
-        class="navbar-nav ml-auto align-items-center"
+        class="navbar-nav ml-auto"
       >
         <!-- Search form -->
 
         <!-- User Links -->
 
-        <li class="nav-item" style="margin-right: 15px">
-          <a
-            routerLink="/profile"
-            class="nav-link active"
-          >
+        <li class="nav-item" style="margin-right: 10px">
+          <a routerLink="/profile" class="nav-link active">
             <i class="fas fa-2x fa-user-circle"></i>
-            <span class="ml-2" style="vertical-align: super;">{{ currentUser.username }}</span>
+            <span class="ml-2" style="vertical-align: super">{{
+              currentUser.username
+            }}</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a
+          <button
+            mat-mini-fab
+            color="warn"
+            aria-label="Measurements icon"
             routerLink="/measurements"
             [routerLinkActive]="'active'"
             class="nav-link"
-            ><i class="fas fa-weight fa-2x flex-right"
-            matTooltip="Measurements"></i></a
           >
+            <i class="fas fa-weight flex-right" matTooltip="Measurements"></i>
+          </button>
         </li>
 
         <li class="nav-item dropdown">
-          <a
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Measurements icon"
             id="navbarDropdown"
             class="nav-link active"
-            href="#"
-            role="button"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
+            mat-button [matMenuTriggerFor]="menu"
           >
-            <i class="fas fa-2x fa-caret-down"></i>
-          </a>
+            <i class="fas fa-caret-down"></i>
+          </button>
 
-          <div
+          <mat-menu #menu="matMenu"
             aria-labelledby="navbarDropdown"
-            class="dropdown-menu dropdown-menu-right bg-primary"
+            class="bg-primary"
+            style="width: 300px;"
           >
-            <a routerLink="/profile" class="dropdown-item">
-              <i class="fas fa-user-circle"></i>Profile</a>
-            <a routerLink="/friends" class="dropdown-item">
-              <i class="fas fa-user-friends"></i>Friends</a>
+            <a mat-menu-item routerLink="/profile" class="dropdown-item">
+              <i class="fas fa-user-circle"></i>Profile</a
+            >
+            <a mat-menu-item routerLink="/friends" class="dropdown-item">
+              <i class="fas fa-user-friends"></i>Friends</a
+            >
             <div class="dropdown-divider"></div>
-            <a routerLink="/settings" class="dropdown-item">
-              <i class="fas fa-cog"></i>Settings</a>
-            <a routerLink="/login" (click)="logout()" class="dropdown-item">
+            <a mat-menu-item routerLink="/settings" class="dropdown-item">
+              <i class="fas fa-cog"></i>Settings</a
+            >
+            <a mat-menu-item routerLink="/login" (click)="logout()" class="dropdown-item">
               <i class="fas fa-sign-out-alt"></i>Logout
             </a>
-          </div>
+
+        </mat-menu>
         </li>
       </ul>
 

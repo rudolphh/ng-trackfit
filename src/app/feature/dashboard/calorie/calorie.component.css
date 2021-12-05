@@ -1,8 +1,4 @@
 /******************** Section 1 ****************/
-.firstsection {
-    height: 100px;
-    color: white;
-}
 
 .firstsection-2{
     height: 100px;
@@ -32,4 +28,8 @@
   /* your own custom styles here */
   /* e.g. */
   background-color: #b58900 !important
+}
+
+::ng-deep .mat-typography p {
+  margin-bottom: 18px;
 }
