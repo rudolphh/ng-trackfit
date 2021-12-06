@@ -21,8 +21,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <mat-card class="inline-calendar-card p-0">
+        <mat-card class="inline-calendar-card p-0 theme-alternate">
           <mat-calendar
+            class="bg-light"
+            style="color: black"
             (selectedChange)="selectDate($event)"
           ></mat-calendar>
         </mat-card>

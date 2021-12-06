@@ -2,7 +2,7 @@
 
 <!---------------- first section with bf and calories ----------------------------------->
 <div class="row">
-  <div class="col-12 col-sm-12 col-md pb-3">
+  <div class="col-md-12 col-lg-6 pb-3">
     <div class="card">
       <div class="card-header d-flex align-items-center">
         <span class="text-white">Dashboard</span>
@@ -14,29 +14,22 @@
           matTooltipHideDelay="1000"
         ></i>
       </div>
-      <div class="card-body d-flex">
-        <div>
-          <p>
-            Last Weigh-in :<span class="light-text-primary"> 217 lbs.</span>
-            <i class="fas fa-caret-down text-success ml-2"></i>
-          </p>
-          <p>
-            Latest BF :<span class="light-text-primary"> {{ latestBF }} %</span>
-            <i class="fas fa-caret-down text-success ml-2"></i>
-          </p>
+      <div class="card-body d-flex flex-wrap justify-content-between">
+        <div class="dash-vital">
+          Last Weigh-in :<span class="light-text-primary"> 217 lbs.</span>
+          <i class="fas fa-caret-down text-success ml-2"></i>
         </div>
-        <div class="flex-right">
-          <p>
-            Daily Cals : <span class="light-text-primary"> {{ dailyCal }}</span>
-          </p>
-          <p>Strategy : <span class="light-text-success"> CUT</span></p>
+        <div class="dash-vital">
+          Latest BF :<span class="light-text-primary"> {{ latestBF }} %</span>
+          <i class="fas fa-caret-down text-success ml-2"></i>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-12 col-sm-12 col-md pb-3">
+  <div class="col-md-12 col-lg-6 pb-3">
     <div class="card">
+      <!-- card-header-->
       <div class="card-header d-flex align-items-center">
         <app-custom-date-picker
           [currentDate]="selected"
@@ -51,21 +44,29 @@
           matTooltipHideDelay="1000"
         ></i>
       </div>
+      <!-- card-body -->
       <div class="card-body">
+        <!-- daily vitals -->
+        <div class="d-flex justify-content-between">
+          <div class="dash-vital mb-3">
+            Daily Cals : <span class="light-text-primary"> {{ dailyCal }}</span>
+          </div>
+          <div class="dash-vital">
+            Strategy : <span class="light-text-success"> CUT</span>
+          </div>
+        </div>
+
+        <!-- TODO: make component -->
         <div class="d-flex">
-          <span class="w-100">
-            <mat-form-field
-              class="example-full-width"
-              class="w-100"
-              appearance="fill"
-            >
+          <span class="flex-grow-1">
+            <mat-form-field class="w-100" appearance="fill">
               <mat-label>Food</mat-label>
               <input matInput placeholder="Ex. Pizza" #nameInput />
             </mat-form-field>
           </span>
 
           <span class="ml-2">
-            <mat-form-field style="width: 100px" appearance="fill">
+            <mat-form-field style="max-width: 100px" appearance="fill">
               <mat-label>Calories</mat-label>
               <input matInput placeholder="250" #calorieInput />
             </mat-form-field>
@@ -77,6 +78,7 @@
             </button>
           </span>
         </div>
+        <!-- end component -->
 
         <!-- progress bar -->
         <mat-progress-bar
@@ -84,11 +86,36 @@
           [value]="onUpdatePercent()"
         ></mat-progress-bar>
 
-        <div class="d-flex mt-1">
+        <div class="d-flex mt-2">
           <span class="ml-auto"
             >Remaining :
             <span class="light-text-success">{{ leftCal }}</span></span
           >
+        </div>
+        <!-- end progress bar -->
+
+        <mat-divider class="mt-3"></mat-divider>
+
+        <mat-selection-list #foods>
+          <mat-list-option
+            *ngFor="let food of dbFoods.reverse()"
+            class="mat-warn"
+          >
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <small class="badge">{{ food.date | date:'shortTime'}}</small>
+                <span class="ml-3">{{ food.name }}</span>
+              </div>
+              <small>{{ food.calories }}</small>
+            </div>
+          </mat-list-option>
+        </mat-selection-list>
+
+        <div class="d-flex justify-content-center mt-4">
+          <button mat-flat-button class="bg-success w-75">
+            <i class="fas fa-arrow-circle-down mr-2" style="font-size: 1.2em"></i>
+              <span>Load More</span>
+          </button>
         </div>
       </div>
       <!-- end card-body-->

@@ -1,7 +1,7 @@
 <!------------ second section with input and button and using local reference to pass data --------->
 <div class="container">
     <div class="row sec2 justify-content-center align-items-center">
-        <div class="col-6 offset-1 foodlabel d-flex">
+        <div class="col foodlabel d-flex">
           <span>
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>Food</mat-label>
@@ -48,7 +48,8 @@
           </table>
 
           <mat-selection-list #foods>
-            <mat-list-option *ngFor="let food of dbFoods.reverse()">
+            <mat-list-option *ngFor="let food of dbFoods.reverse()"
+              color="warn">
               <div class="d-flex justify-content-between">
                 <div>
                   <span>{{ food.name }}</span>

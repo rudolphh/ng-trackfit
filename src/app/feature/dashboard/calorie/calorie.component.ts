@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { MeasurementService } from '../../measurement/measurement.service';
 
+declare var $: any;
 @Component({
   selector: 'app-calorie',
   templateUrl: './calorie.component.html',
@@ -12,16 +13,22 @@ export class CalorieComponent implements OnInit {
 
   selected: Date | null = new Date();
 
+  latestBF = this.dashService.latestBodyFat;
+  dailyCal = this.dashService.dailyCalories;
+  leftCal = this.dashService.leftCalories;
+
+  dbFoods = this.dashService.foodsDB;
+
   constructor(
     private dashService: DashboardService,
     private measurementService: MeasurementService
   ) {}
 
-  latestBF = this.dashService.latestBodyFat;
-  dailyCal = this.dashService.dailyCalories;
-  leftCal = this.dashService.leftCalories;
-
   ngOnInit(): void {
+
+    $(function () {
+      $('[data-toggle="popover"]').popover();
+    });
 
     // check to see if there there is data to update progress bar and calories left
     if ( this.dashService.foodsDB.length ){

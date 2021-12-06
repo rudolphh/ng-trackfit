@@ -33,3 +33,14 @@
 ::ng-deep .mat-typography p {
   margin-bottom: 18px;
 }
+
+.dash-vital {
+  /* margin: 5px 5px 5px 0;
+  border: 1px solid #6c6a6a;
+  padding: 12px;
+  border-radius: 5px; */
+}
+
+::ng-deep .mat-warn .mat-pseudo-checkbox::after {
+  color: white;
+  }
