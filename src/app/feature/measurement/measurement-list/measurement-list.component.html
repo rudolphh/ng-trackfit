@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
 <div
-  *ngIf="true; else showTable"
+  *ngIf="loading; else showTable"
   class="loader"
 >
   <app-growing-spinner></app-growing-spinner>
