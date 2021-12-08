@@ -86,35 +86,109 @@
           [value]="onUpdatePercent()"
         ></mat-progress-bar>
 
-        <div class="d-flex mt-2">
-          <span class="ml-auto"
+        <div class="d-flex mt-2 flex-wrap" style="height: 51px">
+          <span class=""
             >Remaining :
             <span class="light-text-success">{{ leftCal }}</span></span
           >
+          <div class="d-flex ml-auto">
+
+            <mat-selection-list
+              (selectionChange)="selectAllChange()"
+              #selectAll
+              id="select-all-foods"
+              class=""
+              style="min-width: 64px; padding-top: 0px"
+            >
+              <mat-list-option
+                color="warn"
+                style="max-width: 64px; height: 51px"
+                [selected]="allSelected"
+              >
+              </mat-list-option>
+            </mat-selection-list>
+
+            <button
+              mat-flat-button
+              class="bg-danger ml-2"
+              *ngIf="foodsSelect.selectedOptions.selected.length"
+            >
+              <i class="fas fa-2x fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
         <!-- end progress bar -->
 
-        <mat-divider class="mt-3"></mat-divider>
+        <mat-divider class="mt-2"></mat-divider>
 
-        <mat-selection-list #foods>
-          <mat-list-option
-            *ngFor="let food of dbFoods.reverse()"
-            class="mat-warn"
+        <mat-selection-list
+          #foodsSelect
+          id="food-selection-list"
+
+        >
+          <div
+            *ngFor="let food of dbFoods.reverse(); trackBy: trackFood"
+            class=""
           >
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <small class="">{{ food.date | date:'shortTime'}}</small>
+            <div class="d-flex justify-content-between" style="">
+              <span class="mr-2">
+                <mat-form-field style="max-width: 100px" appearance="fill">
+                  <mat-label>Time</mat-label>
+                  <input
+                    matInput
+                    type="time"
+                    [value]="food.date | date: 'hh:mm'"
+                  />
+                </mat-form-field>
+              </span>
+
+              <span class="flex-grow-1">
+                <mat-form-field class="w-100" appearance="fill">
+                  <mat-label>Food</mat-label>
+                  <input matInput placeholder="Ex. Pizza" [value]="food.name" />
+                </mat-form-field>
+              </span>
+
+              <span class="ml-2">
+                <mat-form-field style="max-width: 100px" appearance="fill">
+                  <mat-label>Calories</mat-label>
+                  <input matInput placeholder="250" [value]="food.calories" />
+                </mat-form-field>
+              </span>
+
+              <!--
                 <span class="ml-3">{{ food.name }}</span>
-              </div>
-              <small>{{ food.calories }}</small>
+
+              <span class="ml-auto mr-3">{{ food.calories }}</span> -->
+              <mat-list-option
+                style="max-width: 64px; height: 51px"
+                color="warn"
+                class="ml-2"
+                (click)="optionClick()"
+                [selected]="food.checked"
+              >
+              </mat-list-option>
+              <!-- <mat-checkbox
+                color="warn"
+                class="ml-2"
+                ([ngModel])="food.checked" [checked]="food.checked || false"
+                (change)="onChange($event)"
+                name="{{i}}-name"
+              >
+              </mat-checkbox> -->
             </div>
-          </mat-list-option>
+          </div>
         </mat-selection-list>
+
+        <mat-divider class="mb-2"></mat-divider>
 
         <div class="d-flex justify-content-center mt-4">
           <button mat-flat-button class="bg-success w-75">
-            <i class="fas fa-arrow-circle-down mr-2" style="font-size: 1.2em"></i>
-              <span>Load More</span>
+            <i
+              class="fas fa-arrow-circle-down mr-2"
+              style="font-size: 1.2em"
+            ></i>
+            <span>Load More</span>
           </button>
         </div>
       </div>

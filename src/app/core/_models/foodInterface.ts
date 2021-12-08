@@ -5,4 +5,5 @@ export interface Food{
     date: string;
     name: string;
     calories: number;
+    checked ?: boolean;
 }

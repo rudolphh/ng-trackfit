@@ -44,3 +44,15 @@
 ::ng-deep .mat-warn .mat-pseudo-checkbox::after {
   color: white;
   }
+
+::ng-deep .mat-checkbox-checkmark-path {
+  stroke: white !important;
+}
+
+::ng-deep #food-selection-list .mat-list-item-content {
+  padding: 0 5px;
+}
+
+::ng-deep #select-all-foods .mat-list-item-content {
+  padding: 0 5px;
+}

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 
 import { DashboardService } from '../dashboard.service';
+import { Food } from 'src/app/core/_models/foodInterface';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MeasurementService } from '../../measurement/measurement.service';
 
 declare var $: any;
@@ -11,6 +14,8 @@ declare var $: any;
 })
 export class CalorieComponent implements OnInit {
 
+  @ViewChild('foodsSelect') foodsSelect !: MatSelectionList;
+
   selected: Date | null = new Date();
 
   latestBF = this.dashService.latestBodyFat;
@@ -18,6 +23,9 @@ export class CalorieComponent implements OnInit {
   leftCal = this.dashService.leftCalories;
 
   dbFoods = this.dashService.foodsDB;
+  selectAllFoods = false;
+
+  allSelected = false;
 
   constructor(
     private dashService: DashboardService,
@@ -40,6 +48,8 @@ export class CalorieComponent implements OnInit {
     else if ( !this.dashService.foodsDB.length ){
       this.leftCal = this.dailyCal;
     }
+
+    this.dbFoods.forEach((food) => food.checked = false);
   }
 
   // return percent string to update progress bar
@@ -60,5 +70,26 @@ export class CalorieComponent implements OnInit {
   setSelected(date: Date): void {
     this.selected = date;
   }
+
+  selectAllChange(): void {
+      this.foodsSelect.options.forEach((item: MatListOption) => console.log(item.toggle()));
+      this.allSelected = !this.allSelected;
+  }
+
+  public trackFood (index: number, food: Food) {
+    return food.checked;
+  }
+
+  optionClick(): void {
+
+    let newStatus = true;
+    this.foodsSelect.options.forEach((item: MatListOption) => {
+      if (!item.selected) {
+        newStatus = false;
+      }
+    });
+    this.allSelected = newStatus;
+  }
+
 
 }
