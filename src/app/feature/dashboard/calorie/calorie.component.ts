@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatListOption, MatSelectionList } from '@angular/material/list';
 
 import { DashboardService } from '../dashboard.service';
 import { Food } from 'src/app/core/_models/foodInterface';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MeasurementService } from '../../measurement/measurement.service';
 
 declare var $: any;
@@ -33,10 +32,6 @@ export class CalorieComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    $(function () {
-      $('[data-toggle="popover"]').popover();
-    });
 
     // check to see if there there is data to update progress bar and calories left
     if ( this.dashService.foodsDB.length ){

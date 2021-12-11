@@ -10,18 +10,18 @@ export class DashboardService {
   // data ("mock database")
   foodsDB = mockFoods;
   // initialized value
-  latestBodyFat: number = 25 ;
-  dailyCalories: number = 1800;
-  leftCalories: number = 0;
-  caloriePercent: string = "0%";
+  latestBodyFat = 25 ;
+  dailyCalories = 1800;
+  leftCalories = 0;
+  caloriePercent = '0%';
 
   constructor() { }
 
   statusInput = new EventEmitter <string>();
 
   // update the percent to update the progress bar
-  updateCaloriePercent(){
-    let rawPercentage = (this.dailyCalories-this.leftCalories)/this.dailyCalories*100;
+  updateCaloriePercent(): void{
+    let rawPercentage = (this.dailyCalories - this.leftCalories) / this.dailyCalories * 100;
     rawPercentage = Math.min(rawPercentage, 100);
     this.caloriePercent = rawPercentage + '%';
   }
