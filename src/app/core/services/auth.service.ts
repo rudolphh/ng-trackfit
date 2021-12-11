@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { EnvService } from './env.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { ApiResponse } from '../models/api-response';
+import { EnvService } from './env.service';
+import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/user';
+import { map } from 'rxjs/operators';
 
 const helper = new JwtHelperService();
 
@@ -21,16 +22,16 @@ export class AuthService {
     ) {
 
     this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('currentUser')!)
+      JSON.parse(localStorage.getItem('currentUser') || '')
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue() {
-    return this.currentUserSubject.value;
+  public get currentUserValue(): User {
+    return this.currentUserSubject.getValue();
   }
 
-  login(username :string, password: string) : Observable<ApiResponse> {
+  login(username: string, password: string): Observable<ApiResponse> {
     const body = new HttpParams()
       .set('username', username)
       .set('email', username)
@@ -41,8 +42,8 @@ export class AuthService {
       .pipe(
         map((response) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          if(response.data) {
-            let userReturned : User = <User> response.data;
+          if (response.data) {
+            const userReturned: User = response.data as User;
             userReturned.token = response.token;
             userReturned.expiresIn = response.expiresIn;
 
@@ -54,13 +55,13 @@ export class AuthService {
       );
   }
 
-  logout() {
+  logout(): void {
     // remove user from local storage and set current user to null
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     const token = this.currentUserValue?.token;
     // Check whether the token is expired and return true or false
     return !helper.isTokenExpired(token);

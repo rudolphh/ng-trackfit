@@ -22,8 +22,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatProgressSpinnerModule,
     MatButtonToggleModule
   ],
-  providers: [
-    MeasurementService
-  ]
+  providers: []
 })
 export class MeasurementModule { }
