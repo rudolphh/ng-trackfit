@@ -8,31 +8,21 @@ import { UserService } from 'src/app/core/services/user.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-
-  currentUser : User = {};
-  userSettings !: Settings;
+  currentUser: User = {};
+  userSettings!: Settings;
 
   constructor(
     private userService: UserService,
     private authService: AuthService
-    ) { }
+  ) {}
 
   ngOnInit(): void {
-
     this.currentUser = this.authService.currentUserValue;
-    this.userService.settings(this.currentUser)
-      .then((settings : Settings) => {
-        console.log(settings);
-        if(settings) {
-          this.userSettings = settings;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.userService.settings(this.currentUser).subscribe(
+      (userSettings: Settings) => this.userSettings = userSettings
+    );
   }
-
 }

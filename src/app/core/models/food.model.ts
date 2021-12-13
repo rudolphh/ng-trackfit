@@ -1,3 +1,6 @@
+import { Adapter } from '../adapter';
+import { Injectable } from '@angular/core';
+
 export class Food {
   constructor(
     public id: number,
@@ -5,4 +8,13 @@ export class Food {
     public calories: number,
     public created: Date
   ) {}
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FoodAdapter implements Adapter<Food> {
+  adapt(food: any): Food {
+    return new Food(food.id, food.code, food.name, new Date(food.created));
+  }
 }

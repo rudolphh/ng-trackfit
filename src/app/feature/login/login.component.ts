@@ -19,7 +19,7 @@ import { User } from 'src/app/core/models/user';
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   public user: User = {};
-  public attemptedSubmit: boolean = false;
+  public attemptedSubmit = false;
   public authError: any;
   loading = false;
   returnUrl ?: string;
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     this.authService.logout();
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/home';
 
     this.loginForm = this.fb.group({
       email: [
@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.authService
         .login(this.user.email!, this.user.password!)
-        .subscribe((res : ApiResponse) => {
+        .subscribe((res: ApiResponse) => {
           if (!res.data) {
             this.authError = res.message;
             return;
@@ -112,16 +112,16 @@ export class LoginComponent implements OnInit {
   }
 
   validateAllFormFields(formGroup: FormGroup) {
-    //{1}
+    // {1}
     Object.keys(formGroup.controls).forEach((field) => {
-      //{2}
-      const control = formGroup.get(field); //{3}
+      // {2}
+      const control = formGroup.get(field); // {3}
       if (control instanceof FormControl) {
-        //{4}
+        // {4}
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {
-        //{5}
-        this.validateAllFormFields(control); //{6}
+        // {5}
+        this.validateAllFormFields(control); // {6}
       }
     });
   }

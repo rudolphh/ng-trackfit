@@ -1,10 +1,8 @@
-<!------------ nav bar selector needs to be created ----------------->
-
-<!---------------- first section with bf and calories ----------------------------------->
 <div class="row">
   <div class="col-md-12 col-lg-5 pb-3">
-    <div class="card">
-      <div class="card-header d-flex align-items-center">
+    <app-dash-card>
+      <!-- header -->
+      <div app-card-header class="d-flex align-items-center">
         <span class="text-white">Dashboard</span>
         <i
           class="fas fa-weight flex-right"
@@ -14,7 +12,9 @@
           matTooltipHideDelay="1000"
         ></i>
       </div>
-      <div class="card-body d-flex flex-wrap justify-content-between">
+
+      <!-- body -->
+      <div app-card-body class="d-flex flex-wrap justify-content-between">
         <div class="dash-vital">
           Last Weigh-in :<span class="light-text-primary"> 217 lbs.</span>
           <i class="fas fa-caret-down text-success ml-2"></i>
@@ -24,19 +24,20 @@
           <i class="fas fa-caret-down text-success ml-2"></i>
         </div>
       </div>
-    </div>
+    </app-dash-card>
   </div>
 
   <div class="col-md-12 col-lg-7 pb-3">
-    <div class="card">
+    <app-dash-card>
       <!-- card-header-->
-      <div class="card-header d-flex align-items-center">
+      <div app-card-header class="d-flex align-items-center">
         <app-custom-date-picker
           [currentDate]="selected"
           (newDateSelectedEvent)="setSelected($event)"
         ></app-custom-date-picker>
 
         <i
+          app-card-header
           class="fas fa-utensils flex-right"
           matTooltip="View Foods"
           matTooltipPosition="left"
@@ -45,7 +46,8 @@
         ></i>
       </div>
       <!-- card-body -->
-      <div class="card-body">
+
+      <div app-card-body>
         <!-- daily vitals -->
         <div class="d-flex justify-content-between">
           <div class="dash-vital mb-3">
@@ -92,7 +94,6 @@
             <span class="light-text-success">{{ leftCal }}</span></span
           >
           <div class="d-flex ml-auto">
-
             <mat-selection-list
               (selectionChange)="selectAllChange()"
               #selectAll
@@ -121,16 +122,12 @@
 
         <mat-divider class="mt-2"></mat-divider>
 
-        <mat-selection-list
-          #foodsSelect
-          id="food-selection-list"
-
-        >
+        <mat-selection-list #foodsSelect id="food-selection-list">
           <div
             *ngFor="let food of dbFoods.reverse(); trackBy: trackFood"
             class=""
           >
-            <div class="d-flex justify-content-between" style="">
+            <div class="d-flex justify-content-between">
               <span class="mr-2">
                 <mat-form-field style="max-width: 100px" appearance="fill">
                   <mat-label>Time</mat-label>
@@ -193,7 +190,7 @@
         </div>
       </div>
       <!-- end card-body-->
-    </div>
+    </app-dash-card>
     <!-- end card -->
   </div>
 </div>

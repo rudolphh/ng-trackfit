@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { EventEmitter, Output } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
+import { EventEmitter, Output } from '@angular/core';
 
 declare var $: any;
 

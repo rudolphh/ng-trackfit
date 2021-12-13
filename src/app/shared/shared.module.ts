@@ -2,6 +2,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
 import { CustomDatePickerComponent } from './components/custom-date-picker/custom-date-picker.component';
+import { DashCardComponent } from './components/dash-card/dash-card.component';
 import { FieldErrorDisplayComponent } from './components/field-error-display/field-error-display.component';
 import { GrowingSpinnerComponent } from './components/growing-spinner/growing-spinner.component';
 import { MatCardModule } from '@angular/material/card';
@@ -11,9 +12,10 @@ import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [
+    CustomDatePickerComponent,
+    DashCardComponent,
     FieldErrorDisplayComponent,
     GrowingSpinnerComponent,
-    CustomDatePickerComponent
    ],
    imports: [
      CommonModule,
@@ -25,9 +27,10 @@ import { NgModule } from '@angular/core';
    ],
    providers: [MatDatepickerModule],
    exports: [
+     CustomDatePickerComponent,
+     DashCardComponent,
      FieldErrorDisplayComponent,
      GrowingSpinnerComponent,
-     CustomDatePickerComponent,
      CommonModule,
      ReactiveFormsModule,
      FormsModule

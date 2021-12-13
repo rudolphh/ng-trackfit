@@ -9,11 +9,10 @@ declare var $: any;
 @Component({
   selector: 'app-calorie',
   templateUrl: './calorie.component.html',
-  styleUrls: ['./calorie.component.css']
+  styleUrls: ['./calorie.component.css'],
 })
 export class CalorieComponent implements OnInit {
-
-  @ViewChild('foodsSelect') foodsSelect !: MatSelectionList;
+  @ViewChild('foodsSelect') foodsSelect!: MatSelectionList;
 
   selected: Date | null = new Date();
 
@@ -32,31 +31,30 @@ export class CalorieComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     // check to see if there there is data to update progress bar and calories left
-    if ( this.dashService.foodsDB.length ){
-        this.leftCal = this.dailyCal - this.previousStoredCalories();
-        this.dashService.leftCalories = this.leftCal;
-        this.dashService.updateCaloriePercent();
+    if (this.dashService.foodsDB.length) {
+      this.leftCal = this.dailyCal - this.previousStoredCalories();
+      this.dashService.leftCalories = this.leftCal;
+      this.dashService.updateCaloriePercent();
     }
     // if no data initalize left calories = calories for the day
-    else if ( !this.dashService.foodsDB.length ){
+    else if (!this.dashService.foodsDB.length) {
       this.leftCal = this.dailyCal;
     }
 
-    this.dbFoods.forEach((food) => food.checked = false);
+    this.dbFoods.forEach((food) => (food.checked = false));
   }
 
   // return percent string to update progress bar
-  onUpdatePercent(): number{
+  onUpdatePercent(): number {
     const value = this.dashService.caloriePercent;
     return parseInt(value.slice(0, -1), 10);
   }
 
   // check and see if there was stored data already
-  previousStoredCalories(): number{
+  previousStoredCalories(): number {
     let prevCal = 0;
-    for (let i = 0 ; i <= this.dashService.foodsDB.length - 1 ; i++){
+    for (let i = 0; i <= this.dashService.foodsDB.length - 1; i++) {
       prevCal += this.dashService.foodsDB[i].calories;
     }
     return prevCal;
@@ -67,16 +65,17 @@ export class CalorieComponent implements OnInit {
   }
 
   selectAllChange(): void {
-      this.foodsSelect.options.forEach((item: MatListOption) => console.log(item.toggle()));
-      this.allSelected = !this.allSelected;
+    this.allSelected = !this.allSelected;
+    this.foodsSelect.options.forEach(
+      (item: MatListOption) => (item.selected = this.allSelected)
+    );
   }
 
-  public trackFood (index: number, food: Food) {
+  public trackFood(index: number, food: Food) {
     return food.checked;
   }
 
   optionClick(): void {
-
     let newStatus = true;
     this.foodsSelect.options.forEach((item: MatListOption) => {
       if (!item.selected) {
@@ -85,6 +84,4 @@ export class CalorieComponent implements OnInit {
     });
     this.allSelected = newStatus;
   }
-
-
 }
