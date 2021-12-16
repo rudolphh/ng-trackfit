@@ -15,6 +15,6 @@ export class Food {
 })
 export class FoodAdapter implements Adapter<Food> {
   adapt(food: any): Food {
-    return new Food(food.id, food.code, food.name, new Date(food.created));
+    return new Food(food.id, food.name, food.calories, new Date(food.created));
   }
 }

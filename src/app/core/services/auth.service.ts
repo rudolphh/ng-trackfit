@@ -22,7 +22,7 @@ export class AuthService {
     ) {
 
     this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('currentUser') || '')
+      JSON.parse(localStorage.getItem('currentUser') || 'null')
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }

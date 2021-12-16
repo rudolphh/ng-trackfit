@@ -1,30 +1,6 @@
 <div class="row">
   <div class="col-md-12 col-lg-5 pb-3">
-    <app-dash-card>
-      <!-- header -->
-      <div app-card-header class="d-flex align-items-center">
-        <span class="text-white">Dashboard</span>
-        <i
-          class="fas fa-weight flex-right"
-          matTooltip="View Measurements"
-          matTooltipPosition="left"
-          matTooltipShowDelay="500"
-          matTooltipHideDelay="1000"
-        ></i>
-      </div>
-
-      <!-- body -->
-      <div app-card-body class="d-flex flex-wrap justify-content-between">
-        <div class="dash-vital">
-          Last Weigh-in :<span class="light-text-primary"> 217 lbs.</span>
-          <i class="fas fa-caret-down text-success ml-2"></i>
-        </div>
-        <div class="dash-vital">
-          Latest BF :<span class="light-text-primary"> {{ latestBF }} %</span>
-          <i class="fas fa-caret-down text-success ml-2"></i>
-        </div>
-      </div>
-    </app-dash-card>
+    <app-vitals [latestBodyFat]="bodyFat$"></app-vitals>
   </div>
 
   <div class="col-md-12 col-lg-7 pb-3">
@@ -37,7 +13,6 @@
         ></app-custom-date-picker>
 
         <i
-          app-card-header
           class="fas fa-utensils flex-right"
           matTooltip="View Foods"
           matTooltipPosition="left"
@@ -75,7 +50,12 @@
           </span>
 
           <span class="ml-2">
-            <button mat-flat-button class="bg-success" style="height: 51px">
+            <button
+              mat-flat-button
+              class="bg-success"
+              style="height: 51px"
+              (click)="addFood()"
+            >
               <i class="fas fa-2x fa-cookie-bite"></i>
             </button>
           </span>
@@ -118,23 +98,20 @@
             </button>
           </div>
         </div>
-        <!-- end progress bar -->
 
         <mat-divider class="mt-2"></mat-divider>
 
         <mat-selection-list #foodsSelect id="food-selection-list">
-          <div
-            *ngFor="let food of dbFoods.reverse(); trackBy: trackFood"
-            class=""
-          >
+          <div *ngFor="let food of dbFoods.reverse(); let i = index">
             <div class="d-flex justify-content-between">
               <span class="mr-2">
                 <mat-form-field style="max-width: 100px" appearance="fill">
                   <mat-label>Time</mat-label>
                   <input
                     matInput
+                    name="time-{{ i }}"
                     type="time"
-                    [value]="food.date | date: 'hh:mm'"
+                    [value]="food.created | date: 'hh:mm'"
                   />
                 </mat-form-field>
               </span>
@@ -142,14 +119,24 @@
               <span class="flex-grow-1">
                 <mat-form-field class="w-100" appearance="fill">
                   <mat-label>Food</mat-label>
-                  <input matInput placeholder="Ex. Pizza" [value]="food.name" />
+                  <input
+                    matInput
+                    name="name-{{ i }}"
+                    placeholder="Ex. Pizza"
+                    [value]="food.name"
+                  />
                 </mat-form-field>
               </span>
 
               <span class="ml-2">
                 <mat-form-field style="max-width: 100px" appearance="fill">
                   <mat-label>Calories</mat-label>
-                  <input matInput placeholder="250" [value]="food.calories" />
+                  <input
+                    matInput
+                    name="calories-{{ i }}"
+                    placeholder="250"
+                    [value]="food.calories"
+                  />
                 </mat-form-field>
               </span>
 
@@ -162,7 +149,6 @@
                 color="warn"
                 class="ml-2"
                 (click)="optionClick()"
-                [selected]="food.checked"
               >
               </mat-list-option>
               <!-- <mat-checkbox

@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
+import { Food } from 'src/app/core/models/food.model';
 import {mockFoods} from '../../core/_models/mockFoods';
 
 @Injectable({
@@ -8,7 +9,7 @@ import {mockFoods} from '../../core/_models/mockFoods';
 export class DashboardService {
 
   // data ("mock database")
-  foodsDB = mockFoods;
+  foodsDB: Food[] = [];
   // initialized value
   latestBodyFat = 25 ;
   dailyCalories = 1800;

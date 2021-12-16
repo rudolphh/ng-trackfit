@@ -19,6 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { VitalsComponent } from './vitals/vitals.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CalorieIntakeComponent,
     DashboardComponent,
     LandingComponent,
+    VitalsComponent
   ],
   imports: [
     SharedModule,

@@ -38,7 +38,7 @@
             </tr>
 
             <tr *ngFor="let dessert of sortedData">
-              <td>{{ dessert.date | date:'mediumTime' }}</td>
+              <td>{{ dessert.created | date:'mediumTime' }}</td>
               <td>{{dessert.name}}</td>
               <td>{{dessert.calories}}</td>
               <!-- <td>{{dessert.fat}}</td>

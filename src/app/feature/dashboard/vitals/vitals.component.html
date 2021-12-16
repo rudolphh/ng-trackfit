@@ -1,0 +1,27 @@
+<app-dash-card>
+  <!-- header -->
+  <div app-card-header class="d-flex align-items-center">
+    <span class="text-white">Vitals</span>
+    <i
+      class="fas fa-weight ml-auto"
+      matTooltip="View Measurements"
+      matTooltipPosition="left"
+      matTooltipShowDelay="500"
+      matTooltipHideDelay="1000"
+    ></i>
+  </div>
+
+  <!-- body -->
+  <div app-card-body class="d-flex flex-wrap justify-content-between">
+    <div class="dash-vital">
+      Last Weigh-in :<span class="light-text-primary"> 217 lbs.</span>
+      <i class="fas fa-caret-down text-success ml-2"></i>
+    </div>
+    <div class="dash-vital">
+      Latest BF :<span class="light-text-primary">
+        {{ latestBodyFat | async | percent: "2.1" }}
+      </span>
+      <i class="fas fa-caret-down text-success ml-2"></i>
+    </div>
+  </div>
+</app-dash-card>

@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 
+import { BehaviorSubject } from 'rxjs';
 import { DashboardService } from '../dashboard.service';
-import { Food } from 'src/app/core/_models/foodInterface';
 import { MeasurementService } from '../../measurement/measurement.service';
 
 declare var $: any;
@@ -12,22 +13,27 @@ declare var $: any;
   styleUrls: ['./calorie.component.css'],
 })
 export class CalorieComponent implements OnInit {
+  @ViewChild('nameInput') nameInput!: ElementRef;
+  @ViewChild('calorieInput') calorieInput!: ElementRef;
   @ViewChild('foodsSelect') foodsSelect!: MatSelectionList;
 
   selected: Date | null = new Date();
 
-  latestBF = this.dashService.latestBodyFat;
+  bodyFatSubject$ = new BehaviorSubject<number>(0.2143);
+  bodyFat$ = this.bodyFatSubject$.asObservable();
+
   dailyCal = this.dashService.dailyCalories;
   leftCal = this.dashService.leftCalories;
 
-  dbFoods = this.dashService.foodsDB;
+  dbFoods: Food[] = [];
   selectAllFoods = false;
 
   allSelected = false;
 
   constructor(
     private dashService: DashboardService,
-    private measurementService: MeasurementService
+    private measurementService: MeasurementService,
+    private foodAdapter: FoodAdapter
   ) {}
 
   ngOnInit(): void {
@@ -41,8 +47,6 @@ export class CalorieComponent implements OnInit {
     else if (!this.dashService.foodsDB.length) {
       this.leftCal = this.dailyCal;
     }
-
-    this.dbFoods.forEach((food) => (food.checked = false));
   }
 
   // return percent string to update progress bar
@@ -71,10 +75,6 @@ export class CalorieComponent implements OnInit {
     );
   }
 
-  public trackFood(index: number, food: Food) {
-    return food.checked;
-  }
-
   optionClick(): void {
     let newStatus = true;
     this.foodsSelect.options.forEach((item: MatListOption) => {
@@ -84,4 +84,19 @@ export class CalorieComponent implements OnInit {
     });
     this.allSelected = newStatus;
   }
+
+  addFood(): void {
+    const name = this.nameInput.nativeElement.value;
+    const calories = this.calorieInput.nativeElement.value;
+
+    this.dbFoods.push(this.foodAdapter.adapt({
+      id: 10,
+      name,
+      calories,
+      created: new Date()
+    }));
+
+  }
 }
+
+
