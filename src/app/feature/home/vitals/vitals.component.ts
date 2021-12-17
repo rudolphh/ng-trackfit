@@ -8,6 +8,7 @@ import { Observable, of } from 'rxjs';
 })
 export class VitalsComponent implements OnInit {
 
+  @Input() latestWeight: Observable<number> = of(215);
   @Input() latestBodyFat: Observable<number> = of(0.2545);
 
   constructor() {

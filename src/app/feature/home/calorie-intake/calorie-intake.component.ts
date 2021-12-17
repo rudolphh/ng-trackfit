@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 
-import { DashboardService } from '../dashboard.service';
+import { HomeService } from '../home.service';
 import { Sort } from '@angular/material/sort';
 
 @Component({
@@ -11,11 +11,11 @@ import { Sort } from '@angular/material/sort';
 })
 export class CalorieIntakeComponent implements OnInit {
   addedFood?: Food;
-  dbFoods = this.dashService.foodsDB;
+  dbFoods = this.homeService.foodsDB;
   sortedData!: Food[];
 
   constructor(
-    private dashService: DashboardService,
+    private homeService: HomeService,
     private foodAdapter: FoodAdapter
   ) {}
 
@@ -30,9 +30,9 @@ export class CalorieIntakeComponent implements OnInit {
     if (caloriesTaken && nameFood) {
       console.log(nameFood);
       console.log(caloriesTaken);
-      this.dashService.leftCalories =
-        this.dashService.leftCalories - caloriesTaken;
-      let idFood = this.dashService.foodsDB.length + 1;
+      this.homeService.leftCalories =
+        this.homeService.leftCalories - caloriesTaken;
+      let idFood = this.homeService.foodsDB.length + 1;
 
       const newFood = this.foodAdapter.adapt({
         id: idFood,
@@ -40,21 +40,21 @@ export class CalorieIntakeComponent implements OnInit {
         calories: caloriesTaken,
         created: JSON.stringify(new Date()),
       });
-      this.dashService.foodsDB.push(newFood);
+      this.homeService.foodsDB.push(newFood);
 
-      this.dashService.updateCaloriePercent();
+      this.homeService.updateCaloriePercent();
     } else {
       console.log('Missing calories or name of food.');
     }
   }
 
   onDeleteFood(delFood: Food): void {
-    this.dashService.leftCalories =
-      this.dashService.leftCalories + delFood.calories;
-    this.dashService.updateCaloriePercent();
-    for (let i = 0; i <= this.dashService.foodsDB.length - 1; i++) {
-      if (delFood.id == this.dashService.foodsDB[i].id) {
-        this.dashService.foodsDB.splice(i, 1);
+    this.homeService.leftCalories =
+      this.homeService.leftCalories + delFood.calories;
+    this.homeService.updateCaloriePercent();
+    for (let i = 0; i <= this.homeService.foodsDB.length - 1; i++) {
+      if (delFood.id == this.homeService.foodsDB[i].id) {
+        this.homeService.foodsDB.splice(i, 1);
       }
     } // for loop
   }

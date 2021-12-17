@@ -6,7 +6,7 @@ import {mockFoods} from '../../core/_models/mockFoods';
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class HomeService {
 
   // data ("mock database")
   foodsDB: Food[] = [];

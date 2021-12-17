@@ -1,18 +1,18 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 
 import { BehaviorSubject } from 'rxjs';
-import { DashboardService } from '../dashboard.service';
+import { HomeService } from '../home.service';
 import { MeasurementService } from '../../measurement/measurement.service';
 
 declare var $: any;
 @Component({
-  selector: 'app-calorie',
-  templateUrl: './calorie.component.html',
-  styleUrls: ['./calorie.component.css'],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
 })
-export class CalorieComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   @ViewChild('nameInput') nameInput!: ElementRef;
   @ViewChild('calorieInput') calorieInput!: ElementRef;
   @ViewChild('foodsSelect') foodsSelect!: MatSelectionList;
@@ -22,8 +22,8 @@ export class CalorieComponent implements OnInit {
   bodyFatSubject$ = new BehaviorSubject<number>(0.2143);
   bodyFat$ = this.bodyFatSubject$.asObservable();
 
-  dailyCal = this.dashService.dailyCalories;
-  leftCal = this.dashService.leftCalories;
+  dailyCal = this.homeService.dailyCalories;
+  leftCal = this.homeService.leftCalories;
 
   dbFoods: Food[] = [];
   displayedFoods: Food[] = [];
@@ -33,35 +33,35 @@ export class CalorieComponent implements OnInit {
   allSelected = false;
 
   constructor(
-    private dashService: DashboardService,
+    private homeService: HomeService,
     private measurementService: MeasurementService,
     private foodAdapter: FoodAdapter,
   ) {}
 
   ngOnInit(): void {
     // check to see if there there is data to update progress bar and calories left
-    if (this.dashService.foodsDB.length) {
+    if (this.homeService.foodsDB.length) {
       this.leftCal = this.dailyCal - this.previousStoredCalories();
-      this.dashService.leftCalories = this.leftCal;
-      this.dashService.updateCaloriePercent();
+      this.homeService.leftCalories = this.leftCal;
+      this.homeService.updateCaloriePercent();
     }
     // if no data initalize left calories = calories for the day
-    else if (!this.dashService.foodsDB.length) {
+    else if (!this.homeService.foodsDB.length) {
       this.leftCal = this.dailyCal;
     }
   }
 
   // return percent string to update progress bar
   onUpdatePercent(): number {
-    const value = this.dashService.caloriePercent;
+    const value = this.homeService.caloriePercent;
     return parseInt(value.slice(0, -1), 10);
   }
 
   // check and see if there was stored data already
   previousStoredCalories(): number {
     let prevCal = 0;
-    for (let i = 0; i <= this.dashService.foodsDB.length - 1; i++) {
-      prevCal += this.dashService.foodsDB[i].calories;
+    for (let i = 0; i <= this.homeService.foodsDB.length - 1; i++) {
+      prevCal += this.homeService.foodsDB[i].calories;
     }
     return prevCal;
   }

@@ -1,7 +1,7 @@
-import { CalorieComponent } from './calorie/calorie.component';
 import { CalorieIntakeComponent } from './calorie-intake/calorie-intake.component';
-import { DashboardComponent } from './dashboard.component';
-import { DashboardService } from './dashboard.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home.component';
+import { HomeService } from './home.service';
 import { LandingComponent } from './landing/landing.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,11 +23,11 @@ import { VitalsComponent } from './vitals/vitals.component';
 
 @NgModule({
   declarations: [
-    CalorieComponent,
     CalorieIntakeComponent,
     DashboardComponent,
     LandingComponent,
-    VitalsComponent
+    VitalsComponent,
+    HomeComponent,
   ],
   imports: [
     SharedModule,
@@ -46,7 +46,7 @@ import { VitalsComponent } from './vitals/vitals.component';
     MatTableModule,
     MatTooltipModule,
   ],
-  providers: [DashboardService],
-  exports: [CalorieComponent, CalorieIntakeComponent]
+  providers: [],
+  exports: []
 })
 export class DashboardModule {}

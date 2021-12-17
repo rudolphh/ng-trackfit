@@ -1,5 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
+@media (min-width: 576px) {
+  #myContainer {
+      max-width: 97.5%; /*this gives it the precise width to match the Bootstrap defaults*/
+  }
+}
+
+@media (min-width: 768px) {
+  #myContainer {
+      max-width: 720px; /*this gives it the precise width to match the Bootstrap defaults*/
+  }
+}
+
+@media (min-width: 992px) {
+  #myContainer {
+      max-width: 960px; /*this gives it the precise width to match the Bootstrap defaults*/
+  }
+}
+
+@media (min-width: 1200px) {
+  #myContainer {
+      max-width: 1140px; /*this gives it the precise width to match the Bootstrap defaults*/
+  }
+}
+
 body {
   color: lightgrey;
 }

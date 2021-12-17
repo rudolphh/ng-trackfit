@@ -3,7 +3,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CoreModule } from './core/core.module';
-import { DashboardModule } from './feature/dashboard/dashboard.module';
+import { DashboardModule } from './feature/home/home.module';
 import { ForgotPasswordModule } from './feature/forgot-password/forgot-password.module';
 import { LoginModule } from './feature/login/login.module';
 import { MeasurementModule } from './feature/measurement/measurement.module';
