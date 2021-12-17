@@ -23,3 +23,7 @@ body {
 .light-text-success {
   color: #38d5c9 !important
 }
+
+.light-text-danger {
+  color: #d84c8f !important;
+  }

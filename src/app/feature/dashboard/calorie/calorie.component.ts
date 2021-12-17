@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 
@@ -26,6 +26,8 @@ export class CalorieComponent implements OnInit {
   leftCal = this.dashService.leftCalories;
 
   dbFoods: Food[] = [];
+  displayedFoods: Food[] = [];
+  foodsLoaded = 3;
   selectAllFoods = false;
 
   allSelected = false;
@@ -33,7 +35,7 @@ export class CalorieComponent implements OnInit {
   constructor(
     private dashService: DashboardService,
     private measurementService: MeasurementService,
-    private foodAdapter: FoodAdapter
+    private foodAdapter: FoodAdapter,
   ) {}
 
   ngOnInit(): void {
@@ -89,14 +91,27 @@ export class CalorieComponent implements OnInit {
     const name = this.nameInput.nativeElement.value;
     const calories = this.calorieInput.nativeElement.value;
 
-    this.dbFoods.push(this.foodAdapter.adapt({
+    this.dbFoods.unshift(this.foodAdapter.adapt({
       id: 10,
       name,
       calories,
       created: new Date()
     }));
-
+    this.displayedFoods = this.dbFoods.slice(0, this.foodsLoaded);
   }
+
+  loadMore(): void {
+    if(this.dbFoods.length > this.foodsLoaded){
+      this.foodsLoaded += 3;
+      this.displayedFoods = this.dbFoods.slice(0, this.foodsLoaded);
+    }
+  }
+
+  loadReset(): void {
+    this.foodsLoaded = 3;
+    this.displayedFoods = this.dbFoods.slice(0, this.foodsLoaded);
+  }
+
 }
 
 

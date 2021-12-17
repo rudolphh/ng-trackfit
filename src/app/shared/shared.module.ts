@@ -33,7 +33,7 @@ import { NgModule } from '@angular/core';
      GrowingSpinnerComponent,
      CommonModule,
      ReactiveFormsModule,
-     FormsModule
+     FormsModule,
   ]
 })
 export class SharedModule {}

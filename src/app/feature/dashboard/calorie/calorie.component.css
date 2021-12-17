@@ -1,15 +1,5 @@
 /******************** Section 1 ****************/
 
-.firstsection-2{
-    height: 100px;
-    color: #d58900
-}
-
-.first{
-    display: flex;
-    align-items: bottom;
-    justify-content: center;
-}
 
 .progress-bar{
     height: 15px;
@@ -55,4 +45,8 @@
 
 ::ng-deep #select-all-foods .mat-list-item-content {
   padding: 0 5px;
+}
+
+.mat-list-base {
+  padding-top: 0;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { DashboardService } from './dashboard.service';
 
 @Component({
@@ -8,9 +9,7 @@ import { DashboardService } from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor( private dashServ : DashboardService ) {
-    this.dashServ.statusInput.subscribe((status: string) => alert(status));
-  }
+  constructor( private dashboardService : DashboardService ) {}
 
   ngOnInit(): void {
   }

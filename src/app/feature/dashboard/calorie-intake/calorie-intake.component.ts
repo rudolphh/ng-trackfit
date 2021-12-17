@@ -45,7 +45,6 @@ export class CalorieIntakeComponent implements OnInit {
       this.dashService.updateCaloriePercent();
     } else {
       console.log('Missing calories or name of food.');
-      this.dashService.statusInput.emit('Missing calories or name of food.');
     }
   }
 

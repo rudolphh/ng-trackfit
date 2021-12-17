@@ -18,8 +18,6 @@ export class DashboardService {
 
   constructor() { }
 
-  statusInput = new EventEmitter <string>();
-
   // update the percent to update the progress bar
   updateCaloriePercent(): void{
     let rawPercentage = (this.dailyCalories - this.leftCalories) / this.dailyCalories * 100;

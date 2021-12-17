@@ -1,8 +1,10 @@
 <div class="row">
+  <!-- general vitals dash card -->
   <div class="col-md-12 col-lg-5 pb-3">
     <app-vitals [latestBodyFat]="bodyFat$"></app-vitals>
   </div>
 
+  <!-- daily vitals dash card -->
   <div class="col-md-12 col-lg-7 pb-3">
     <app-dash-card>
       <!-- card-header-->
@@ -20,8 +22,8 @@
           matTooltipHideDelay="1000"
         ></i>
       </div>
-      <!-- card-body -->
 
+      <!-- card-body -->
       <div app-card-body>
         <!-- daily vitals -->
         <div class="d-flex justify-content-between">
@@ -73,7 +75,15 @@
             >Remaining :
             <span class="light-text-success">{{ leftCal }}</span></span
           >
-          <div class="d-flex ml-auto">
+          <div *ngIf="dbFoods.length !== 0" class="d-flex ml-auto">
+            <button
+              mat-flat-button
+              class="bg-danger mx-2"
+              *ngIf="foodsSelect.selectedOptions.selected.length"
+            >
+              <i class="fas fa-2x fa-trash-alt"></i>
+            </button>
+
             <mat-selection-list
               (selectionChange)="selectAllChange()"
               #selectAll
@@ -88,21 +98,20 @@
               >
               </mat-list-option>
             </mat-selection-list>
-
-            <button
-              mat-flat-button
-              class="bg-danger ml-2"
-              *ngIf="foodsSelect.selectedOptions.selected.length"
-            >
-              <i class="fas fa-2x fa-trash-alt"></i>
-            </button>
           </div>
         </div>
 
-        <mat-divider class="mt-2"></mat-divider>
+        <!-- start foods list divider -->
+        <mat-divider class="mt-2 mb-3"></mat-divider>
 
+        <div
+          *ngIf="dbFoods.length === 0"
+          class="light-text-primary d-flex justify-content-center my-4"
+        >
+          <span class="h6">You've ate nothing. Fast day?</span>
+        </div>
         <mat-selection-list #foodsSelect id="food-selection-list">
-          <div *ngFor="let food of dbFoods.reverse(); let i = index">
+          <div *ngFor="let food of displayedFoods; let i = index">
             <div class="d-flex justify-content-between">
               <span class="mr-2">
                 <mat-form-field style="max-width: 100px" appearance="fill">
@@ -140,10 +149,6 @@
                 </mat-form-field>
               </span>
 
-              <!--
-                <span class="ml-3">{{ food.name }}</span>
-
-              <span class="ml-auto mr-3">{{ food.calories }}</span> -->
               <mat-list-option
                 style="max-width: 64px; height: 51px"
                 color="warn"
@@ -151,29 +156,36 @@
                 (click)="optionClick()"
               >
               </mat-list-option>
-              <!-- <mat-checkbox
-                color="warn"
-                class="ml-2"
-                ([ngModel])="food.checked" [checked]="food.checked || false"
-                (change)="onChange($event)"
-                name="{{i}}-name"
-              >
-              </mat-checkbox> -->
             </div>
           </div>
         </mat-selection-list>
 
+        <!-- end foods list -->
         <mat-divider class="mb-2"></mat-divider>
 
-        <div class="d-flex justify-content-center mt-4">
-          <button mat-flat-button class="bg-success w-75">
+        <span class="d-flex mt-3">
+          <button mat-flat-button
+            *ngIf="dbFoods.length > 3 && dbFoods.length > foodsLoaded"
+            (click)="loadMore()"
+            class="w-100 d-flex justify-content-center align-items-center bg-transparent light-text-success"
+            style="height: 51px"
+          >
             <i
               class="fas fa-arrow-circle-down mr-2"
               style="font-size: 1.2em"
             ></i>
             <span>Load More</span>
           </button>
-        </div>
+
+          <button mat-flat-button
+            *ngIf="displayedFoods.length > 3"
+            (click)="loadReset()"
+            class="bg-transparent ml-auto light-text-success"
+            style="height: 51px"
+          >
+            <i class="far fa-2x fa-minus-square"></i>
+          </button>
+        </span>
       </div>
       <!-- end card-body-->
     </app-dash-card>
