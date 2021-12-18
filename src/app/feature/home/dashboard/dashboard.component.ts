@@ -13,8 +13,7 @@ declare var $: any;
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild('nameInput') nameInput!: ElementRef;
-  @ViewChild('calorieInput') calorieInput!: ElementRef;
+
   @ViewChild('foodsSelect') foodsSelect!: MatSelectionList;
 
   selected: Date | null = new Date();
@@ -87,17 +86,14 @@ export class DashboardComponent implements OnInit {
     this.allSelected = newStatus;
   }
 
-  addFood(): void {
-    const name = this.nameInput.nativeElement.value;
-    const calories = this.calorieInput.nativeElement.value;
+  addFood(food: Food): void {
 
-    this.dbFoods.unshift(this.foodAdapter.adapt({
-      id: 10,
-      name,
-      calories,
-      created: new Date()
-    }));
+    this.dbFoods.unshift(food);
     this.displayedFoods = this.dbFoods.slice(0, this.foodsLoaded);
+
+    // hack for now, on adding all deselected
+    this.allSelected = false;
+    this.foodsSelect.deselectAll();
   }
 
   loadMore(): void {

@@ -36,32 +36,7 @@
         </div>
 
         <!-- TODO: make component -->
-        <div class="d-flex">
-          <span class="flex-grow-1">
-            <mat-form-field class="w-100" appearance="fill">
-              <mat-label>Food</mat-label>
-              <input matInput placeholder="Ex. Pizza" #nameInput />
-            </mat-form-field>
-          </span>
-
-          <span class="ml-2">
-            <mat-form-field style="max-width: 100px" appearance="fill">
-              <mat-label>Calories</mat-label>
-              <input matInput placeholder="250" #calorieInput />
-            </mat-form-field>
-          </span>
-
-          <span class="ml-2">
-            <button
-              mat-flat-button
-              class="bg-success"
-              style="height: 51px"
-              (click)="addFood()"
-            >
-              <i class="fas fa-2x fa-cookie-bite"></i>
-            </button>
-          </span>
-        </div>
+        <app-food-input (newFoodCreatedEvent)="addFood($event)"></app-food-input>
         <!-- end component -->
 
         <!-- progress bar -->
@@ -78,7 +53,7 @@
           <div *ngIf="dbFoods.length !== 0" class="d-flex ml-auto">
             <button
               mat-flat-button
-              class="bg-danger mx-2"
+              class="bg-danger mx-2" style="min-width: 100px"
               *ngIf="foodsSelect.selectedOptions.selected.length"
             >
               <i class="fas fa-2x fa-trash-alt"></i>
@@ -106,9 +81,12 @@
 
         <div
           *ngIf="dbFoods.length === 0"
-          class="light-text-primary d-flex justify-content-center my-4"
+          class="d-flex justify-content-center my-4"
         >
-          <span class="h6">You've ate nothing. Fast day?</span>
+          <span class="h6 d-flex align-items-center">
+            <i class="fas fa-2x fa-exclamation-circle text-success mx-3"></i>
+            No food today
+          </span>
         </div>
         <mat-selection-list #foodsSelect id="food-selection-list">
           <div *ngFor="let food of displayedFoods; let i = index">
@@ -171,10 +149,10 @@
             style="height: 51px"
           >
             <i
-              class="fas fa-arrow-circle-down mr-2"
-              style="font-size: 1.2em"
+              class="fas fa-arrow-circle-down mx-2"
+              style="font-size: 2em"
             ></i>
-            <span>Load More</span>
+            <span>More</span>
           </button>
 
           <button mat-flat-button
@@ -183,7 +161,11 @@
             class="bg-transparent ml-auto light-text-success"
             style="height: 51px"
           >
-            <i class="far fa-2x fa-minus-square"></i>
+            <i class="far fa-2x fa-minus-square"
+            matTooltip="Show Less"
+            matTooltipPosition="left"
+            matTooltipShowDelay="500"
+            matTooltipHideDelay="1000"></i>
           </button>
         </span>
       </div>

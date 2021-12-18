@@ -15,8 +15,7 @@
 }
 
 ::ng-deep .mat-tooltip {
-  /* your own custom styles here */
-  /* e.g. */
+
   background-color: #b58900 !important
 }
 

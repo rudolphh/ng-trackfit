@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgModule } from '@angular/core';
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NgModule } from '@angular/core';
     DashCardComponent,
     FieldErrorDisplayComponent,
     GrowingSpinnerComponent,
+    NumbersOnlyDirective
    ],
    imports: [
      CommonModule,
@@ -34,6 +36,7 @@ import { NgModule } from '@angular/core';
      CommonModule,
      ReactiveFormsModule,
      FormsModule,
+     NumbersOnlyDirective
   ]
 })
 export class SharedModule {}

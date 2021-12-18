@@ -1,7 +1,8 @@
 import { CalorieIntakeComponent } from './calorie-intake/calorie-intake.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FoodModule } from '../food/food.module';
 import { HomeComponent } from './home.component';
-import { HomeService } from './home.service';
+import { HomeRoutingModule } from './home-routing.module';
 import { LandingComponent } from './landing/landing.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -32,6 +33,7 @@ import { VitalsComponent } from './vitals/vitals.component';
   imports: [
     SharedModule,
     RouterModule,
+    HomeRoutingModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
@@ -45,8 +47,9 @@ import { VitalsComponent } from './vitals/vitals.component';
     MatStepperModule,
     MatTableModule,
     MatTooltipModule,
+    FoodModule,
   ],
   providers: [],
   exports: []
 })
-export class DashboardModule {}
+export class HomeModule {}

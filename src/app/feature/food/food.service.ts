@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/core/models/user';
 import { map } from 'rxjs/operators';
 
-@Injectable({ providedIn: 'root' })
+//@Injectable({ providedIn: 'root' })
 export class FoodService {
   constructor(
     private authService: AuthService,

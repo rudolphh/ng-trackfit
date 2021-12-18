@@ -1,0 +1,31 @@
+<div>
+  <form [formGroup]="addFoodForm" (ngSubmit)="onSubmit()" class="d-flex">
+    <span class="flex-grow-1">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Food</mat-label>
+        <input matInput placeholder="Ex. Pizza" formControlName="name" />
+      </mat-form-field>
+    </span>
+
+    <span class="ml-2">
+      <mat-form-field style="max-width: 100px" appearance="fill">
+        <mat-label>Calories</mat-label>
+        <input matInput placeholder="250" maxLength="4"
+        formControlName="calories" appNumbersOnly />
+      </mat-form-field>
+    </span>
+
+    <span class="ml-2">
+      <button id="addFoodBtn"
+        mat-flat-button
+        type="submit"
+        class=""
+        style="height: 51px"
+        (click)="addFood()"
+        [disabled]="!addFoodForm.valid"
+      >
+        <i class="fas fa-2x fa-cookie-bite"></i>
+      </button>
+    </span>
+  </form>
+</div>
