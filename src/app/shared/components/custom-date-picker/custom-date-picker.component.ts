@@ -10,7 +10,7 @@ declare var $: any;
 })
 export class CustomDatePickerComponent implements OnInit {
 
-  @Input() currentDate: Date | null = new Date();
+  @Input() currentDate: Date = new Date();
   @Output() newDateSelectedEvent: EventEmitter<Date> = new EventEmitter<Date>();
 
   constructor() {}
@@ -24,18 +24,21 @@ export class CustomDatePickerComponent implements OnInit {
   }
 
   addDay(): boolean {
-    const result = new Date(this.currentDate as Date);
-    result.setDate(result.getDate() + 1);
-    this.currentDate = result;
-    this.newDateSelectedEvent.emit(this.currentDate as Date);
-    return false;
+    return this.changeDayBy(1);
   }
 
   subDay(): boolean {
-    const result = new Date(this.currentDate as Date);
-    result.setDate(result.getDate() - 1);
+    return this.changeDayBy(-1);
+  }
+
+  changeDayBy(value: number): boolean {
+    const result = new Date(this.currentDate);
+    result.setDate(result.getDate() + value);
+
     this.currentDate = result;
-    this.newDateSelectedEvent.emit(this.currentDate as Date);
+    this.currentDate.setHours(0, 0, 0, 0);
+
+    this.newDateSelectedEvent.emit(this.currentDate);
     return false;
   }
 }

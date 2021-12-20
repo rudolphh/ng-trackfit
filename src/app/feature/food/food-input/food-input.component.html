@@ -3,7 +3,7 @@
     <span class="flex-grow-1">
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>Food</mat-label>
-        <input matInput placeholder="Ex. Pizza" formControlName="name" />
+        <input matInput placeholder="Ex. Pizza" formControlName="name" #nameInput />
       </mat-form-field>
     </span>
 
@@ -19,9 +19,7 @@
       <button id="addFoodBtn"
         mat-flat-button
         type="submit"
-        class=""
         style="height: 51px"
-        (click)="addFood()"
         [disabled]="!addFoodForm.valid"
       >
         <i class="fas fa-2x fa-cookie-bite"></i>

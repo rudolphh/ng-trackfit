@@ -1,4 +1,3 @@
-import { CalorieIntakeComponent } from './calorie-intake/calorie-intake.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FoodModule } from '../food/food.module';
 import { HomeComponent } from './home.component';
@@ -8,9 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSortModule } from '@angular/material/sort';
@@ -24,7 +21,6 @@ import { VitalsComponent } from './vitals/vitals.component';
 
 @NgModule({
   declarations: [
-    CalorieIntakeComponent,
     DashboardComponent,
     LandingComponent,
     VitalsComponent,
@@ -38,9 +34,6 @@ import { VitalsComponent } from './vitals/vitals.component';
     MatDividerModule,
     MatIconModule,
     MatCardModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatListModule,
     MatProgressBarModule,
     MatSortModule,

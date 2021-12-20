@@ -1,0 +1,26 @@
+::ng-deep .mat-form-field-flex {
+  max-height: 51px;
+}
+
+.success-progress ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #2aa198;
+}
+
+.primary-progress ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #b58900;
+}
+
+.danger-progress ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #d33682;
+}
+
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #E4E8EB;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 2px;
+}
+
+

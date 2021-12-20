@@ -1,6 +1,6 @@
-import { Food } from "./food.model";
-import { Settings } from "./settings";
-import { User } from "./user";
+import { Food } from './food.model';
+import { Settings } from './settings';
+import { User } from './user';
 
 export interface ApiResponse {
   success: boolean;

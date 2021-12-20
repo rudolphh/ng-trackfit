@@ -1,10 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Food, FoodAdapter } from 'src/app/core/models/food.model';
-import { MatListOption, MatSelectionList } from '@angular/material/list';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { DailyProgressListComponent } from '../../food/daily-progress-list/daily-progress-list.component';
+import { Food } from 'src/app/core/models/food.model';
 import { HomeService } from '../home.service';
-import { MeasurementService } from '../../measurement/measurement.service';
 
 declare var $: any;
 @Component({
@@ -14,98 +13,45 @@ declare var $: any;
 })
 export class DashboardComponent implements OnInit {
 
-  @ViewChild('foodsSelect') foodsSelect!: MatSelectionList;
+  @ViewChild(DailyProgressListComponent) dailyProgressList!: DailyProgressListComponent;
 
-  selected: Date | null = new Date();
+  selectedDate: Date = new Date();
 
   bodyFatSubject$ = new BehaviorSubject<number>(0.2143);
   bodyFat$ = this.bodyFatSubject$.asObservable();
 
-  dailyCal = this.homeService.dailyCalories;
-  leftCal = this.homeService.leftCalories;
+  maxCals = 1800;
 
-  dbFoods: Food[] = [];
-  displayedFoods: Food[] = [];
-  foodsLoaded = 3;
-  selectAllFoods = false;
-
-  allSelected = false;
+  dbFoods$!: Observable<Food[]>;
 
   constructor(
-    private homeService: HomeService,
-    private measurementService: MeasurementService,
-    private foodAdapter: FoodAdapter,
-  ) {}
+    private homeService: HomeService
+  ) {
+    this.selectedDate.setHours(0, 0, 0, 0);
+    console.log(this.selectedDate);
+  }
 
   ngOnInit(): void {
-    // check to see if there there is data to update progress bar and calories left
-    if (this.homeService.foodsDB.length) {
-      this.leftCal = this.dailyCal - this.previousStoredCalories();
-      this.homeService.leftCalories = this.leftCal;
-      this.homeService.updateCaloriePercent();
-    }
-    // if no data initalize left calories = calories for the day
-    else if (!this.homeService.foodsDB.length) {
-      this.leftCal = this.dailyCal;
-    }
-  }
-
-  // return percent string to update progress bar
-  onUpdatePercent(): number {
-    const value = this.homeService.caloriePercent;
-    return parseInt(value.slice(0, -1), 10);
-  }
-
-  // check and see if there was stored data already
-  previousStoredCalories(): number {
-    let prevCal = 0;
-    for (let i = 0; i <= this.homeService.foodsDB.length - 1; i++) {
-      prevCal += this.homeService.foodsDB[i].calories;
-    }
-    return prevCal;
+    this.dbFoods$ = this.homeService.dbFoods$;
+    this.homeService.getFoodsByDate(this.selectedDate);
   }
 
   setSelected(date: Date): void {
-    this.selected = date;
-  }
-
-  selectAllChange(): void {
-    this.allSelected = !this.allSelected;
-    this.foodsSelect.options.forEach(
-      (item: MatListOption) => (item.selected = this.allSelected)
-    );
-  }
-
-  optionClick(): void {
-    let newStatus = true;
-    this.foodsSelect.options.forEach((item: MatListOption) => {
-      if (!item.selected) {
-        newStatus = false;
-      }
-    });
-    this.allSelected = newStatus;
+    this.selectedDate = date;
+    this.homeService.getFoodsByDate(date);
   }
 
   addFood(food: Food): void {
+    const selectedDateTimeNow = new Date();
+    selectedDateTimeNow.setFullYear(
+      this.selectedDate.getFullYear(),
+      this.selectedDate.getMonth(),
+      this.selectedDate.getDate()
+    );
 
-    this.dbFoods.unshift(food);
-    this.displayedFoods = this.dbFoods.slice(0, this.foodsLoaded);
-
-    // hack for now, on adding all deselected
-    this.allSelected = false;
-    this.foodsSelect.deselectAll();
-  }
-
-  loadMore(): void {
-    if(this.dbFoods.length > this.foodsLoaded){
-      this.foodsLoaded += 3;
-      this.displayedFoods = this.dbFoods.slice(0, this.foodsLoaded);
-    }
-  }
-
-  loadReset(): void {
-    this.foodsLoaded = 3;
-    this.displayedFoods = this.dbFoods.slice(0, this.foodsLoaded);
+    food.date = selectedDateTimeNow;
+    this.homeService.addFood(food);
+    this.dailyProgressList.update();
   }
 
 }

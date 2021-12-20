@@ -5,17 +5,19 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 })
 
 export class NumbersOnlyDirective {
- @Input() numbersOnly!:boolean;
+ @Input() numbersOnly!: boolean;
 
  navigationKeys: Array<string> = ['Backspace']; //Add keys as per requirement
 
  constructor(private _el: ElementRef) { }
 
- @HostListener('keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
+ @HostListener('keydown', ['$event'])
+ onKeyDown(e: KeyboardEvent): void {
 
    if (
      // Allow: Delete, Backspace, Tab, Escape, Enter, etc
      this.navigationKeys.indexOf(e.key) > -1 ||
+     (e.key === 'Enter') ||
      (e.key === 'a' && e.ctrlKey === true) || // Allow: Ctrl+A
      (e.key === 'c' && e.ctrlKey === true) || // Allow: Ctrl+C
      (e.key === 'v' && e.ctrlKey === true) || // Allow: Ctrl+V

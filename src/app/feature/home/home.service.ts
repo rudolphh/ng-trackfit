@@ -1,28 +1,52 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Food } from 'src/app/core/models/food.model';
-import {mockFoods} from '../../core/_models/mockFoods';
+import { FoodService } from '../food/food.service';
+import { Injectable } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
+  private foodDataSource$: BehaviorSubject<Food[]> = new BehaviorSubject<Food[]>(
+    []
+  );
 
-  // data ("mock database")
-  foodsDB: Food[] = [];
-  // initialized value
-  latestBodyFat = 25 ;
-  dailyCalories = 1800;
-  leftCalories = 0;
-  caloriePercent = '0%';
+  public foodData$: Observable<Food[]> = this.foodDataSource$.asObservable();
 
-  constructor() { }
+  constructor(private foodService: FoodService) {}
 
-  // update the percent to update the progress bar
-  updateCaloriePercent(): void{
-    let rawPercentage = (this.dailyCalories - this.leftCalories) / this.dailyCalories * 100;
-    rawPercentage = Math.min(rawPercentage, 100);
-    this.caloriePercent = rawPercentage + '%';
+  /// methods
+
+  get dbFoods$(): Observable<Food[]> {
+    return this.foodData$;
   }
 
+  getFoodsByDate(date: Date): void {
+    const todayString = date.toISOString();
+
+    const tomorrow = new Date(date.getTime());
+    tomorrow.setDate(date.getDate() + 1);
+    const tmwString = tomorrow.toISOString();
+
+    console.log('todayString: ' + todayString);
+    console.log('tmwString: ' + tmwString);
+
+    this.foodService
+      .getFoodsByDate(todayString, tmwString)
+      .pipe(take(1)).subscribe((foods: Food[]) => {
+        this.foodDataSource$.next(foods);
+      });
+  }
+
+  addFood(food: Food): void {
+
+    this.foodService.addFood(food)
+      .pipe(take(1)).subscribe((newFood: Food) => {
+        const foods = this.foodDataSource$.getValue();
+        const updatedFoods = [newFood, ...foods];
+        this.foodDataSource$.next(updatedFoods);
+      });
+  }
 }

@@ -14,7 +14,7 @@
 
 @media (min-width: 992px) {
   #myContainer {
-      max-width: 960px; /*this gives it the precise width to match the Bootstrap defaults*/
+      max-width: 97.5%; /*this gives it the precise width to match the Bootstrap defaults*/
   }
 }
 
@@ -49,5 +49,5 @@ body {
 }
 
 .light-text-danger {
-  color: #d84c8f !important;
+  color: #e96ba8 !important;
   }
