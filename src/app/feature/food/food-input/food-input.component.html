@@ -15,9 +15,9 @@
         >
           <mat-option *ngFor="let option of result$ | async" [value]="option.name"
           (onSelectionChange)="setFood($event, option)">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex">
               <span>{{ option.name }}</span>
-              <span class="ml-auto">{{ option.calories }}</span>
+              <span class="light-text-success ml-2" style="font-size: 0.8em">{{ option.calories }}</span>
             </div>
           </mat-option>
         </mat-autocomplete>

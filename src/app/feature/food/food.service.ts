@@ -1,9 +1,9 @@
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { EnvService } from 'src/app/core/services/env.service';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models/user';
@@ -70,5 +70,18 @@ export class FoodService {
           return this.foodAdapter.adapt(data);
         })
       );
+  }
+
+  deleteFoods(foods: string[]): Observable<ApiResponse> {
+    const user: User = this.authService.currentUserValue;
+    const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods`;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json'
+      }),
+      body: {foods}
+   };
+    return this.http.delete<ApiResponse>(baseUrl, httpOptions);
   }
 }

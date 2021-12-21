@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   bodyFatSubject$ = new BehaviorSubject<number>(0.2143);
   bodyFat$ = this.bodyFatSubject$.asObservable();
 
-  maxCals = 1800;
+  maxCalories = 1800;
 
   dbFoods$!: Observable<Food[]>;
 
@@ -51,6 +51,10 @@ export class DashboardComponent implements OnInit {
     food.date = selectedDateTimeNow;
     this.homeService.addFood(food);
     this.dailyProgressList.update();
+  }
+
+  setFoods(foods: Food[]): void {
+    this.homeService.setFoods(foods);
   }
 
 }

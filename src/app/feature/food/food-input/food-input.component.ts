@@ -9,7 +9,7 @@ import {
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { concatMap, debounceTime, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
 import { FoodService } from '../food.service';
 import { MatOptionSelectionChange } from '@angular/material/core';
@@ -55,6 +55,7 @@ export class FoodInputComponent implements OnInit {
     this.result$ =
       this.addFoodForm.get('name')?.valueChanges.pipe(
         debounceTime(300),
+        distinctUntilChanged(),
         tap(searchText => console.log('searchText: ', searchText)),
         switchMap((searchText) => searchText
           ? this.foodService.getFoodsByName(searchText) : of([])),

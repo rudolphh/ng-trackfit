@@ -22,6 +22,9 @@ export class HomeService {
   get dbFoods$(): Observable<Food[]> {
     return this.foodData$;
   }
+  setFoods(foods: Food[]): void {
+    this.foodDataSource$.next(foods);
+  }
 
   getFoodsByDate(date: Date): void {
     const todayString = date.toISOString();
@@ -47,4 +50,5 @@ export class HomeService {
         this.foodDataSource$.next(updatedFoods);
       });
   }
+
 }

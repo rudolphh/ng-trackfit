@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
+import { catchError, take } from 'rxjs/operators';
 
 import { DatePipe } from '@angular/common';
 import { Food } from 'src/app/core/models/food.model';
+import { FoodService } from '../food.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,6 +20,8 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
   @Input() foods!: Observable<Food[]>;
   dbFoods: Food[] = [];
 
+  @Output() setFoodsEvent: EventEmitter<Food[]> = new EventEmitter<Food[]>();
+
   @Input() maxCalories = 1800;
   remainingCalories!: number;
   percentOfDaily = 0;
@@ -27,7 +31,11 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
 
   foodsForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private datePipe: DatePipe) {
+  constructor(
+    private fb: FormBuilder,
+    private datePipe: DatePipe,
+    private foodService: FoodService
+    ) {
     this.remainingCalories = this.maxCalories;
   }
 
@@ -60,9 +68,15 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
     this.foodsFormArray.push(this.newFoodFormGroup(food));
   }
 
+  removeFood(index: number): void {
+    this.foodsFormArray.removeAt(index);
+  }
+
   newFoodFormGroup(food: Food): FormGroup {
     return this.fb.group({
-      date: [
+      id: [food.id],
+      date: [food.date],
+      formDate: [
         this.datePipe.transform(food.date, 'HH:mm'),
         [
           Validators.required
@@ -83,6 +97,7 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
   update(): void {
     this.percentOfDaily = this.updatePercent();
     this.allFoodsSelected = false;
+    this.maxFoodsDisplayed = 3;
     this.foodsSelect.deselectAll();
   }
 
@@ -97,9 +112,19 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
 
   selectAllChange(): void {
     this.allFoodsSelected = !this.allFoodsSelected;
-    this.foodsSelect.options.forEach(
-      (item: MatListOption) => (item.selected = this.allFoodsSelected)
-    );
+    // this.foodsSelect.options.forEach(
+    //   (item: MatListOption) => (item.selected = this.allFoodsSelected)
+    // );
+    if (this.allFoodsSelected) {
+      this.maxFoodsDisplayed = this.dbFoods.length;
+      setTimeout(() => {
+        this.foodsSelect.selectAll();
+      });
+    } else {
+      this.foodsSelect.deselectAll();
+      this.maxFoodsDisplayed = 3;
+    }
+
   }
 
   optionClick(): void {
@@ -110,6 +135,28 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
       }
     });
     this.allFoodsSelected = newStatus;
+  }
+
+  deleteSelected(): void {
+    const foodOptions = this.foodsSelect.options;
+    const selectedOptions = this.foodsSelect.selectedOptions;
+
+    const selectedFoods = selectedOptions.selected.map(option => option.value.value);
+    console.log(selectedFoods);
+
+    const allFoods = this.foodsFormArray.controls.map((option, index) => option.value);
+    console.log(allFoods);
+
+    const remainingFoods = allFoods.filter(option => !selectedFoods.includes(option));
+    console.log(remainingFoods);
+
+    const idsToDelete = selectedFoods.map(food => food.id);
+
+    this.foodService.deleteFoods(idsToDelete).pipe(take(1)).subscribe(response => {
+      if (response.success) {
+        this.setFoodsEvent.emit(remainingFoods);
+      }
+    });
   }
 
   loadMore(): void {

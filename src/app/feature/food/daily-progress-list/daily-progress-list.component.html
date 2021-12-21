@@ -11,9 +11,10 @@
   <div *ngIf="dbFoods.length !== 0" class="d-flex ml-auto">
     <button
       mat-flat-button
+      *ngIf="foodsSelect.selectedOptions.selected.length"
       class="bg-danger mx-2"
       style="min-width: 100px"
-      *ngIf="foodsSelect.selectedOptions.selected.length"
+      (click)="deleteSelected()"
     >
       <i class="fas fa-2x fa-trash-alt"></i>
     </button>
@@ -56,7 +57,7 @@
       <span class="mr-2">
         <mat-form-field style="max-width: 100px" appearance="fill">
           <mat-label>Time</mat-label>
-          <input formControlName="date" type="time"
+          <input formControlName="formDate" type="time"
             matInput
             name="time-{{ i }}"
           />
@@ -90,6 +91,7 @@
         color="warn"
         class="ml-2"
         (click)="optionClick()"
+        [value]="food"
       >
       </mat-list-option>
     </div>

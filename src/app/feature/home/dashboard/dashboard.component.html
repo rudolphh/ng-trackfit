@@ -27,7 +27,8 @@
         <!-- daily vitals -->
         <div class="d-flex justify-content-between">
           <div class="dash-vital mb-3">
-            Daily Cals : <span class="light-text-primary"> {{ maxCals }}</span>
+            Daily Calories :
+            <span class="light-text-primary"> {{ maxCalories }}</span>
           </div>
           <div class="dash-vital">
             Strategy : <span class="light-text-success"> CUT</span>
@@ -39,8 +40,11 @@
           (newFoodCreatedEvent)="addFood($event)"
         ></app-food-input>
 
-        <app-daily-progress-list #dailyProgressList
-          [foods]="dbFoods$" [maxCalories]="maxCals"
+        <app-daily-progress-list
+          #dailyProgressList
+          [foods]="dbFoods$"
+          [maxCalories]="maxCalories"
+          (setFoodsEvent)="setFoods($event)"
         ></app-daily-progress-list>
       </div>
       <!-- end card-body-->
