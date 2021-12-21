@@ -28,7 +28,6 @@ export class DashboardComponent implements OnInit {
     private homeService: HomeService
   ) {
     this.selectedDate.setHours(0, 0, 0, 0);
-    console.log(this.selectedDate);
   }
 
   ngOnInit(): void {

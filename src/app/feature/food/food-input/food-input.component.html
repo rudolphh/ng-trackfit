@@ -3,20 +3,43 @@
     <span class="flex-grow-1">
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>Food</mat-label>
-        <input matInput placeholder="Ex. Pizza" formControlName="name" #nameInput />
+        <input
+          matInput
+          placeholder="Ex. Pizza"
+          formControlName="name"
+          #nameInput
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+        >
+          <mat-option *ngFor="let option of result$ | async" [value]="option.name"
+          (onSelectionChange)="setFood($event, option)">
+            <div class="d-flex justify-content-between">
+              <span>{{ option.name }}</span>
+              <span class="ml-auto">{{ option.calories }}</span>
+            </div>
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </span>
 
     <span class="ml-2">
       <mat-form-field style="max-width: 100px" appearance="fill">
         <mat-label>Calories</mat-label>
-        <input matInput placeholder="250" maxLength="4"
-        formControlName="calories" appNumbersOnly />
+        <input
+          matInput
+          placeholder="250"
+          maxLength="4"
+          formControlName="calories"
+          appNumbersOnly
+        />
       </mat-form-field>
     </span>
 
     <span class="ml-2">
-      <button id="addFoodBtn"
+      <button
+        id="addFoodBtn"
         mat-flat-button
         type="submit"
         style="height: 51px"

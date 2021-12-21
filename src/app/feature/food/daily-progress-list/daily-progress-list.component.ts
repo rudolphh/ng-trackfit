@@ -45,7 +45,6 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
       this.update();
 
       foods.map((food: Food) => {
-        console.log(food)
         this.addNewFood(food);
       });
     });
@@ -92,8 +91,6 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
       return prev + curr.calories;
     }, 0);
 
-    console.log('dbFoods ', this.dbFoods);
-    console.log('currentCalories ', currentCalories);
     this.remainingCalories = this.maxCalories - currentCalories;
     return (currentCalories / this.maxCalories) * 100;
   }

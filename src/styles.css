@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+body {
+  overflow-y: hidden;
+}
+
 @media (min-width: 576px) {
   #myContainer {
       max-width: 97.5%; /*this gives it the precise width to match the Bootstrap defaults*/

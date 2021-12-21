@@ -2,6 +2,7 @@ import { DailyProgressListComponent } from './daily-progress-list/daily-progress
 import { DatePipe } from '@angular/common';
 import { FoodInputComponent } from './food-input/food-input.component';
 import { FoodService } from './food.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,11 +22,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     SharedModule,
     RouterModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatListModule,
-    MatDividerModule,
     MatProgressBarModule,
     MatTooltipModule,
   ],

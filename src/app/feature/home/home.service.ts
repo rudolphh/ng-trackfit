@@ -30,9 +30,7 @@ export class HomeService {
     tomorrow.setDate(date.getDate() + 1);
     const tmwString = tomorrow.toISOString();
 
-    console.log('todayString: ' + todayString);
-    console.log('tmwString: ' + tmwString);
-
+    // not typical to subscribe in service
     this.foodService
       .getFoodsByDate(todayString, tmwString)
       .pipe(take(1)).subscribe((foods: Food[]) => {

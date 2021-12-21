@@ -45,6 +45,20 @@ export class FoodService {
       );
   }
 
+  getFoodsByName(name: string): Observable<Food[]> {
+    const user: User = this.authService.currentUserValue;
+    const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods?name=${name}`;
+
+    return this.http
+      .get<ApiResponse>(baseUrl)
+      .pipe(
+        map((response: ApiResponse) => {
+          const data = response.data as Food[];
+          return data.map((food: Food) => this.foodAdapter.adapt(food));
+        })
+      );
+  }
+
   addFood(food: Food): Observable<Food> {
     const user: User = this.authService.currentUserValue;
     const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods`;

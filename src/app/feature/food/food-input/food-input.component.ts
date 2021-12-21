@@ -8,7 +8,11 @@ import {
 } from '@angular/core';
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { concatMap, debounceTime, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 
+import { FoodService } from '../food.service';
+import { MatOptionSelectionChange } from '@angular/material/core';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -22,7 +26,13 @@ export class FoodInputComponent implements OnInit {
 
   @ViewChild('nameInput') nameInput!: ElementRef;
 
-  constructor(private fb: FormBuilder, private foodAdapter: FoodAdapter) {}
+  result$!: Observable<Food[]>;
+
+  constructor(
+    private fb: FormBuilder,
+    private foodAdapter: FoodAdapter,
+    private foodService: FoodService
+  ) {}
 
   ngOnInit(): void {
     this.addFoodForm = this.fb.group({
@@ -36,6 +46,39 @@ export class FoodInputComponent implements OnInit {
         ],
       ],
     });
+
+    this.getFoodSearchResults();
+  }
+
+  private getFoodSearchResults(): void {
+    // autocomplete
+    this.result$ =
+      this.addFoodForm.get('name')?.valueChanges.pipe(
+        debounceTime(300),
+        tap(searchText => console.log('searchText: ', searchText)),
+        switchMap((searchText) => searchText
+          ? this.foodService.getFoodsByName(searchText) : of([])),
+        map((foods) => {
+          const seen = {};
+          return foods.filter((item) =>
+            seen.hasOwnProperty(item.calories)
+              ? false
+              : (seen[item.calories] = true)
+          );
+        })
+      ) || of([]);
+  }
+
+  getFoodText(food: Food): string {
+    return food.name;
+  }
+
+  setFood(option: MatOptionSelectionChange, food: Food): void {
+
+    if (option.isUserInput){
+      this.getFoodSearchResults();
+      this.addFoodForm.get('calories')?.setValue(food.calories);
+    }
   }
 
   resetForm(): void {
