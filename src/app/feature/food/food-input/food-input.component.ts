@@ -7,9 +7,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { FoodService } from '../food.service';
 import { MatOptionSelectionChange } from '@angular/material/core';
@@ -26,6 +26,7 @@ export class FoodInputComponent implements OnInit {
 
   @ViewChild('nameInput') nameInput!: ElementRef;
 
+  searchText$!: Observable<string>;
   result$!: Observable<Food[]>;
 
   constructor(
@@ -47,19 +48,32 @@ export class FoodInputComponent implements OnInit {
       ],
     });
 
+    // tslint:disable-next-line: no-non-null-assertion
+    this.searchText$ = this.addFoodForm.get('name')?.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(searchText => console.log('searchText: ', searchText))
+    )!;
+
     this.getFoodSearchResults();
+  }
+
+  private loadFoods(searchText: string): Observable<Food[]> {
+
+    return this.foodService.getFoodsByName(searchText);
   }
 
   private getFoodSearchResults(): void {
     // autocomplete
-    this.result$ =
-      this.addFoodForm.get('name')?.valueChanges.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        tap(searchText => console.log('searchText: ', searchText)),
-        switchMap((searchText) => searchText
-          ? this.foodService.getFoodsByName(searchText) : of([])),
-        map((foods) => {
+    this.result$ = this.searchText$
+      .pipe(
+        switchMap((searchText) => {
+          if (searchText){
+            return this.foodService.getFoodsByName(searchText);
+          }
+          return of([]);
+        }),
+        map((foods: Food[]) => {
           const seen = {};
           return foods.filter((item) =>
             seen.hasOwnProperty(item.calories)
@@ -67,7 +81,7 @@ export class FoodInputComponent implements OnInit {
               : (seen[item.calories] = true)
           );
         })
-      ) || of([]);
+      );
   }
 
   getFoodText(food: Food): string {
@@ -82,15 +96,19 @@ export class FoodInputComponent implements OnInit {
     }
   }
 
-  resetForm(): void {
+  resetForm(formDirective: FormGroupDirective): void {
     this.addFoodForm.reset();
+
     Object.keys(this.addFoodForm.controls).forEach((key) => {
       this.addFoodForm.get(key)?.setErrors(null);
     });
     this.nameInput.nativeElement.focus();
+
+    formDirective.resetForm();
+    this.getFoodSearchResults();
   }
 
-  onSubmit(): void {
+  onSubmit(formDirective: FormGroupDirective): void {
     if (!this.addFoodForm.valid) {
       return;
     }
@@ -106,6 +124,6 @@ export class FoodInputComponent implements OnInit {
     });
 
     this.newFoodCreatedEvent.emit(newFood); // output the new food created
-    this.resetForm();
+    this.resetForm(formDirective);
   }
 }

@@ -43,19 +43,21 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
     this.foodsForm = this.fb.group({
       foods: this.fb.array([])
     });
-  }
 
-  ngAfterViewInit(): void {
     // initialize remaining calories
     this.foods.subscribe((foods: Food[]) => {
       this.foodsFormArray.clear();
       this.dbFoods = foods;
-      this.update();
+      this.percentOfDaily = this.updatePercent();
 
       foods.map((food: Food) => {
         this.addNewFood(food);
       });
     });
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   // form methods
@@ -76,7 +78,7 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
     return this.fb.group({
       id: [food.id],
       date: [food.date],
-      formDate: [
+      time: [
         this.datePipe.transform(food.date, 'HH:mm'),
         [
           Validators.required
@@ -94,8 +96,7 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  update(): void {
-    this.percentOfDaily = this.updatePercent();
+  resetDefaults(): void {
     this.allFoodsSelected = false;
     this.maxFoodsDisplayed = 3;
     this.foodsSelect.deselectAll();
@@ -138,17 +139,11 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
   }
 
   deleteSelected(): void {
-    const foodOptions = this.foodsSelect.options;
     const selectedOptions = this.foodsSelect.selectedOptions;
-
     const selectedFoods = selectedOptions.selected.map(option => option.value.value);
-    console.log(selectedFoods);
 
     const allFoods = this.foodsFormArray.controls.map((option, index) => option.value);
-    console.log(allFoods);
-
     const remainingFoods = allFoods.filter(option => !selectedFoods.includes(option));
-    console.log(remainingFoods);
 
     const idsToDelete = selectedFoods.map(food => food.id);
 

@@ -50,11 +50,12 @@ export class DashboardComponent implements OnInit {
 
     food.date = selectedDateTimeNow;
     this.homeService.addFood(food);
-    this.dailyProgressList.update();
+    this.dailyProgressList.resetDefaults();
   }
 
   setFoods(foods: Food[]): void {
     this.homeService.setFoods(foods);
+    this.dailyProgressList.resetDefaults();
   }
 
 }

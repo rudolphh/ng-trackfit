@@ -1,12 +1,12 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 import { ApiResponse } from '../models/api-response';
 import { EnvService } from './env.service';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/user';
-import { map } from 'rxjs/operators';
 
 const helper = new JwtHelperService();
 
@@ -51,6 +51,9 @@ export class AuthService {
             this.currentUserSubject.next(userReturned);
           }
           return response;
+        }),
+        catchError((error) => {
+          return of({ success: false, message: error });
         })
       );
   }

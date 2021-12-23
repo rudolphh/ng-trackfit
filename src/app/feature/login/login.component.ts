@@ -10,6 +10,8 @@ import {
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -54,16 +56,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
-      this.user.email = this.email!.value;
-      this.user.password = this.password!.value;
+      this.user.email = this.email?.value;
+      this.user.password = this.password?.value;
 
       this.loading = true;
       this.authService
         .login(this.user.email!, this.user.password!)
         .subscribe((res: ApiResponse) => {
           if (!res.data) {
+            console.log(res.message);
             this.authError = res.message;
             return;
           }

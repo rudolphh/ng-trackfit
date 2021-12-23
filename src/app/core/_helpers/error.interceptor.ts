@@ -11,16 +11,27 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
-            if (err.status === 401 || err.status === 403) {
-                // auto logout if 401 response returned from api
-                this.authService.logout();
-                location.reload();
+            // if (err.status === 401 || err.status === 403) {
+            //     auto logout if 401 response returned from api
+            //     this.authService.logout();
+            //     location.reload();
+            // }
+
+            let errorMsg = '';
+            if (err.error instanceof ErrorEvent) {
+              console.log('this is client side error');
+              errorMsg = `Error: ${err.error.message}`;
             }
+            else {
+              console.log('this is server side error');
+              errorMsg = `Error Code: ${err.status},  Message: ${err.message}`;
+            }
+            console.log(errorMsg);
 
             const error = err.error.message || err.statusText;
 
             return throwError(error);
-        }))
+        }));
     }
 }
 
