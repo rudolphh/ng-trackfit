@@ -13,7 +13,7 @@ export class HomeService {
     []
   );
 
-  public foodData$: Observable<Food[]> = this.foodDataSource$.asObservable();
+  public readonly foodData$: Observable<Food[]> = this.foodDataSource$.asObservable();
 
   constructor(private foodService: FoodService) {}
 

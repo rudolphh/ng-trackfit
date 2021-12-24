@@ -67,12 +67,7 @@ export class FoodInputComponent implements OnInit {
     // autocomplete
     this.result$ = this.searchText$
       .pipe(
-        switchMap((searchText) => {
-          if (searchText){
-            return this.foodService.getFoodsByName(searchText);
-          }
-          return of([]);
-        }),
+        switchMap((searchText) => this.foodService.getFoodsByName(searchText)),
         map((foods: Food[]) => {
           const seen = {};
           return foods.filter((item) =>
