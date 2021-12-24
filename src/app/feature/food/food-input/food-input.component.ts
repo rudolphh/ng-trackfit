@@ -9,7 +9,7 @@ import {
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { FoodService } from '../food.service';
 import { MatOptionSelectionChange } from '@angular/material/core';
@@ -21,10 +21,10 @@ import { Validators } from '@angular/forms';
   styleUrls: ['./food-input.component.css'],
 })
 export class FoodInputComponent implements OnInit {
-  addFoodForm!: FormGroup;
+  @ViewChild('nameInput') nameInput!: ElementRef;
   @Output() newFoodCreatedEvent: EventEmitter<Food> = new EventEmitter<Food>();
 
-  @ViewChild('nameInput') nameInput!: ElementRef;
+  addFoodForm!: FormGroup;
 
   searchText$!: Observable<string>;
   result$!: Observable<Food[]>;
@@ -56,6 +56,7 @@ export class FoodInputComponent implements OnInit {
     )!;
 
     this.getFoodSearchResults();
+
   }
 
   private loadFoods(searchText: string): Observable<Food[]> {
@@ -64,10 +65,18 @@ export class FoodInputComponent implements OnInit {
   }
 
   private getFoodSearchResults(): void {
+
     // autocomplete
     this.result$ = this.searchText$
       .pipe(
-        switchMap((searchText) => this.foodService.getFoodsByName(searchText)),
+        switchMap((searchText) => {
+          if (searchText) {
+            return this.foodService.getFoodsByName(searchText).pipe(
+              catchError(() => of([]))
+            );
+          }
+          return of([]);
+        }),
         map((foods: Food[]) => {
           const seen = {};
           return foods.filter((item) =>

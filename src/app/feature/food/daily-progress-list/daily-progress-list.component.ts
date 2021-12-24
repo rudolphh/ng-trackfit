@@ -1,19 +1,19 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
-import { catchError, take } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { debounceTime, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 import { DatePipe } from '@angular/common';
 import { Food } from 'src/app/core/models/food.model';
 import { FoodService } from '../food.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-daily-progress-list',
   templateUrl: './daily-progress-list.component.html',
   styleUrls: ['./daily-progress-list.component.css']
 })
-export class DailyProgressListComponent implements OnInit, AfterViewInit {
+export class DailyProgressListComponent implements OnInit, OnDestroy {
 
   @ViewChild('foodsSelect') foodsSelect!: MatSelectionList;
 
@@ -30,6 +30,8 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
   maxFoodsDisplayed = 3;
 
   foodsForm!: FormGroup;
+
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -56,8 +58,9 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   // form methods
@@ -75,7 +78,7 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
   }
 
   newFoodFormGroup(food: Food): FormGroup {
-    return this.fb.group({
+    const newFoodGroup = this.fb.group({
       id: [food.id],
       date: [food.date],
       time: [
@@ -94,6 +97,19 @@ export class DailyProgressListComponent implements OnInit, AfterViewInit {
         ]
       ]
     });
+
+    newFoodGroup.valueChanges.pipe(
+      debounceTime(500),
+      switchMap(formValue => {
+        console.log('update food');
+        return of(formValue);
+        //service.save(formValue)
+      }),
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe(value => console.log(value));
+
+    return newFoodGroup;
   }
 
   resetDefaults(): void {
