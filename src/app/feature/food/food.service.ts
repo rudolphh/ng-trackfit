@@ -85,4 +85,16 @@ export class FoodService {
    };
     return this.http.delete<ApiResponse>(baseUrl, httpOptions);
   }
+
+  updateFood(food: Food): Observable<Food> {
+    const user: User = this.authService.currentUserValue;
+    const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods/${food.id}`;
+
+    return this.http.patch<ApiResponse>(baseUrl, food).pipe(
+      map((response: ApiResponse) => {
+        const data = response.data as Food;
+        return this.foodAdapter.adapt(data);
+      })
+    );
+  }
 }

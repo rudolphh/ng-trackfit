@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { Observable, Subject, of } from 'rxjs';
-import { debounceTime, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 import { DatePipe } from '@angular/common';
 import { Food } from 'src/app/core/models/food.model';
@@ -50,11 +50,11 @@ export class DailyProgressListComponent implements OnInit, OnDestroy {
     this.foods.subscribe((foods: Food[]) => {
       this.foodsFormArray.clear();
       this.dbFoods = foods;
-      this.percentOfDaily = this.updatePercent();
 
       foods.map((food: Food) => {
         this.addNewFood(food);
       });
+      this.percentOfDaily = this.updatePercent();
     });
   }
 
@@ -99,15 +99,18 @@ export class DailyProgressListComponent implements OnInit, OnDestroy {
     });
 
     newFoodGroup.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(1000),
+      distinctUntilChanged(),
       switchMap(formValue => {
         console.log('update food');
-        return of(formValue);
-        //service.save(formValue)
+        return this.foodService.updateFood(formValue);
       }),
       takeUntil(this.unsubscribe$)
     )
-    .subscribe(value => console.log(value));
+    .subscribe(value => {
+      console.log(value);
+      this.percentOfDaily = this.updatePercent();
+    });
 
     return newFoodGroup;
   }
@@ -119,9 +122,10 @@ export class DailyProgressListComponent implements OnInit, OnDestroy {
   }
 
   updatePercent(): number {
-    const currentCalories: number = this.dbFoods.reduce((prev, curr) => {
-      return prev + curr.calories;
+    const currentCalories: number = this.foodsFormArray.controls.reduce((prev, curr) => {
+      return prev + +curr.value.calories;
     }, 0);
+    console.log(currentCalories);
 
     this.remainingCalories = this.maxCalories - currentCalories;
     return (currentCalories / this.maxCalories) * 100;

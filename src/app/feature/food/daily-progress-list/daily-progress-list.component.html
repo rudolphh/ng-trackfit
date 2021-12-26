@@ -1,5 +1,7 @@
 <!-- progress bar -->
-<mat-progress-bar mode="determinate" [value]="percentOfDaily"
+<mat-progress-bar
+  mode="determinate"
+  [value]="percentOfDaily"
   [ngClass]="progressBarColor()"
 ></mat-progress-bar>
 
@@ -39,7 +41,11 @@
 <!-- start foods list divider -->
 <mat-divider class="mt-2 mb-3"></mat-divider>
 
-<div *ngIf="dbFoods.length === 0;" class="d-flex justify-content-center my-4">
+<div
+  *ngIf="dbFoods.length === 0"
+  class="d-flex justify-content-center my-4 mx-3 p-3 bg-dark"
+  [class.mat-elevation-z12]="true"
+>
   <span class="d-flex align-items-center">
     <i
       class="fas fa-exclamation-circle text-success mx-2"
@@ -50,53 +56,63 @@
 </div>
 
 <form [formGroup]="foodsForm">
-<mat-selection-list #foodsSelect id="food-selection-list">
-  <div formArrayName="foods"
-  *ngFor="let food of foodsFormArray.controls.slice(0, maxFoodsDisplayed); let i = index;">
-    <div [formGroupName]="i" class="d-flex justify-content-between">
-      <span class="mr-2">
-        <mat-form-field style="max-width: 100px" appearance="fill">
-          <mat-label>Time</mat-label>
-          <input formControlName="time" type="time"
-            matInput
-            name="time-{{ i }}"
-          />
-        </mat-form-field>
-      </span>
+  <mat-selection-list #foodsSelect id="food-selection-list">
+    <div
+      formArrayName="foods"
+      *ngFor="
+        let food of foodsFormArray.controls.slice(0, maxFoodsDisplayed);
+        let i = index
+      "
+    >
+      <div [formGroupName]="i" class="d-flex justify-content-between">
+        <span class="mr-2">
+          <mat-form-field style="max-width: 100px" appearance="fill">
+            <mat-label>Time</mat-label>
+            <input
+              formControlName="time"
+              type="time"
+              matInput
+              name="time-{{ i }}"
+            />
+          </mat-form-field>
+        </span>
 
-      <span class="flex-grow-1">
-        <mat-form-field class="w-100" appearance="fill">
-          <mat-label>Food</mat-label>
-          <input formControlName="name"
-            matInput
-            name="name-{{ i }}"
-            placeholder="Ex. Pizza"
-          />
-        </mat-form-field>
-      </span>
+        <span class="flex-grow-1">
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label>Food</mat-label>
+            <input
+              formControlName="name"
+              matInput
+              name="name-{{ i }}"
+              placeholder="Ex. Pizza"
+            />
+          </mat-form-field>
+        </span>
 
-      <span class="ml-2">
-        <mat-form-field style="max-width: 100px" appearance="fill">
-          <mat-label>Calories</mat-label>
-          <input formControlName="calories" appNumbersOnly
-            matInput
-            name="calories-{{ i }}"
-            placeholder="250"
-          />
-        </mat-form-field>
-      </span>
+        <span class="ml-2">
+          <mat-form-field style="max-width: 100px" appearance="fill">
+            <mat-label>Calories</mat-label>
+            <input
+              formControlName="calories"
+              appNumbersOnly
+              matInput
+              name="calories-{{ i }}"
+              placeholder="250"
+            />
+          </mat-form-field>
+        </span>
 
-      <mat-list-option
-        style="max-width: 64px; height: 51px"
-        color="warn"
-        class="ml-2"
-        (click)="optionClick()"
-        [value]="food"
-      >
-      </mat-list-option>
+        <mat-list-option
+          style="max-width: 64px; height: 51px"
+          color="warn"
+          class="ml-2"
+          (click)="optionClick()"
+          [value]="food"
+        >
+        </mat-list-option>
+      </div>
     </div>
-  </div>
-</mat-selection-list>
+  </mat-selection-list>
 </form>
 
 <!-- end foods list -->
@@ -117,9 +133,7 @@
     style="height: 51px; color: lightgrey"
   >
     <span>load</span>
-    <i
-      class="fas fa-arrow-circle-down mx-2"
-    ></i>
+    <i class="fas fa-arrow-circle-down mx-2"></i>
     <span>more</span>
   </button>
 

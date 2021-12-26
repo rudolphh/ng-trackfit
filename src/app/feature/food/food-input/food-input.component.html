@@ -1,8 +1,10 @@
 <div>
+  <!-- form -->
   <form [formGroup]="addFoodForm" (ngSubmit)="onSubmit(formDirective)"
   #formDirective="ngForm"
   class="d-flex">
     <span class="flex-grow-1">
+      <!-- food input -->
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>Food</mat-label>
         <input
@@ -27,9 +29,11 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
+      <!-- end food input -->
     </span>
 
     <span class="ml-2">
+      <!-- calorie input -->
       <mat-form-field style="max-width: 100px" appearance="fill">
         <mat-label>Calories</mat-label>
         <input
@@ -40,9 +44,11 @@
           appNumbersOnly
         />
       </mat-form-field>
+      <!-- end calorie input -->
     </span>
 
     <span class="ml-2">
+      <!-- submit button -->
       <button
         id="addFoodBtn"
         mat-flat-button
