@@ -16,7 +16,7 @@
         />
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option
-            *ngFor="let option of result$ | async"
+            *ngFor="let option of autocompleteOptions$ | async"
             [value]="option.name"
             (onSelectionChange)="setFood($event, option)"
           >

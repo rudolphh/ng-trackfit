@@ -1,6 +1,7 @@
 import { DailyProgressListComponent } from './daily-progress-list/daily-progress-list.component';
 import { DatePipe } from '@angular/common';
 import { FoodInputComponent } from './food-input/food-input.component';
+import { FoodListComponent } from './food-list/food-list.component';
 import { FoodService } from './food.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,13 +14,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { RouterModule } from '@angular/router';
+import { SelectAllComponent } from './select-all/select-all.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
     DailyProgressListComponent,
     FoodInputComponent,
+    FoodListComponent,
     ProgressBarComponent,
+    SelectAllComponent
   ],
   imports: [
     SharedModule,

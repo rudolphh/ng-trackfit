@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 
-import { FoodService } from '../food.service';
+import { FoodDataService } from '../food-data.service';
 import { MatOptionSelectionChange } from '@angular/material/core';
+import { Observable } from 'rxjs';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -22,17 +22,14 @@ import { Validators } from '@angular/forms';
 })
 export class FoodInputComponent implements OnInit {
   @Output() newFoodCreatedEvent: EventEmitter<Food> = new EventEmitter<Food>();
-
   @ViewChild('nameInput') nameInput!: ElementRef;
-
   addFoodForm!: FormGroup;
-  searchText$!: Observable<string>;
-  result$!: Observable<Food[]>;
+  autocompleteOptions$!: Observable<Food[]>;
 
   constructor(
     private fb: FormBuilder,
     private foodAdapter: FoodAdapter,
-    private foodService: FoodService
+    private foodDataService: FoodDataService
   ) {}
 
   ngOnInit(): void {
@@ -48,48 +45,27 @@ export class FoodInputComponent implements OnInit {
       ],
     });
 
-    // tslint:disable-next-line: no-non-null-assertion
-    this.searchText$ = this.addFoodForm.get('name')?.valueChanges.pipe(
+    this.autocompleteOptions$ = this.foodDataService.autocompleteOptions;
+
+    const searchText$ = this.addFoodForm.get('name')?.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap(searchText => console.log('searchText: ', searchText))
-    )!;
+      tap((searchText) => console.log('searchText: ', searchText)),
+      // null (after selecting autocomplete option), or special characters return empty string
+      map((searchText) =>
+        searchText ? searchText.replace(/[&\/\\#^+()$~%.'":*?<>{}!@]/g, '') : ''
+      )
+    );
 
-    this.getFoodSearchResults();
-
-  }
-
-  private getFoodSearchResults(): void {
-
-    // autocomplete
-    this.result$ = this.searchText$
-      .pipe(
-        switchMap((searchText) => {
-          if (searchText) {
-            return this.foodService.getFoodsByName(searchText).pipe(
-              catchError(() => of([]))
-            );
-          }
-          return of([]);
-        }),
-        map((foods: Food[]) => {
-          const seen = {};
-          return foods.filter((item) =>
-            seen.hasOwnProperty(item.calories)
-              ? false
-              : (seen[item.calories] = true)
-          );
-        })
-      );
-  }
-
-  getFoodText(food: Food): string {
-    return food.name;
+    searchText$?.subscribe((searchText) =>
+      this.foodDataService.updateAutocompleteOptions(searchText)
+    );
   }
 
   setFood(option: MatOptionSelectionChange, food: Food): void {
-    if (option.isUserInput){
-      this.getFoodSearchResults();
+    if (option.isUserInput) {
+      // the name control is set automatically so just clear autocomplete options
+      this.foodDataService.updateAutocompleteOptions('');
       this.addFoodForm.get('calories')?.setValue(food.calories);
     }
   }
@@ -98,8 +74,12 @@ export class FoodInputComponent implements OnInit {
     Object.keys(this.addFoodForm.controls).forEach((key) => {
       this.addFoodForm.get(key)?.setErrors(null);
     });
+
     this.addFoodForm.reset();
     formDirective.resetForm();
+
+    this.foodDataService.updateAutocompleteOptions('');
+    this.nameInput.nativeElement.focus();
   }
 
   onSubmit(formDirective: FormGroupDirective): void {
@@ -119,8 +99,5 @@ export class FoodInputComponent implements OnInit {
 
     this.newFoodCreatedEvent.emit(newFood); // output the new food created
     this.resetForm(formDirective);
-
-    this.getFoodSearchResults();
-    this.nameInput.nativeElement.focus();
   }
 }

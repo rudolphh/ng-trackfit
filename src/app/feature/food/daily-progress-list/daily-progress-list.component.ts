@@ -181,15 +181,11 @@ export class DailyProgressListComponent implements OnInit, OnDestroy {
     this.maxFoodsDisplayed = 3;
   }
 
-  remainingCaloriesColor(): string {
-    return this.percentOfDaily < 75
-      ? 'light-text-success'
-      : this.percentOfDaily < 100
-        ? 'light-text-primary'
-        : 'light-text-danger';
+  anySelected(): boolean {
+    return this.foodsSelect.selectedOptions.selected.length > 0;
   }
 
   trackByFn(index: any, item: { id: any; }): any {
     return item.id; // unique id corresponding to the item
- }
+  }
 }

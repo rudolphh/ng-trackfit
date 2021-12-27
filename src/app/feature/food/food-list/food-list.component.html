@@ -1,0 +1,60 @@
+<form [formGroup]="foodsForm">
+  <mat-selection-list #foodsSelect id="food-selection-list">
+    <div
+      formArrayName="foods"
+      *ngFor="
+        let food of foodsControls;
+        let i = index
+      "
+    >
+      <div [formGroupName]="i" class="d-flex justify-content-between">
+        <span class="mr-2">
+          <mat-form-field style="max-width: 100px" appearance="fill">
+            <mat-label>Time</mat-label>
+            <input
+              formControlName="time"
+              type="time"
+              matInput
+              name="time-{{ i }}"
+            />
+          </mat-form-field>
+        </span>
+
+        <span class="flex-grow-1">
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label>Food</mat-label>
+            <input
+              formControlName="name"
+              matInput
+              name="name-{{ i }}"
+              placeholder="Ex. Pizza"
+            />
+          </mat-form-field>
+        </span>
+
+        <span class="ml-2">
+          <mat-form-field style="max-width: 100px" appearance="fill">
+            <mat-label>Calories</mat-label>
+            <input
+              formControlName="calories"
+              appNumbersOnly
+              matInput
+              name="calories-{{ i }}"
+              maxLength="4"
+              placeholder="250"
+            />
+          </mat-form-field>
+        </span>
+
+        <mat-list-option
+          style="max-width: 64px; height: 51px"
+          color="warn"
+          class="ml-2"
+          (click)="optionClick()"
+          [value]="food"
+        >
+        </mat-list-option>
+      </div>
+    </div>
+  </mat-selection-list>
+</form>
