@@ -9,7 +9,7 @@ import {
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
 import { FoodService } from '../food.service';
 import { MatOptionSelectionChange } from '@angular/material/core';
@@ -21,11 +21,11 @@ import { Validators } from '@angular/forms';
   styleUrls: ['./food-input.component.css'],
 })
 export class FoodInputComponent implements OnInit {
-  @ViewChild('nameInput') nameInput!: ElementRef;
   @Output() newFoodCreatedEvent: EventEmitter<Food> = new EventEmitter<Food>();
 
-  addFoodForm!: FormGroup;
+  @ViewChild('nameInput') nameInput!: ElementRef;
 
+  addFoodForm!: FormGroup;
   searchText$!: Observable<string>;
   result$!: Observable<Food[]>;
 
@@ -59,11 +59,6 @@ export class FoodInputComponent implements OnInit {
 
   }
 
-  private loadFoods(searchText: string): Observable<Food[]> {
-
-    return this.foodService.getFoodsByName(searchText);
-  }
-
   private getFoodSearchResults(): void {
 
     // autocomplete
@@ -93,7 +88,6 @@ export class FoodInputComponent implements OnInit {
   }
 
   setFood(option: MatOptionSelectionChange, food: Food): void {
-
     if (option.isUserInput){
       this.getFoodSearchResults();
       this.addFoodForm.get('calories')?.setValue(food.calories);
@@ -101,15 +95,11 @@ export class FoodInputComponent implements OnInit {
   }
 
   resetForm(formDirective: FormGroupDirective): void {
-    this.addFoodForm.reset();
-
     Object.keys(this.addFoodForm.controls).forEach((key) => {
       this.addFoodForm.get(key)?.setErrors(null);
     });
-    this.nameInput.nativeElement.focus();
-
+    this.addFoodForm.reset();
     formDirective.resetForm();
-    this.getFoodSearchResults();
   }
 
   onSubmit(formDirective: FormGroupDirective): void {
@@ -129,5 +119,8 @@ export class FoodInputComponent implements OnInit {
 
     this.newFoodCreatedEvent.emit(newFood); // output the new food created
     this.resetForm(formDirective);
+
+    this.getFoodSearchResults();
+    this.nameInput.nativeElement.focus();
   }
 }

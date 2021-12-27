@@ -1,15 +1,13 @@
 <!-- progress bar -->
-<mat-progress-bar
-  mode="determinate"
-  [value]="percentOfDaily"
-  [ngClass]="progressBarColor()"
-></mat-progress-bar>
+<app-progress-bar [percent]="percentOfDaily"></app-progress-bar>
 
-<div class="d-flex mt-2" style="height: 51px">
-  <span
-    >Remaining :
-    <span [ngClass]="remainingCaloriesColor()">{{ remainingCalories }}</span>
-  </span>
+<div class="float-left mt-1"
+>Remaining :
+<span [ngClass]="remainingCaloriesColor()">{{ remainingCalories }}</span>
+</div>
+
+<div class="d-flex mt-2 ml-auto" style="height: 51px">
+
   <div *ngIf="dbFoods.length !== 0" class="d-flex ml-auto">
     <button
       mat-flat-button
@@ -43,8 +41,7 @@
 
 <div
   *ngIf="dbFoods.length === 0"
-  class="d-flex justify-content-center my-4 mx-3 p-3 bg-dark"
-  [class.mat-elevation-z12]="true"
+  class="d-flex justify-content-center my-4"
 >
   <span class="d-flex align-items-center">
     <i
@@ -97,6 +94,7 @@
               appNumbersOnly
               matInput
               name="calories-{{ i }}"
+              maxLength="4"
               placeholder="250"
             />
           </mat-form-field>

@@ -125,7 +125,6 @@ export class DailyProgressListComponent implements OnInit, OnDestroy {
     const currentCalories: number = this.foodsFormArray.controls.reduce((prev, curr) => {
       return prev + +curr.value.calories;
     }, 0);
-    console.log(currentCalories);
 
     this.remainingCalories = this.maxCalories - currentCalories;
     return (currentCalories / this.maxCalories) * 100;
@@ -133,9 +132,7 @@ export class DailyProgressListComponent implements OnInit, OnDestroy {
 
   selectAllChange(): void {
     this.allFoodsSelected = !this.allFoodsSelected;
-    // this.foodsSelect.options.forEach(
-    //   (item: MatListOption) => (item.selected = this.allFoodsSelected)
-    // );
+
     if (this.allFoodsSelected) {
       this.maxFoodsDisplayed = this.dbFoods.length;
       setTimeout(() => {
@@ -190,17 +187,6 @@ export class DailyProgressListComponent implements OnInit, OnDestroy {
       : this.percentOfDaily < 100
         ? 'light-text-primary'
         : 'light-text-danger';
-  }
-
-  progressBarColor(): string {
-    // background-color: #2aa198; success
-    // #b58900; primary
-    // d33682; danger
-    return this.percentOfDaily < 75
-      ? 'success-progress'
-      : this.percentOfDaily < 100
-        ? 'primary-progress'
-        : 'danger-progress';
   }
 
   trackByFn(index: any, item: { id: any; }): any {

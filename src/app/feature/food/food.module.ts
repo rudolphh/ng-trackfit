@@ -11,13 +11,15 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
     DailyProgressListComponent,
-    FoodInputComponent
+    FoodInputComponent,
+    ProgressBarComponent,
   ],
   imports: [
     SharedModule,
