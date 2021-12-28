@@ -1,9 +1,10 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 
+import { ApiResponse } from 'src/app/core/models/api-response';
 import { Food } from 'src/app/core/models/food.model';
 import { FoodService } from './food.service';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class FoodDataService {
@@ -63,5 +64,40 @@ export class FoodDataService {
 
     return obs;
   }
+
+  addFood(food: Food): Observable<Food> {
+    let obs = this.foodService.addFood(food);
+
+    obs.subscribe(savedFood => {
+      const foods = [savedFood, ...this.todaysFoodDataSource.getValue()];
+      this.todaysFoodDataSource.next(foods);
+    });
+
+    return obs;
+  }
+
+  saveFood(food: Food): Observable<Food> {
+    let obs = this.foodService.updateFood(food);
+
+    obs.subscribe(savedFood => {
+      console.log('saved');
+    });
+
+    return obs;
+  }
+
+  deleteFoods(foodIds: string[], remainingFoods: Food[]): Observable<ApiResponse> {
+    let obs = this.foodService.deleteFoods(foodIds);
+
+    obs.subscribe(response => {
+      if (response.success) {
+        this.todaysFoodDataSource.next(remainingFoods);
+      }
+    });
+
+    return obs;
+  }
+
+
 
 }

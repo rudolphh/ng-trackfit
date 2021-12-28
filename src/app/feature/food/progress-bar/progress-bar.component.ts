@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
       [value]="percent"
       [ngClass]="progressBarColor()"
     ></mat-progress-bar>
-    <div class="float-left mt-1"
+    <div class="float-left mt-2"
       >Remaining :
       <span [ngClass]="remainingColor()">{{ remaining }}</span>
     </div>

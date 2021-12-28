@@ -3,7 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { DailyProgressListComponent } from '../../food/daily-progress-list/daily-progress-list.component';
 import { Food } from 'src/app/core/models/food.model';
-import { HomeService } from '../home.service';
+import { FoodDataService } from '../../food/food-data.service';
+import { HomeDataService } from '../home-data.service';
 
 declare var $: any;
 @Component({
@@ -14,34 +15,33 @@ declare var $: any;
 export class DashboardComponent implements OnInit {
 
   @ViewChild(DailyProgressListComponent) dailyProgressList!: DailyProgressListComponent;
-
-  selectedDate: Date = new Date();
+  selectedDate!: Date;
 
   bodyFatSubject$ = new BehaviorSubject<number>(0.2143);
   bodyFat$ = this.bodyFatSubject$.asObservable();
 
   maxCalories = 1800;
 
-  dbFoods$!: Observable<Food[]>;
-
   constructor(
-    private homeService: HomeService
+    private homeDataService: HomeDataService, private foodDataService: FoodDataService
   ) {
+    this.selectedDate = this.homeDataService.date;
     this.selectedDate.setHours(0, 0, 0, 0);
+    this.foodDataService.changeDate(this.selectedDate);
   }
 
   ngOnInit(): void {
-    this.dbFoods$ = this.homeService.dbFoods$;
-    this.homeService.getFoodsByDate(this.selectedDate);
+
   }
 
   setSelected(date: Date): void {
-    this.selectedDate = date;
-    this.homeService.getFoodsByDate(date);
+    this.foodDataService.changeDate(date);
   }
 
   addFood(food: Food): void {
+    // new date will get current time
     const selectedDateTimeNow = new Date();
+    // which we will keep and change to the selected date
     selectedDateTimeNow.setFullYear(
       this.selectedDate.getFullYear(),
       this.selectedDate.getMonth(),
@@ -49,14 +49,10 @@ export class DashboardComponent implements OnInit {
     );
 
     food.date = selectedDateTimeNow;
-    this.homeService.addFood(food);
+    this.foodDataService.addFood(food);
     this.dailyProgressList.resetDefaults();
   }
 
-  setFoods(foods: Food[]): void {
-    this.homeService.setFoods(foods);
-    this.dailyProgressList.resetDefaults();
-  }
 
 }
 

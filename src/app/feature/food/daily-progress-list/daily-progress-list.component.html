@@ -7,7 +7,7 @@
 <!-- select all -->
 <div class="d-flex mt-2" style="height: 51px">
   <app-select-all
-    *ngIf="dbFoods.length !== 0"
+    *ngIf="listLength !== 0"
     class="ml-auto"
     [anySelected]="anySelected()"
     (delete)="deleteSelected()"
@@ -19,7 +19,7 @@
 <!-- start foods list divider -->
 <mat-divider class="mt-2 mb-3"></mat-divider>
 
-<div *ngIf="dbFoods.length === 0" class="d-flex justify-content-center my-4">
+<div *ngIf="listLength === 0" class="d-flex justify-content-center my-4">
   <span class="d-flex align-items-center">
     <i
       class="fas fa-exclamation-circle text-success mx-2"
@@ -96,7 +96,7 @@
 <span class="d-flex mt-3">
   <button
     mat-flat-button
-    *ngIf="dbFoods.length > 3 && dbFoods.length > maxFoodsDisplayed"
+    *ngIf="listLength > 3 && listLength > maxFoodsDisplayed"
     (click)="loadMore()"
     class="
       w-100
