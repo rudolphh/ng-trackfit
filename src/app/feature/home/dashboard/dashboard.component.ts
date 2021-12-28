@@ -50,7 +50,6 @@ export class DashboardComponent implements OnInit {
 
     food.date = selectedDateTimeNow;
     this.foodDataService.addFood(food);
-    this.dailyProgressList.resetDefaults();
   }
 
 
