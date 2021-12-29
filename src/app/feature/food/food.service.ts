@@ -1,5 +1,6 @@
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -7,7 +8,6 @@ import { EnvService } from 'src/app/core/services/env.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models/user';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class FoodService {
@@ -35,13 +35,16 @@ export class FoodService {
     const user: User = this.authService.currentUserValue;
     const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods?start=${start}&end=${end}`;
 
+    console.log('getFoodsByDate called');
     return this.http
       .get<ApiResponse>(baseUrl)
       .pipe(
         map((response: ApiResponse) => {
+          console.log('inside map');
           const data = response.data as Food[];
           return data.map((food: Food) => this.foodAdapter.adapt(food));
-        })
+        }),
+        shareReplay()// for multiple view layer subscriptions
       );
   }
 

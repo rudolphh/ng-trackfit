@@ -12,7 +12,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
-  take,
   takeUntil,
 } from 'rxjs/operators';
 
@@ -46,9 +45,7 @@ export class DailyProgressListComponent
     });
   }
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.foodDataService.todaysFood
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
@@ -57,8 +54,13 @@ export class DailyProgressListComponent
         foods.map((food: Food) => {
           this.addNewFood(food);
         });
+
         this.resetDefaults();
       });
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   ngOnDestroy(): void {
@@ -175,7 +177,6 @@ export class DailyProgressListComponent
   resetDefaults(): void {
     this.allFoodsSelected = false;
     this.maxFoodsDisplayed = 3;
-    this.foodsSelect.deselectAll();
   }
 
   optionClick(): void {

@@ -22,6 +22,10 @@ export class DashboardComponent implements OnInit {
 
   maxCalories = 1800;
 
+  isLoading = false;
+
+  foods$!: Observable<Food[]>;
+
   constructor(
     private homeDataService: HomeDataService, private foodDataService: FoodDataService
   ) {
@@ -35,7 +39,10 @@ export class DashboardComponent implements OnInit {
   }
 
   setSelected(date: Date): void {
-    this.foodDataService.changeDate(date);
+    this.isLoading = true;
+    this.foodDataService.changeDate(date).subscribe(() => {
+        this.isLoading = false;
+    });
   }
 
   addFood(food: Food): void {

@@ -50,10 +50,13 @@
           (newFoodCreatedEvent)="addFood($event)"
         ></app-food-input>
 
-        <app-daily-progress-list
-          #dailyProgressList
-          [maxCalories]="maxCalories"
-        ></app-daily-progress-list>
+        <div [ngStyle]="{ 'opacity': isLoading ? 0.3 : 1 }">
+          <app-daily-progress-list
+            #dailyProgressList
+            [maxCalories]="maxCalories"
+          ></app-daily-progress-list>
+        </div>
+
       </div>
       <!-- end card-body-->
     </app-dash-card>
