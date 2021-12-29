@@ -35,12 +35,10 @@ export class FoodService {
     const user: User = this.authService.currentUserValue;
     const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods?start=${start}&end=${end}`;
 
-    console.log('getFoodsByDate called');
     return this.http
       .get<ApiResponse>(baseUrl)
       .pipe(
         map((response: ApiResponse) => {
-          console.log('inside map');
           const data = response.data as Food[];
           return data.map((food: Food) => this.foodAdapter.adapt(food));
         }),

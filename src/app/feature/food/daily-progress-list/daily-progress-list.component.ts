@@ -83,6 +83,16 @@ export class DailyProgressListComponent
     return (this.currentCalories / this.maxCalories) * 100;
   }
 
+  remainingColor(): string {
+    return this.percentOfDaily < 75
+      ? 'light-text-success'
+      : this.percentOfDaily < 90
+        ? 'light-text-primary'
+        : this.percentOfDaily < 100
+          ? 'light-text-warning'
+          : 'light-text-danger';
+  }
+
   // for select-all
   anySelected(): boolean {
     return this.foodsSelect?.selectedOptions.selected.length > 0 || false;

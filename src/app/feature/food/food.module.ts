@@ -12,7 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
-import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { ProgressBarComponent } from '../../shared/components/progress-bar/progress-bar.component';
 import { RouterModule } from '@angular/router';
 import { SelectAllComponent } from './select-all/select-all.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -22,7 +22,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     DailyProgressListComponent,
     FoodInputComponent,
     FoodListComponent,
-    ProgressBarComponent,
     SelectAllComponent
   ],
   imports: [
@@ -34,7 +33,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    MatProgressBarModule,
     MatTooltipModule,
   ],
   providers: [FoodService, DatePipe],

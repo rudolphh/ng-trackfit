@@ -4,10 +4,16 @@
   [remaining]="remainingCalories"
 ></app-progress-bar>
 
+<div class="float-left mt-2"
+  >Remaining :
+  <!-- <span class="light-text-info">{{ remainingCalories }}</span> -->
+  <span [ngClass]="remainingColor()">{{ remainingCalories }}</span>
+</div>
+
 <!-- select all -->
 <div class="d-flex mt-2" style="height: 51px">
   <app-select-all
-    *ngIf="listLength !== 0"
+    *ngIf="listLength > 1"
     class="ml-auto"
     [anySelected]="anySelected()"
     (delete)="deleteSelected()"

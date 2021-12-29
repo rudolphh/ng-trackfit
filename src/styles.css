@@ -52,6 +52,14 @@ body {
   color: #38d5c9 !important
 }
 
+.light-text-warning {
+  color: #dd6734 !important;
+}
+
 .light-text-danger {
   color: #e96ba8 !important;
-  }
+}
+
+.light-text-info {
+  color: #7ebbe7 !important
+}

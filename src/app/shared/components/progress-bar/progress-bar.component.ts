@@ -8,10 +8,6 @@ import { Component, Input } from '@angular/core';
       [value]="percent"
       [ngClass]="progressBarColor()"
     ></mat-progress-bar>
-    <div class="float-left mt-2"
-      >Remaining :
-      <span [ngClass]="remainingColor()">{{ remaining }}</span>
-    </div>
   `,
   styleUrls: ['./progress-bar.component.css']
 })
@@ -26,16 +22,11 @@ export class ProgressBarComponent {
     // d33682; danger
     return this.percent < 75
       ? 'success-progress'
-      : this.percent < 100
+      : this.percent < 90
         ? 'primary-progress'
-        : 'danger-progress';
+        : this.percent < 100
+          ? 'warning-progress'
+          : 'danger-progress';
   }
 
-  remainingColor(): string {
-    return this.percent < 75
-      ? 'light-text-success'
-      : this.percent < 100
-        ? 'light-text-primary'
-        : 'light-text-danger';
-  }
 }

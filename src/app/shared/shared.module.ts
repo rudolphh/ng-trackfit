@@ -8,8 +8,10 @@ import { GrowingSpinnerComponent } from './components/growing-spinner/growing-sp
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgModule } from '@angular/core';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
     DashCardComponent,
     FieldErrorDisplayComponent,
     GrowingSpinnerComponent,
-    NumbersOnlyDirective
+    NumbersOnlyDirective,
+    ProgressBarComponent,
    ],
    imports: [
      CommonModule,
@@ -26,6 +29,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
      MatCardModule,
      MatDatepickerModule,
      MatNativeDateModule,
+     MatProgressBarModule,
    ],
    providers: [MatDatepickerModule],
    exports: [
@@ -36,7 +40,8 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
      CommonModule,
      ReactiveFormsModule,
      FormsModule,
-     NumbersOnlyDirective
+     NumbersOnlyDirective,
+     ProgressBarComponent
   ]
 })
 export class SharedModule {}

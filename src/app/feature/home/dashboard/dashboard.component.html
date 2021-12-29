@@ -1,8 +1,7 @@
 
-<div class="row">
 
   <!-- general vitals dash card -->
-  <div class="col-md-12 col-lg-5 pb-4">
+  <div class="col-md-12 col-lg-5 mb-4 float-left">
     <app-vitals [latestBodyFat]="bodyFat$"></app-vitals>
     <!-- <app-dash-card>
       <div app-card-header>
@@ -15,7 +14,7 @@
   </div>
 
   <!-- daily vitals dash card -->
-  <div class="col-md-12 col-lg-7 pb-3">
+  <div class="col-md-12 col-lg-7 mb-4 float-right">
     <app-dash-card>
       <!-- card-header-->
       <div app-card-header class="d-flex align-items-center">
@@ -38,10 +37,10 @@
         <div class="d-flex justify-content-between">
           <div class="dash-vital mb-3">
             Daily Calories :
-            <span class="light-text-primary"> {{ maxCalories }}</span>
+            <span class="light-text-info"> {{ maxCalories }}</span>
           </div>
           <div class="dash-vital">
-            Strategy : <span class="light-text-success"> CUT</span>
+            Strategy : <span class="light-text-info"> CUT</span>
           </div>
         </div>
 
@@ -62,5 +61,54 @@
     </app-dash-card>
     <!-- end card -->
   </div>
-</div>
-<!-- end row -->
+
+  <div class="col-md-12 col-lg-5 mb-4 float-left">
+    <app-dash-card>
+      <div app-card-header>
+        Daily Macronutrients
+      </div>
+      <div app-card-body>
+        <div class="mb-4">
+          <div class="d-flex mb-1 px-1">
+            <span>protein</span>
+            <div class="ml-auto">
+              <span class="light-text-success">100</span> /
+              <span class="light-text-info">212 g</span>
+            </div>
+          </div>
+          <app-progress-bar
+            [percent]="50"
+          ></app-progress-bar>
+        </div>
+
+        <div class="mb-4">
+          <div class="d-flex mb-1 px-1">
+            <span>carbs</span>
+            <div class="ml-auto">
+              <span class="light-text-success">140</span> /
+              <span class="light-text-info">222 g</span>
+            </div>
+          </div>
+          <app-progress-bar
+            [percent]="90"
+          ></app-progress-bar>
+        </div>
+
+        <div class="mb-4">
+          <div class="d-flex mb-1 px-1">
+            <span>fats</span>
+            <div class="ml-auto">
+              <span class="light-text-success">40</span> /
+              <span class="light-text-info">50 g</span>
+            </div>
+          </div>
+          <app-progress-bar
+            [percent]="80"
+          ></app-progress-bar>
+        </div>
+
+      </div>
+    </app-dash-card>
+  </div>
+
+  <div class="clearfix"></div>
