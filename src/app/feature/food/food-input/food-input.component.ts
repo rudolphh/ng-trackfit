@@ -25,6 +25,7 @@ export class FoodInputComponent implements OnInit {
   @ViewChild('nameInput') nameInput!: ElementRef;
   addFoodForm!: FormGroup;
   autocompleteOptions$!: Observable<Food[]>;
+  macroOptions = false;
 
   constructor(
     private fb: FormBuilder,
@@ -99,5 +100,9 @@ export class FoodInputComponent implements OnInit {
 
     this.newFoodCreatedEvent.emit(newFood); // output the new food created
     this.resetForm(formDirective);
+  }
+
+  toggleMacroOptions(): void {
+    this.macroOptions = !this.macroOptions;
   }
 }

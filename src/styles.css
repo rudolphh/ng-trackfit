@@ -63,3 +63,7 @@ body {
 .light-text-info {
   color: #7ebbe7 !important
 }
+
+.mat-form-field-outline {
+  background-color: #073642 !important;
+}

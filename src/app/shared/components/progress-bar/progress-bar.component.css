@@ -16,7 +16,8 @@
 
 
 ::ng-deep .mat-progress-bar-buffer {
-  background: #c3c7ca;
+  /* background: #c3c7ca; */
+  background: #002b36;
 }
 
 ::ng-deep .mat-progress-bar {
