@@ -8,7 +8,7 @@
     style="max-height: 134px;"
   >
     <div class="d-flex">
-      <span class="flex-grow-1">
+      <span class="flex-grow-1" style="min-width: 0">
         <!-- food input -->
         <mat-form-field class="w-100" appearance="fill">
           <mat-label>Food</mat-label>
@@ -41,7 +41,7 @@
 
       <span class="ml-2">
         <!-- calorie input -->
-        <mat-form-field style="max-width: 100px" appearance="fill">
+        <mat-form-field style="max-width: 90px" appearance="fill">
           <mat-label>Calories</mat-label>
           <input
             matInput
@@ -68,18 +68,20 @@
       </span>
     </div>
 
-    <div *ngIf="!macroOptions" class="d-flex justify-content-center"
+    <div *ngIf="!macroOptions" class="d-flex justify-content-center my-1"
       style="position: relative; bottom: 10px;"
     >
       <a (click)="toggleMacroOptions()" class="light-text-info"
         style="cursor: pointer;"
-      >protein, carbs, or fats?</a>
+      >optional - protein, carbs, or fats</a>
     </div>
 
     <div class="d-flex" style="position: relative; bottom: 10px">
       <span class="" style="max-width: 33%">
         <!-- calorie input -->
-        <mat-form-field [hidden]="!macroOptions" class="w-100" appearance="outline">
+        <mat-form-field [hidden]="!macroOptions" appearance="outline"
+          class="text-center w-100"
+        >
           <mat-label>Protein</mat-label>
           <input
             matInput
@@ -94,7 +96,9 @@
 
       <span class="ml-2" style="max-width: 33%">
         <!-- calorie input -->
-        <mat-form-field [hidden]="!macroOptions" class="w-100" appearance="outline">
+        <mat-form-field [hidden]="!macroOptions" appearance="outline"
+          class="text-center w-100"
+        >
           <mat-label>Carbs</mat-label>
           <input
             matInput
@@ -109,7 +113,9 @@
 
       <span class="ml-2" style="max-width: 31%">
         <!-- calorie input -->
-        <mat-form-field [hidden]="!macroOptions" class="w-100" appearance="outline">
+        <mat-form-field [hidden]="!macroOptions" appearance="outline"
+          class="text-center w-100"
+        >
           <mat-label>Fats</mat-label>
           <input
             matInput

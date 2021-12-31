@@ -44,6 +44,9 @@ export class FoodInputComponent implements OnInit {
           Validators.maxLength(4),
         ],
       ],
+      protein: [''],
+      carbs: [''],
+      fats: ['']
     });
 
     this.autocompleteOptions$ = this.foodDataService.autocompleteOptions;
@@ -87,12 +90,15 @@ export class FoodInputComponent implements OnInit {
     if (!this.addFoodForm.valid) {
       return;
     }
-    const { name, calories } = this.addFoodForm.value; // these are strings
+    const { name, calories, protein, carbs, fats } = this.addFoodForm.value; // these are strings
     const now = Date.now();
     const newFood = this.foodAdapter.adapt({
       id: null,
       name,
       calories: +calories,
+      protein: +protein,
+      carbohydrate: +carbs,
+      fat: +fats,
       date: now,
       createdAt: now,
       updatedAt: now,

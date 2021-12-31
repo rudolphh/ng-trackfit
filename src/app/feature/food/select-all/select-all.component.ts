@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
         mat-flat-button
         *ngIf="anySelected"
         class="bg-danger mx-2"
-        style="min-width: 100px"
+        style="min-width: 90px"
         (click)="deleteClicked()"
       >
         <i class="fas fa-2x fa-trash-alt"></i>
@@ -17,11 +17,11 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
       <mat-selection-list
         (selectionChange)="selectionChanged()"
         id="select-all-foods"
-        style="min-width: 64px; padding-top: 0px"
+        style="min-width: 30px; padding-top: 0px"
       >
         <mat-list-option
           color="warn"
-          style="max-width: 64px; height: 51px"
+          style="height: 51px"
           [selected]="allSelected"
         >
         </mat-list-option>

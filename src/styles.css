@@ -67,3 +67,15 @@ body {
 .mat-form-field-outline {
   background-color: #073642 !important;
 }
+
+.mat-list-option {
+  max-width: 30px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix input {
+  padding: 1em 0 1em 0;
+}

@@ -1,3 +1,4 @@
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   AfterViewInit,
   Component,
@@ -6,7 +7,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import {
   debounceTime,
@@ -165,6 +165,31 @@ export class DailyProgressListComponent
           Validators.maxLength(4),
         ],
       ],
+      protein: [
+        food.protein,
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]*$'),
+          Validators.maxLength(4),
+        ],
+      ],
+      carbs: [
+        food.carbohydrate,
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]*$'),
+          Validators.maxLength(4),
+        ],
+      ],
+      fats: [
+        food.fat,
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]*$'),
+          Validators.maxLength(4),
+        ],
+      ],
+
     });
 
     newFoodGroup.valueChanges
@@ -207,5 +232,15 @@ export class DailyProgressListComponent
 
   loadReset(): void {
     this.maxFoodsDisplayed = 3;
+  }
+
+  onFocusEvent(event: any, locals: any): void{
+    console.log('on focus');
+    locals.isHidden = false;
+  }
+
+  onBlurEvent(event: any, locals: any): void{
+    //console.log(event.target);
+    locals.isHidden = true;
   }
 }
