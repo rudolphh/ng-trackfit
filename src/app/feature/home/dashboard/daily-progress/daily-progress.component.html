@@ -1,0 +1,56 @@
+<app-dash-card>
+  <!-- card-header-->
+  <div app-card-header class="d-flex align-items-center">
+    <app-custom-date-picker
+      [currentDate]="selectedDate"
+      (newDateSelectedEvent)="setSelected($event)"
+    ></app-custom-date-picker>
+
+    <i
+      class="fas fa-utensils ml-auto"
+      matTooltip="View Foods"
+      matTooltipPosition="left"
+      matTooltipShowDelay="500"
+      matTooltipHideDelay="1000"
+    ></i>
+  </div>
+
+  <!-- card-body -->
+  <div app-card-body>
+    <!-- daily vitals -->
+    <div class="d-flex justify-content-between">
+      <div class="dash-vital mb-3">
+        Daily Calories :
+        <span class="light-text-info"> {{ maxCalories }}</span>
+      </div>
+      <div class="dash-vital">
+        Strategy : <span class="light-text-info"> CUT</span>
+      </div>
+    </div>
+
+    <!-- food input -->
+    <app-food-input (newFoodCreatedEvent)="addFood($event)"></app-food-input>
+
+    <!-- progress bar -->
+    <app-progress-bar
+      [percent]="percentOfDaily"
+      [remaining]="remainingCalories"
+    ></app-progress-bar>
+
+    <!-- remaining calories -->
+    <div class="float-left mt-2">
+      Remaining :
+      <!-- <span class="light-text-info">{{ remainingCalories }}</span> -->
+      <span [ngClass]="remainingColor()">{{ remainingCalories }}</span>
+    </div>
+
+    <div [ngStyle]="{ opacity: isLoading ? 0.3 : 1 }">
+      <app-daily-progress-list
+        #dailyProgressList
+        [maxCalories]="maxCalories"
+      ></app-daily-progress-list>
+    </div>
+  </div>
+  <!-- end card-body-->
+</app-dash-card>
+<!-- end card -->

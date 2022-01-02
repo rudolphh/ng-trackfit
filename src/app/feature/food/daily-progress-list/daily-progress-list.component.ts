@@ -1,4 +1,3 @@
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   AfterViewInit,
   Component,
@@ -7,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import {
   debounceTime,
@@ -59,38 +59,11 @@ export class DailyProgressListComponent
       });
   }
 
-  ngAfterViewInit(): void {
-
-  }
+  ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-  }
-
-  // for progress bar
-  get currentCalories(): number {
-    return this.foodsFormArray.controls.reduce((prev, curr) => {
-      return prev + +curr.value.calories;
-    }, 0);
-  }
-
-  get remainingCalories(): number {
-    return this.maxCalories - this.currentCalories;
-  }
-
-  get percentOfDaily(): number {
-    return (this.currentCalories / this.maxCalories) * 100;
-  }
-
-  remainingColor(): string {
-    return this.percentOfDaily < 75
-      ? 'light-text-success'
-      : this.percentOfDaily < 90
-        ? 'light-text-primary'
-        : this.percentOfDaily < 100
-          ? 'light-text-warning'
-          : 'light-text-danger';
   }
 
   // for select-all
@@ -149,6 +122,12 @@ export class DailyProgressListComponent
   }
 
   newFoodFormGroup(food: Food): FormGroup {
+    const numberValidators = [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+      Validators.maxLength(4),
+    ];
+
     const newFoodGroup = this.fb.group({
       id: [food.id],
       date: [food.date],
@@ -157,39 +136,10 @@ export class DailyProgressListComponent
         [Validators.required],
       ],
       name: [food.name, Validators.required],
-      calories: [
-        food.calories,
-        [
-          Validators.required,
-          Validators.pattern('^[0-9]*$'),
-          Validators.maxLength(4),
-        ],
-      ],
-      protein: [
-        food.protein,
-        [
-          Validators.required,
-          Validators.pattern('^[0-9]*$'),
-          Validators.maxLength(4),
-        ],
-      ],
-      carbs: [
-        food.carbohydrate,
-        [
-          Validators.required,
-          Validators.pattern('^[0-9]*$'),
-          Validators.maxLength(4),
-        ],
-      ],
-      fats: [
-        food.fat,
-        [
-          Validators.required,
-          Validators.pattern('^[0-9]*$'),
-          Validators.maxLength(4),
-        ],
-      ],
-
+      calories: [food.calories, numberValidators],
+      protein: [food.protein, numberValidators],
+      carbohydrate: [food.carbohydrate, numberValidators],
+      fat: [food.fat, numberValidators],
     });
 
     newFoodGroup.valueChanges
@@ -197,8 +147,8 @@ export class DailyProgressListComponent
         debounceTime(1000),
         distinctUntilChanged(),
         switchMap((formValue) => {
-          console.log('update food');
-          return this.foodDataService.saveFood(formValue);
+          console.log('update food: ' + formValue);
+          return this.foodDataService.saveFood(formValue as Food);
         }),
         takeUntil(this.unsubscribe$)
       )
@@ -234,12 +184,12 @@ export class DailyProgressListComponent
     this.maxFoodsDisplayed = 3;
   }
 
-  onFocusEvent(event: any, locals: any): void{
+  onFocusEvent(event: any, locals: any): void {
     console.log('on focus');
     locals.isHidden = false;
   }
 
-  onBlurEvent(event: any, locals: any): void{
+  onBlurEvent(event: any, locals: any): void {
     //console.log(event.target);
     locals.isHidden = true;
   }

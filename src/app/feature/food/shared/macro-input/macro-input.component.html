@@ -1,0 +1,143 @@
+<!-- macro inputs -->
+
+<div [formGroup]="form">
+  <!-- when used for single control (food-input)-->
+  <div *ngIf="foodIndex === -1">
+    <div
+      class="d-flex"
+      style="position: relative; bottom: 5px"
+      [ngStyle]="{ height: isHidden ? 0 : '100%' }"
+    >
+      <span style="max-width: 33%">
+        <!-- calorie input -->
+        <mat-form-field
+          appearance="outline"
+          class="text-center w-100"
+          [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+        >
+          <mat-label>Protein</mat-label>
+          <input
+            (focus)="onFocusEvent()"
+            (blur)="onBlurEvent()"
+            matInput
+            maxLength="4"
+            formControlName="protein"
+            appNumbersOnly
+          />
+        </mat-form-field>
+        <!-- end calorie input -->
+      </span>
+
+      <span class="ml-2" style="max-width: 33%">
+        <!-- calorie input -->
+        <mat-form-field
+          appearance="outline"
+          class="text-center w-100"
+          [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+        >
+          <mat-label>Carbs</mat-label>
+          <input
+            (focus)="onFocusEvent()"
+            (blur)="onBlurEvent()"
+            matInput
+            maxLength="4"
+            formControlName="carbohydrate"
+            appNumbersOnly
+          />
+        </mat-form-field>
+        <!-- end calorie input -->
+      </span>
+
+      <span class="ml-2" style="max-width: 31%">
+        <!-- calorie input -->
+        <mat-form-field
+          appearance="outline"
+          class="text-center w-100"
+          [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+        >
+          <mat-label>Fats</mat-label>
+          <input
+            (focus)="onFocusEvent()"
+            (blur)="onBlurEvent()"
+            matInput
+            maxLength="4"
+            formControlName="fat"
+            appNumbersOnly
+          />
+        </mat-form-field>
+        <!-- end calorie input -->
+      </span>
+    </div>
+  </div>
+
+  <!-- when used for formarray controls (daily-progress-list)-->
+  <div *ngIf="foodIndex >= 0" formArrayName="foods">
+    <div [formGroupName]="foodIndex">
+      <div
+        class="d-flex"
+        style="position: relative; bottom: 5px"
+        [ngStyle]="{ height: isHidden ? 0 : '100%' }"
+      >
+        <span style="max-width: 33%">
+          <!-- calorie input -->
+          <mat-form-field
+            appearance="outline"
+            class="text-center w-100"
+            [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+          >
+            <mat-label>Protein</mat-label>
+            <input
+              (focus)="onFocusEvent()"
+              (blur)="onBlurEvent()"
+              matInput
+              maxLength="4"
+              formControlName="protein"
+              appNumbersOnly
+            />
+          </mat-form-field>
+          <!-- end calorie input -->
+        </span>
+
+        <span class="ml-2" style="max-width: 33%">
+          <!-- calorie input -->
+          <mat-form-field
+            appearance="outline"
+            class="text-center w-100"
+            [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+          >
+            <mat-label>Carbs</mat-label>
+            <input
+              (focus)="onFocusEvent()"
+              (blur)="onBlurEvent()"
+              matInput
+              maxLength="4"
+              formControlName="carbohydrate"
+              appNumbersOnly
+            />
+          </mat-form-field>
+          <!-- end calorie input -->
+        </span>
+
+        <span class="ml-2" style="max-width: 31%">
+          <!-- calorie input -->
+          <mat-form-field
+            appearance="outline"
+            class="text-center w-100"
+            [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+          >
+            <mat-label>Fats</mat-label>
+            <input
+              (focus)="onFocusEvent()"
+              (blur)="onBlurEvent()"
+              matInput
+              maxLength="4"
+              formControlName="fat"
+              appNumbersOnly
+            />
+          </mat-form-field>
+          <!-- end calorie input -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

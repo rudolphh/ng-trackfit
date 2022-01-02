@@ -14,6 +14,10 @@ export class FoodDataService {
 
   constructor(private foodService: FoodService) {}
 
+  get foods(): Food[] {
+    return this.todaysFoodDataSource.getValue();
+  }
+
   get todaysFood(): Observable<Food[]> {
     return this.todaysFoodDataSource.asObservable();
   }

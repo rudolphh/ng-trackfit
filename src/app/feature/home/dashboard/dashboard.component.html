@@ -3,63 +3,15 @@
   <!-- general vitals dash card -->
   <div class="col-md-12 col-lg-5 mb-4 float-left">
     <app-vitals [latestBodyFat]="bodyFat$"></app-vitals>
-    <!-- <app-dash-card>
-      <div app-card-header>
-        Daily Macronutrients
-      </div>
-      <div app-card-body>
-
-      </div>
-    </app-dash-card> -->
   </div>
 
   <!-- daily vitals dash card -->
   <div class="col-md-12 col-lg-7 mb-4 float-right">
-    <app-dash-card>
-      <!-- card-header-->
-      <div app-card-header class="d-flex align-items-center">
-        <app-custom-date-picker
-          (newDateSelectedEvent)="setSelected($event)"
-        ></app-custom-date-picker>
-
-        <i
-          class="fas fa-utensils flex-right"
-          matTooltip="View Foods"
-          matTooltipPosition="left"
-          matTooltipShowDelay="500"
-          matTooltipHideDelay="1000"
-        ></i>
-      </div>
-
-      <!-- card-body -->
-      <div app-card-body>
-        <!-- daily vitals -->
-        <div class="d-flex justify-content-between">
-          <div class="dash-vital mb-3">
-            Daily Calories :
-            <span class="light-text-info"> {{ maxCalories }}</span>
-          </div>
-          <div class="dash-vital">
-            Strategy : <span class="light-text-info"> CUT</span>
-          </div>
-        </div>
-
-        <!-- food input -->
-        <app-food-input
-          (newFoodCreatedEvent)="addFood($event)"
-        ></app-food-input>
-
-        <div [ngStyle]="{ 'opacity': isLoading ? 0.3 : 1 }">
-          <app-daily-progress-list
-            #dailyProgressList
-            [maxCalories]="maxCalories"
-          ></app-daily-progress-list>
-        </div>
-
-      </div>
-      <!-- end card-body-->
-    </app-dash-card>
-    <!-- end card -->
+    <app-daily-progress
+      [selectedDate]="initialDate"
+      [isLoading]="isLoading"
+      >
+    </app-daily-progress>
   </div>
 
   <div class="col-md-12 col-lg-5 mb-4 float-left">
@@ -68,11 +20,11 @@
         Daily Macronutrients
       </div>
       <div app-card-body>
-        <div class="pt-2 mb-4">
+        <div class="pt-3 mb-4">
           <div class="d-flex mb-2 px-1">
             <span>protein</span>
             <div class="ml-auto">
-              <span class="light-text-success">100</span> /
+              <span class="">100</span> /
               <span class="light-text-info">212 g</span>
             </div>
           </div>
@@ -81,11 +33,11 @@
           ></app-progress-bar>
         </div>
 
-        <div class="pt-2 mb-4">
+        <div class="pt-3 mb-4">
           <div class="d-flex mb-2 px-1">
             <span>carbs</span>
             <div class="ml-auto">
-              <span class="light-text-success">140</span> /
+              <span class="">140</span> /
               <span class="light-text-info">222 g</span>
             </div>
           </div>
@@ -94,11 +46,11 @@
           ></app-progress-bar>
         </div>
 
-        <div class="pt-2 mb-4">
+        <div class="pt-3 mb-5">
           <div class="d-flex mb-2 px-1">
             <span>fats</span>
             <div class="ml-auto">
-              <span class="light-text-success">40</span> /
+              <span class="">40</span> /
               <span class="light-text-info">50 g</span>
             </div>
           </div>

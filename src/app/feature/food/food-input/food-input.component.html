@@ -67,67 +67,21 @@
         </button>
       </span>
     </div>
-<!-- hi -->
+
+
     <div *ngIf="!macroOptions" class="d-flex justify-content-center my-1"
       style="position: relative; bottom: 10px;"
     >
-      <a (click)="toggleMacroOptions()" class="light-text-info"
+      <a (click)="toggleMacroOptions()" class="light-text-primary"
         style="cursor: pointer;"
-      >optional - protein, carbs, or fats</a>
+      >Macronutrients <span class="light-text-info">(optional)</span></a>
     </div>
 
-    <div class="d-flex" style="position: relative; bottom: 10px">
-      <span class="" style="max-width: 33%">
-        <!-- calorie input -->
-        <mat-form-field [hidden]="!macroOptions" appearance="outline"
-          class="text-center w-100"
-        >
-          <mat-label>Protein</mat-label>
-          <input
-            matInput
-            placeholder="250"
-            maxLength="4"
-            formControlName="protein"
-            appNumbersOnly
-          />
-        </mat-form-field>
-        <!-- end calorie input -->
-      </span>
-
-      <span class="ml-2" style="max-width: 33%">
-        <!-- calorie input -->
-        <mat-form-field [hidden]="!macroOptions" appearance="outline"
-          class="text-center w-100"
-        >
-          <mat-label>Carbs</mat-label>
-          <input
-            matInput
-            placeholder="250"
-            maxLength="4"
-            formControlName="carbs"
-            appNumbersOnly
-          />
-        </mat-form-field>
-        <!-- end calorie input -->
-      </span>
-
-      <span class="ml-2" style="max-width: 31%">
-        <!-- calorie input -->
-        <mat-form-field [hidden]="!macroOptions" appearance="outline"
-          class="text-center w-100"
-        >
-          <mat-label>Fats</mat-label>
-          <input
-            matInput
-            placeholder="250"
-            maxLength="4"
-            formControlName="fats"
-            appNumbersOnly
-          />
-        </mat-form-field>
-        <!-- end calorie input -->
-      </span>
-    </div>
+    <app-macro-input
+      [isHidden]="!macroOptions"
+      [form]="addFoodForm"
+      [foodIndex]="-1"
+    ></app-macro-input>
 
   </form>
   <!-- end form -->

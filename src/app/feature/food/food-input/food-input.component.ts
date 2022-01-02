@@ -45,8 +45,8 @@ export class FoodInputComponent implements OnInit {
         ],
       ],
       protein: [''],
-      carbs: [''],
-      fats: ['']
+      carbohydrate: [''],
+      fat: ['']
     });
 
     this.autocompleteOptions$ = this.foodDataService.autocompleteOptions;
@@ -90,20 +90,19 @@ export class FoodInputComponent implements OnInit {
     if (!this.addFoodForm.valid) {
       return;
     }
-    const { name, calories, protein, carbs, fats } = this.addFoodForm.value; // these are strings
+    const { name, calories, protein, carbohydrate, fat } = this.addFoodForm.value; // these are strings
     const now = Date.now();
     const newFood = this.foodAdapter.adapt({
       id: null,
       name,
-      calories: +calories,
-      protein: +protein,
-      carbohydrate: +carbs,
-      fat: +fats,
+      calories,
+      protein,
+      carbohydrate,
+      fat,
       date: now,
       createdAt: now,
       updatedAt: now,
     });
-
     this.newFoodCreatedEvent.emit(newFood); // output the new food created
     this.resetForm(formDirective);
   }

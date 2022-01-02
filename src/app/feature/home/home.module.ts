@@ -1,5 +1,4 @@
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { FoodModule } from '../food/food.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { LandingComponent } from './landing/landing.component';
@@ -16,13 +15,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { VitalsComponent } from './vitals/vitals.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
     LandingComponent,
-    VitalsComponent,
     HomeComponent,
   ],
   imports: [
@@ -39,7 +35,7 @@ import { VitalsComponent } from './vitals/vitals.component';
     MatStepperModule,
     MatTableModule,
     MatTooltipModule,
-    FoodModule,
+    DashboardModule,
   ],
   providers: [],
   exports: []

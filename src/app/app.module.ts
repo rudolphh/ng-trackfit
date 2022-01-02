@@ -3,6 +3,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CoreModule } from './core/core.module';
+import { DatePipe } from '@angular/common';
 import { ForgotPasswordModule } from './feature/forgot-password/forgot-password.module';
 import { HomeModule } from './feature/home/home.module';
 import { LoginModule } from './feature/login/login.module';
@@ -29,7 +30,7 @@ import { SettingsModule } from './feature/settings/settings.module';
     AppRoutingModule,
     CoreModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

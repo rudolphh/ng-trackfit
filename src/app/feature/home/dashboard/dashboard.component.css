@@ -6,14 +6,6 @@
     color: white;
 }
 
-.flex-right {
-  margin-left: auto;
-}
-
-.card-body {
-  /* border-bottom: 1px solid; */
-}
-
 ::ng-deep .mat-tooltip {
 
   background-color: #b58900 !important
