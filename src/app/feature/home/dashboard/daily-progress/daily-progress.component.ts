@@ -20,7 +20,8 @@ export class DailyProgressComponent implements OnInit {
     private foodDataService: FoodDataService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   setSelected(date: Date): void {
     this.homeDataService.setCurrentDate(date);

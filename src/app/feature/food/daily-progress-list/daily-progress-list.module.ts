@@ -1,5 +1,5 @@
 import { DailyProgressListComponent } from './daily-progress-list.component';
-import { FoodListComponent } from './food-list/food-list.component';
+import { FoodListFormComponent } from './food-list-form/food-list-form.component';
 import { FoodModule } from '../food.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     SelectAllComponent,
     DailyProgressListComponent,
-    FoodListComponent,
+    FoodListFormComponent,
   ],
   imports: [
     SharedModule,

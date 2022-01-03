@@ -6,14 +6,15 @@ import { Input } from '@angular/core';
 import { Output } from '@angular/core';
 
 @Component({
-  selector: 'app-food-list',
-  templateUrl: 'food-list.component.html',
-  styleUrls: ['./food-list.component.css']
+  selector: 'app-food-list-form',
+  templateUrl: 'food-list-form.component.html',
+  styleUrls: ['./food-list-form.component.css']
 })
-export class FoodListComponent implements OnInit {
+export class FoodListFormComponent implements OnInit {
 
   @Input() maxFoodsDisplayed = 3;
   @Output() optionClicked: EventEmitter<void> = new EventEmitter<void>();
+  @Output() length: EventEmitter<number> = new EventEmitter<number>();
   foodsForm!: FormGroup;
 
   constructor(private fb: FormBuilder) {}
@@ -23,6 +24,8 @@ export class FoodListComponent implements OnInit {
       foods: this.fb.array([])
     });
   }
+
+  
 
   get foodsFormArray(): FormArray{
     return this.foodsForm.get('foods') as FormArray;
@@ -34,6 +37,16 @@ export class FoodListComponent implements OnInit {
 
   optionClick(): void {
     this.optionClicked.emit();
+  }
+
+  onFocusEvent(event: any, locals: any): void {
+    console.log('on focus');
+    locals.isHidden = false;
+  }
+
+  onBlurEvent(event: any, locals: any): void {
+    //console.log(event.target);
+    locals.isHidden = true;
   }
 
 }

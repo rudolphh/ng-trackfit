@@ -50,7 +50,7 @@ export class DailyProgressListComponent
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
         this.foodsFormArray.clear();
-
+        console.log('daily-progress-list: ', foods);
         foods.map((food: Food) => {
           this.addNewFood(food);
         });

@@ -22,11 +22,15 @@ export class DashboardComponent {
     private homeDataService: HomeDataService,
     private foodDataService: FoodDataService
   ) {
+    // set initial date for entire dashboard
+    this.homeDataService.setCurrentDate(new Date());
+
     this.homeDataService.currentDate.subscribe((date: Date) => {
       // every date change we need all other date related data changes to go here
       this.initialDate = date;
       this.isLoading = true;
-      
+
+      console.log(date)
       this.foodDataService.changeDate(date).subscribe(() => {
         this.isLoading = false;
       });
