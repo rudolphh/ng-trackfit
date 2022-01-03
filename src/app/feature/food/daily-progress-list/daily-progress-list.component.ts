@@ -62,6 +62,7 @@ export class DailyProgressListComponent
   ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {
+    console.log('on destroy called')
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

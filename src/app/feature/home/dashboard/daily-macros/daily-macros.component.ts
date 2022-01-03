@@ -20,29 +20,6 @@ export class DailyMacrosComponent implements OnInit {
   constructor(private foodDataService: FoodDataService) {}
 
   ngOnInit(): void {
-    const macros = this.foodDataService.foods.reduce(
-      (prev, curr) => {
-        prev.protein += curr.protein;
-        prev.carbohydrate += curr.carbohydrate;
-        prev.fat += curr.fat;
-
-        return prev;
-      },
-      { protein: 0, carbohydrate: 0, fat: 0 }
-    );
-
-    console.log(macros);
-    this.protein = macros.protein;
-    this.carbohydrate = macros.carbohydrate;
-    this.fat = macros.fat;
-
-    this.macrosPercent.protein =
-      (macros.protein / this.max.protein) * 100;
-    this.macrosPercent.carbohydrate =
-      (macros.carbohydrate / this.max.carbohydrate) * 100;
-    this.macrosPercent.fat = (macros.fat / this.max.fat) * 100;
-
-    console.log(this.macrosPercent);
   }
 
   get currentMacros(): any {
