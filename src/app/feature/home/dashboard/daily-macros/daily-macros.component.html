@@ -1,0 +1,46 @@
+<app-dash-card>
+  <div app-card-header class="text-white">
+    Daily Macronutrients
+  </div>
+  <div app-card-body>
+    <div class="pt-3 mb-4">
+      <div class="d-flex mb-2 px-1">
+        <span>protein</span>
+        <div class="ml-auto">
+          <span class="">{{ currentMacros.protein }}</span> /
+          <span class="light-text-info">212 g</span>
+        </div>
+      </div>
+      <app-progress-bar
+        [percent]="currentMacroPercent.protein"
+      ></app-progress-bar>
+    </div>
+
+    <div class="pt-3 mb-4">
+      <div class="d-flex mb-2 px-1">
+        <span>carbs</span>
+        <div class="ml-auto">
+          <span class="">{{ currentMacros.carbohydrate }}</span> /
+          <span class="light-text-info">222 g</span>
+        </div>
+      </div>
+      <app-progress-bar
+        [percent]="currentMacroPercent.carbohydrate"
+      ></app-progress-bar>
+    </div>
+
+    <div class="pt-3 mb-4">
+      <div class="d-flex mb-2 px-1">
+        <span>fats</span>
+        <div class="ml-auto">
+          <span class="">{{ currentMacros.fat }}</span> /
+          <span class="light-text-info">50 g</span>
+        </div>
+      </div>
+      <app-progress-bar
+        [percent]="currentMacroPercent.fat"
+      ></app-progress-bar>
+    </div>
+
+  </div>
+</app-dash-card>

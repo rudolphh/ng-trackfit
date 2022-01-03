@@ -85,6 +85,12 @@ export class FoodDataService {
 
     obs.subscribe(savedFood => {
       console.log('saved');
+
+      const index = this.foods.findIndex(item => item.id === food.id);
+      console.log(index)
+      this.foods[index] = savedFood;
+      console.log(this.foods)
+
     });
 
     return obs;

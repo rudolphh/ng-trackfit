@@ -20,9 +20,9 @@ export class ProgressBarComponent {
     // background-color: #2aa198; success
     // #b58900; primary
     // d33682; danger
-    return this.percent < 75
+    return this.percent < 50
       ? 'success-progress'
-      : this.percent < 90
+      : this.percent < 75
         ? 'primary-progress'
         : this.percent < 100
           ? 'warning-progress'

@@ -1,3 +1,4 @@
+import { DailyMacrosComponent } from './daily-macros/daily-macros.component';
 import { DailyProgressComponent } from './daily-progress/daily-progress.component';
 import { DailyProgressListModule } from '../../food/daily-progress-list/daily-progress-list.module';
 import { DashboardComponent } from './dashboard.component';
@@ -11,7 +12,8 @@ import { VitalsComponent } from './vitals/vitals.component';
   declarations: [
     DashboardComponent,
     VitalsComponent,
-    DailyProgressComponent
+    DailyProgressComponent,
+    DailyMacrosComponent
   ],
   imports: [
     SharedModule,
