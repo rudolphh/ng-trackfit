@@ -12,6 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgModule } from '@angular/core';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { SmoothHeightComponent } from './components/smooth-height/smooth-height.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     GrowingSpinnerComponent,
     NumbersOnlyDirective,
     ProgressBarComponent,
+    SmoothHeightComponent
    ],
    imports: [
      CommonModule,
@@ -41,7 +43,8 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
      ReactiveFormsModule,
      FormsModule,
      NumbersOnlyDirective,
-     ProgressBarComponent
+     ProgressBarComponent,
+     SmoothHeightComponent
   ]
 })
 export class SharedModule {}
