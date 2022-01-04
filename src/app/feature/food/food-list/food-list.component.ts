@@ -23,11 +23,11 @@ import { FoodDataService } from '../food-data.service';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-daily-progress-list',
-  templateUrl: './daily-progress-list.component.html',
-  styleUrls: ['./daily-progress-list.component.css'],
+  selector: 'app-food-list',
+  templateUrl: './food-list.component.html',
+  styleUrls: ['./food-list.component.css'],
 })
-export class DailyProgressListComponent
+export class FoodListComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
   @ViewChild('foodsSelect') foodsSelect!: MatSelectionList;

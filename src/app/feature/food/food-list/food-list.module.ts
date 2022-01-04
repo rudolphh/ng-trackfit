@@ -1,4 +1,4 @@
-import { DailyProgressListComponent } from './daily-progress-list.component';
+import { FoodListComponent } from './food-list.component';
 import { FoodModule } from '../food.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     SelectAllComponent,
-    DailyProgressListComponent,
+    FoodListComponent,
   ],
   imports: [
     SharedModule,
@@ -24,6 +24,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatTooltipModule
   ],
   providers: [],
-  exports: [DailyProgressListComponent],
+  exports: [FoodListComponent],
 })
-export class DailyProgressListModule {}
+export class FoodListModule {}

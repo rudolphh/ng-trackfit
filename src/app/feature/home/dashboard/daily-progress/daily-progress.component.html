@@ -45,10 +45,9 @@
     </div>
 
     <div [ngStyle]="{ opacity: isLoading ? 0.3 : 1 }">
-      <app-daily-progress-list
-        #dailyProgressList
+      <app-food-list
         [maxCalories]="maxCalories"
-      ></app-daily-progress-list>
+      ></app-food-list>
     </div>
   </div>
   <!-- end card-body-->

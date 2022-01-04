@@ -1,7 +1,7 @@
 import { DailyMacrosComponent } from './daily-macros/daily-macros.component';
 import { DailyProgressComponent } from './daily-progress/daily-progress.component';
-import { DailyProgressListModule } from '../../food/daily-progress-list/daily-progress-list.module';
 import { DashboardComponent } from './dashboard.component';
+import { FoodListModule } from '../../food/food-list/food-list.module';
 import { FoodModule } from '../../food/food.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
@@ -18,7 +18,7 @@ import { VitalsComponent } from './vitals/vitals.component';
   imports: [
     SharedModule,
     FoodModule,
-    DailyProgressListModule,
+    FoodListModule,
     MatTooltipModule,
   ],
   providers: [],
