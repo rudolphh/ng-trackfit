@@ -32,6 +32,11 @@
                   style="font-size: 0.8em"
                   >{{ option.calories }}</span
                 >
+                <span
+                class="light-text-success ml-auto"
+                style="font-size: 0.8em"
+                >{{ option.protein }} - {{ option.carbohydrate }} - {{ option.fat }}</span
+              >
               </div>
             </mat-option>
           </mat-autocomplete>
@@ -72,7 +77,7 @@
     <div *ngIf="!macroOptions" class="d-flex justify-content-center my-1"
       style="position: relative; bottom: 5px; height: 30px"
     >
-      <a (click)="toggleMacroOptions()" class="light-text-primary"
+      <a (click)="toggleMacroOptions()" class="light-text-primary font-italic"
         style="cursor: pointer;"
       >Macronutrients <span class="light-text-info">(optional)</span></a>
     </div>

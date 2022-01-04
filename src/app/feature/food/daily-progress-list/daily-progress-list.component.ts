@@ -1,12 +1,14 @@
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   Input,
   OnDestroy,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import {
   debounceTime,
@@ -35,13 +37,41 @@ export class DailyProgressListComponent
   maxFoodsDisplayed = 3;
   unsubscribe$ = new Subject<void>();
 
+  @ViewChild('foodForm') foodForm!: ElementRef;
+  @ViewChild('loadButtons') loadButtons!: ElementRef;
+  closeFormMacroInputs = false;
+  isHidden = {}
+
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
-    private foodDataService: FoodDataService
+    private foodDataService: FoodDataService,
+    private renderer: Renderer2
   ) {
     this.foodsForm = this.fb.group({
       foods: this.fb.array([]),
+    });
+
+    this.renderer.listen('window', 'click',(e:Event)=>{
+      /**
+       * Only run when toggleButton is not clicked
+       * If we don't check this, all clicks (even on the toggle button) gets into this
+       * section which in the result we might never see the menu open!
+       * And the menu itself is checked here, and it's where we check just outside of
+       * the menu and button the condition abbove must close the menu
+       */
+      if(e.target === this.foodForm.nativeElement || this.foodForm.nativeElement.contains(e.target)
+        || e.target === this.loadButtons.nativeElement || this.loadButtons.nativeElement.contains(e.target)){
+        this.closeFormMacroInputs=false;
+        console.log(this.closeFormMacroInputs)
+      } else {
+        this.closeFormMacroInputs = true;
+        console.log(e.target)
+
+        for(let id in this.isHidden) {
+          this.isHidden[id] = true;
+        }
+      }
     });
   }
 
@@ -50,7 +80,7 @@ export class DailyProgressListComponent
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
         this.foodsFormArray.clear();
-        console.log('daily-progress-list: ', foods);
+
         foods.map((food: Food) => {
           this.addNewFood(food);
         });
@@ -105,6 +135,11 @@ export class DailyProgressListComponent
     });
   }
 
+  get foods(): AbstractControl[] {
+    const foods = this.foodsFormArray.controls;
+    return foods;
+  }
+
   // form methods
   get foodsFormArray(): FormArray {
     return this.foodsForm.get('foods') as FormArray;
@@ -115,21 +150,21 @@ export class DailyProgressListComponent
   }
 
   addNewFood(food: Food): void {
-    this.foodsFormArray.push(this.newFoodFormGroup(food));
+    this.foodsFormArray.push(this.addFoodFormGroup(food));
   }
 
   removeFood(index: number): void {
     this.foodsFormArray.removeAt(index);
   }
 
-  newFoodFormGroup(food: Food): FormGroup {
+  createNewFoodFormGroup(food: Food): FormGroup {
     const numberValidators = [
       Validators.required,
       Validators.pattern('^[0-9]*$'),
       Validators.maxLength(4),
     ];
 
-    const newFoodGroup = this.fb.group({
+    return this.fb.group({
       id: [food.id],
       date: [food.date],
       time: [
@@ -142,8 +177,11 @@ export class DailyProgressListComponent
       carbohydrate: [food.carbohydrate, numberValidators],
       fat: [food.fat, numberValidators],
     });
+  }
 
-    newFoodGroup.valueChanges
+  addFoodFormGroupValueChanges(foodFormGroup: FormGroup): FormGroup {
+
+    foodFormGroup.valueChanges
       .pipe(
         debounceTime(1000),
         distinctUntilChanged(),
@@ -157,7 +195,13 @@ export class DailyProgressListComponent
         console.log(value);
       });
 
-    return newFoodGroup;
+    return foodFormGroup;
+  }
+
+  addFoodFormGroup(food: Food): FormGroup {
+    const newFoodGroup = this.createNewFoodFormGroup(food);
+    this.isHidden[food.id] = true;
+    return this.addFoodFormGroupValueChanges(newFoodGroup);
   }
 
   resetDefaults(): void {
@@ -185,13 +229,19 @@ export class DailyProgressListComponent
     this.maxFoodsDisplayed = 3;
   }
 
-  onFocusEvent(event: any, locals: any): void {
+  onFocusEvent(event: any, index: any): void {
     console.log('on focus');
-    locals.isHidden = false;
+    this.isHidden[index] = false;
   }
 
-  onBlurEvent(event: any, locals: any): void {
+  onBlurEvent(event: any, index: any): void {
     //console.log(event.target);
-    locals.isHidden = true;
+    if(this.closeFormMacroInputs)
+      this.isHidden[index] = true;
+
+  }
+
+  trackByfn(index: any, item: any) {
+    return item.id;
   }
 }

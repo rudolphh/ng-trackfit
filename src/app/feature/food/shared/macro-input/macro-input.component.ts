@@ -1,9 +1,7 @@
-import { Component, EventEmitter, Input, NgModule } from "@angular/core";
+import { Component, EventEmitter, Input } from "@angular/core";
 
 import { FormGroup } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
 import { Output } from "@angular/core";
-import { SharedModule } from "src/app/shared/shared.module";
 
 @Component({
   selector: 'app-macro-input',
@@ -11,7 +9,7 @@ import { SharedModule } from "src/app/shared/shared.module";
 })
 export class MacroInputComponent {
 
-  @Input() isHidden = true;
+  @Input() isHidden !: boolean;
   @Output() onFocus: EventEmitter<void> = new EventEmitter<void>();
   @Output() onBlur: EventEmitter<void> = new EventEmitter<void>();
 

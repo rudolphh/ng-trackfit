@@ -54,7 +54,7 @@ export class FoodInputComponent implements OnInit {
     const searchText$ = this.addFoodForm.get('name')?.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap((searchText) => console.log('searchText: ', searchText)),
+      //tap((searchText) => console.log('searchText: ', searchText)),
       // null (after selecting autocomplete option), or special characters return empty string
       map((searchText) =>
         searchText ? searchText.replace(/[&\/\\#^+()$~%.'":*?<>{}!@]/g, '') : ''
@@ -71,6 +71,9 @@ export class FoodInputComponent implements OnInit {
       // the name control is set automatically so just clear autocomplete options
       this.foodDataService.updateAutocompleteOptions('');
       this.addFoodForm.get('calories')?.setValue(food.calories);
+      this.addFoodForm.get('protein')?.setValue(food.protein);
+      this.addFoodForm.get('carbohydrate')?.setValue(food.carbohydrate);
+      this.addFoodForm.get('fat')?.setValue(food.fat);
     }
   }
 

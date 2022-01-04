@@ -58,9 +58,9 @@ export class DailyProgressComponent implements OnInit {
 
     // for remaining
     remainingColor(): string {
-      return this.percentOfDaily < 75
+      return this.percentOfDaily < 50
         ? 'light-text-success'
-        : this.percentOfDaily < 90
+        : this.percentOfDaily < 75
           ? 'light-text-primary'
           : this.percentOfDaily < 100
             ? 'light-text-warning'

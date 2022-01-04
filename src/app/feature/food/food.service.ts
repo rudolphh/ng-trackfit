@@ -50,7 +50,6 @@ export class FoodService {
     const user: User = this.authService.currentUserValue;
     const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods?name=${name}`;
 
-    console.log('get foods by name called')
     return this.http
       .get<ApiResponse>(baseUrl)
       .pipe(
