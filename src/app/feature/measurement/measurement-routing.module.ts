@@ -1,13 +1,13 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from 'src/app/core/_helpers/auth.guard';
+import { MeasurementComponent } from './measurement.component';
 import { MeasurementCreateEditComponent } from './measurement-create-edit/measurement-create-edit.component';
-import { MeasurementListComponent } from './measurement-list/measurement-list.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
-    path: 'measurements', component: MeasurementListComponent,
+    path: 'measurements', component: MeasurementComponent,
     canActivate: [AuthGuard],
     children: [
       { path: 'new', component: MeasurementCreateEditComponent },

@@ -1,12 +1,41 @@
 <router-outlet></router-outlet>
-<div
-  *ngIf="loading; else showTable"
-  class="loader"
->
+<div *ngIf="loading; else showTable" class="loader">
   <app-growing-spinner></app-growing-spinner>
 </div>
 <ng-template #showTable>
-  <table class="table table-bordered table-striped">
+  <!-- <div *ngFor="let measurement of measurements" class="w-100">
+    <button
+      id="addFoodBtn"
+      class="w-100 my-1 bg-success"
+      mat-flat-button
+      style="height: 51px"
+    >
+      {{measurement.date | date: 'shortDate'}} : {{ measurement.weight }} : {{ measurement.neck }} - {{ measurement.waist }}
+    </button>
+  </div> -->
+
+  <mat-list>
+    <mat-list-item
+      *ngFor="let measurement of measurements"
+      class="w-100 bg-dark rounded my-1 text-secondary"
+    >
+      <img
+        matListAvatar
+        src="https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744034?k=20&m=1016744034&s=612x612&w=0&h=kjCAwH5GOC3n3YRTHBaLDsLIuF8P3kkAJc9RvfiYWBY="
+        alt="user image"
+      />
+      <h3 matLine class="d-flex justify-content-between">
+        {{ measurement.date | date: "shortDate" }}
+        <span>{{ measurement.weight }}</span>
+      </h3>
+      <p *ngIf="measurement.neck" matLine class="d-flex justify-content-between">
+        <span> Neck: {{ measurement.neck }} </span>
+        <span class="demo-2"> Waist: {{ measurement.waist }} </span>
+      </p>
+    </mat-list-item>
+  </mat-list>
+
+  <!-- <table class="table table-bordered table-striped">
     <thead class="table-success">
       <tr>
         <th scope="col">Date</th>
@@ -18,7 +47,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let measurement of measurements">
-        <th scope="row">{{ measurement.date | date: "mediumDate" }}</th>
+        <th scope="row">{{ measurement.date | date: "shortDate" }}</th>
         <td>{{ measurement.weight + " " + weightUnit }}</td>
         <td>
           {{ measurement.neck ? measurement.neck + " " + lengthUnit : "---" }}
@@ -29,5 +58,5 @@
         <td *ngIf="isFemale">{{ measurement.hips }}</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 </ng-template>
