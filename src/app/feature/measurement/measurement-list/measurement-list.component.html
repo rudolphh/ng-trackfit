@@ -3,17 +3,6 @@
   <app-growing-spinner></app-growing-spinner>
 </div>
 <ng-template #showTable>
-  <!-- <div *ngFor="let measurement of measurements" class="w-100">
-    <button
-      id="addFoodBtn"
-      class="w-100 my-1 bg-success"
-      mat-flat-button
-      style="height: 51px"
-    >
-      {{measurement.date | date: 'shortDate'}} : {{ measurement.weight }} : {{ measurement.neck }} - {{ measurement.waist }}
-    </button>
-  </div> -->
-
   <mat-list>
     <mat-list-item
       *ngFor="let measurement of measurements"
@@ -35,28 +24,4 @@
     </mat-list-item>
   </mat-list>
 
-  <!-- <table class="table table-bordered table-striped">
-    <thead class="table-success">
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Weight</th>
-        <th scope="col">Neck</th>
-        <th scope="col">Waist</th>
-        <th *ngIf="isFemale" scope="col">Hip</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let measurement of measurements">
-        <th scope="row">{{ measurement.date | date: "shortDate" }}</th>
-        <td>{{ measurement.weight + " " + weightUnit }}</td>
-        <td>
-          {{ measurement.neck ? measurement.neck + " " + lengthUnit : "---" }}
-        </td>
-        <td>
-          {{ measurement.waist ? measurement.waist + " " + lengthUnit : "---" }}
-        </td>
-        <td *ngIf="isFemale">{{ measurement.hips }}</td>
-      </tr>
-    </tbody>
-  </table> -->
 </ng-template>
