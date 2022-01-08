@@ -40,7 +40,7 @@ export class FoodListComponent
   @ViewChild('foodForm') foodForm!: ElementRef;
   @ViewChild('loadButtons') loadButtons!: ElementRef;
   closeFormMacroInputs = false;
-  isHidden = {}
+  isHidden = {};
 
   constructor(
     private fb: FormBuilder,
@@ -52,7 +52,7 @@ export class FoodListComponent
       foods: this.fb.array([]),
     });
 
-    this.renderer.listen('window', 'click',(e:Event)=>{
+    this.renderer.listen('window', 'click', (e: Event) => {
       /**
        * Only run when toggleButton is not clicked
        * If we don't check this, all clicks (even on the toggle button) gets into this
@@ -60,16 +60,18 @@ export class FoodListComponent
        * And the menu itself is checked here, and it's where we check just outside of
        * the menu and button the condition abbove must close the menu
        */
-      if(e.target === this.foodForm.nativeElement || this.foodForm.nativeElement.contains(e.target)
+      if (e.target === this.foodForm.nativeElement || this.foodForm.nativeElement.contains(e.target)
         || e.target === this.loadButtons.nativeElement || this.loadButtons.nativeElement.contains(e.target)){
-        this.closeFormMacroInputs=false;
+        this.closeFormMacroInputs = false;
         console.log(this.closeFormMacroInputs)
       } else {
         this.closeFormMacroInputs = true;
-        console.log(e.target)
+        console.log(e.target);
 
-        for(let id in this.isHidden) {
-          this.isHidden[id] = true;
+        for (const id in this.isHidden) {
+          if (this.isHidden.hasOwnProperty(id)) {
+            this.isHidden[id] = true;
+          }
         }
       }
     });
@@ -80,7 +82,9 @@ export class FoodListComponent
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
         this.foodsFormArray.clear();
+        console.log(this.foodsFormArray.controls);
 
+        console.log('ngOnInit: ', foods);
         foods.map((food: Food) => {
           this.addNewFood(food);
         });
@@ -150,6 +154,7 @@ export class FoodListComponent
   }
 
   addNewFood(food: Food): void {
+    console.log('addNewFood: ', food);
     this.foodsFormArray.push(this.addFoodFormGroup(food));
   }
 
@@ -230,14 +235,14 @@ export class FoodListComponent
   }
 
   onFocusEvent(event: any, index: any): void {
-    console.log('on focus');
     this.isHidden[index] = false;
   }
 
   onBlurEvent(event: any, index: any): void {
-    //console.log(event.target);
-    if(this.closeFormMacroInputs)
+    // console.log(event.target);
+    if (this.closeFormMacroInputs) {
       this.isHidden[index] = true;
+    }
 
   }
 
