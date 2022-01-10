@@ -2,10 +2,10 @@ li.nav-item {
   margin-left: 20px;
 }
 
-li.nav-item a:hover {
+/* li.nav-item a:hover {
   border-radius: 15px;
   background-color: #d6a103;
-}
+} */
 
 .dropdown-item {
   color: white;
