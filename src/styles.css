@@ -81,6 +81,11 @@ body {
 }
 
 /* mat-button-toggle */
+
+.mat-button-toggle-appearance-standard {
+  background-color: #073642
+}
+
 .mat-button-toggle-checked {
   background-color: #2aa198;
 }
