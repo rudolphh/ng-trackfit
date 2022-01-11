@@ -1,0 +1,92 @@
+<app-dash-card>
+  <div app-card-header class="d-flex align-items-center">
+    <span class="light-text-success">Check-in</span>
+    <i
+      class="fas fa-weight ml-auto"
+      matTooltip="Update Measurements"
+      matTooltipPosition="left"
+      matTooltipShowDelay="500"
+      matTooltipHideDelay="1000"
+    ></i>
+  </div>
+  <div app-card-body>
+    <div>
+      <!-- form -->
+      <form
+        [formGroup]="addMeasureForm"
+        (ngSubmit)="onSubmit(formDirective)"
+        #formDirective="ngForm"
+        class="d-flex flex-column"
+        style="max-height: 120px"
+        [ngStyle]="{ height: !measureOptions ? '95px' : '100%' }"
+      >
+        <div class="d-flex">
+          <span class="flex-grow-1" style="min-width: 0">
+            <!-- calorie input -->
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Weight</mat-label>
+              <input
+                matInput
+                placeholder="250"
+                maxLength="4"
+                formControlName="weight"
+                appNumbersOnly
+              />
+            </mat-form-field>
+            <!-- end calorie input -->
+          </span>
+
+          <span class="ml-2">
+            <!-- food input -->
+            <mat-button-toggle-group
+              #unit
+              class="bg-success"
+              style="height: 51px"
+              name="favoriteColor"
+              aria-label="Favorite Color"
+              formControlName="unit"
+            >
+              <mat-button-toggle value="metric">Metric</mat-button-toggle>
+              <mat-button-toggle value="imperial">Imperial</mat-button-toggle>
+            </mat-button-toggle-group>
+            <!-- end food input -->
+          </span>
+
+          <span class="ml-2">
+            <!-- submit button -->
+            <button
+              id="addMeasureBtn"
+              class="w-100"
+              mat-flat-button
+              type="submit"
+              style="height: 51px"
+              [disabled]="!addMeasureForm.valid"
+            >
+              <i class="fas fa-2x fa-weight"></i>
+            </button>
+          </span>
+        </div>
+
+        <div
+          *ngIf="!measureOptions"
+          class="d-flex justify-content-center my-1"
+          style="position: relative; bottom: 5px; height: 30px"
+        >
+          <a
+            (click)="toggleMeasureOptions()"
+            class="light-text-primary"
+            style="cursor: pointer"
+            >Body Measurements
+            <span class="light-text-info">(optional)</span></a
+          >
+        </div>
+
+        <app-measurement-input
+          [form]="addMeasureForm"
+          [isHidden]="!measureOptions"
+        ></app-measurement-input>
+      </form>
+      <!-- end form -->
+    </div>
+  </div>
+</app-dash-card>

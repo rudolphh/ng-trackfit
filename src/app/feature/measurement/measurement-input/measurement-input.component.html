@@ -1,0 +1,64 @@
+<!-- macro inputs -->
+
+<div [formGroup]="form">
+  <!-- when used for single control (food-input)-->
+  <div
+    class="d-flex"
+    style="position: relative; bottom: 10px"
+    [ngStyle]="{ height: isHidden ? 0 : '100%' }"
+  >
+    <span class="flex-grow-1" style="max-width: 49%; min-width: 0">
+      <!-- calorie input -->
+      <mat-form-field
+        appearance="outline"
+        class="text-center w-100"
+        [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+      >
+        <mat-label>Neck</mat-label>
+        <input
+          matInput
+          maxLength="3"
+          formControlName="neck"
+          appNumbersOnly
+        />
+      </mat-form-field>
+      <!-- end calorie input -->
+    </span>
+
+    <span class="ml-2 flex-grow-1" style="max-width: 49%; min-width: 0">
+      <!-- calorie input -->
+      <mat-form-field
+        appearance="outline"
+        class="text-center w-100"
+        [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+      >
+        <mat-label>Waist</mat-label>
+        <input
+          matInput
+          maxLength="3"
+          formControlName="waist"
+          appNumbersOnly
+        />
+      </mat-form-field>
+      <!-- end calorie input -->
+    </span>
+
+    <span *ngIf="true" class="ml-2 flex-grow-1" style="max-width: 31%; min-width: 0">
+      <!-- calorie input -->
+      <mat-form-field
+        appearance="outline"
+        class="text-center w-100"
+        [ngClass]="{ 'cdk-visually-hidden': isHidden }"
+      >
+        <mat-label>Hips</mat-label>
+        <input
+          matInput
+          maxLength="3"
+          formControlName="hips"
+          appNumbersOnly
+        />
+      </mat-form-field>
+      <!-- end calorie input -->
+    </span>
+  </div>
+</div>

@@ -1,24 +1,24 @@
+<!-- general vitals dash card -->
+<div class="col-md-12 col-lg-5 mb-4 float-left">
+  <app-vitals [latestBodyFat]="bodyFat$"></app-vitals>
+</div>
 
+<!-- daily vitals dash card -->
+<div class="col-md-12 col-lg-7 mb-4 float-right">
+  <app-daily-progress [selectedDate]="initialDate" [isLoading]="isLoading">
+  </app-daily-progress>
+</div>
 
-  <!-- general vitals dash card -->
-  <div class="col-md-12 col-lg-5 mb-4 float-left">
-    <app-vitals [latestBodyFat]="bodyFat$"></app-vitals>
-  </div>
+<div class="col-md-12 col-lg-5 mb-4 float-left">
+  <app-daily-macros
+    [selectedDate]="initialDate"
+    [isLoading]="isLoading"
+  ></app-daily-macros>
+</div>
+<!-- <div class="clearfix"></div> -->
 
-  <!-- daily vitals dash card -->
-  <div class="col-md-12 col-lg-7 mb-4 float-right">
-    <app-daily-progress
-      [selectedDate]="initialDate"
-      [isLoading]="isLoading"
-      >
-    </app-daily-progress>
-  </div>
+<!-- general vitals dash card -->
+<div class="col-md-12 col-lg-5 mb-4">
+  <app-check-in></app-check-in>
+</div>
 
-  <div class="col-md-12 col-lg-5 mb-4 float-left">
-    <app-daily-macros
-      [selectedDate]="initialDate"
-      [isLoading]="isLoading"
-    ></app-daily-macros>
-  </div>
-
-  <div class="clearfix"></div>

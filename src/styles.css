@@ -79,3 +79,9 @@ body {
 .mat-form-field-appearance-outline .mat-form-field-infix input {
   padding: 1em 0 1em 0;
 }
+
+/* mat-button-toggle */
+.mat-button-toggle-checked {
+  background-color: #2aa198;
+}
+

@@ -1,8 +1,8 @@
 <!-- select all -->
 <div class="d-flex mt-2" style="height: 51px">
   <app-select-all
-    *ngIf="listLength > 1"
     class="ml-auto"
+    [listLength]="listLength"
     [anySelected]="anySelected()"
     (delete)="deleteSelected()"
     (selectAll)="selectAllChange()"
@@ -101,8 +101,8 @@
           [isHidden]="isHidden[food.value.id]"
           [form]="foodsForm"
           [foodIndex]="i"
-          (onFocus)="onFocusEvent($event, food.value.id)"
-          (onBlur)="onBlurEvent($event, food.value.id)"
+          (focused)="onFocusEvent($event, food.value.id)"
+          (blurred)="onBlurEvent($event, food.value.id)"
         ></app-macro-input>
       </div>
     </smooth-height>

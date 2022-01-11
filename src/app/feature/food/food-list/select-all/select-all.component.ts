@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-select-all',
   template: `
-    <div class="d-flex">
+    <div class="d-flex" style="height: 51px">
       <button
         mat-flat-button
         *ngIf="anySelected"
@@ -15,13 +15,14 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
       </button>
 
       <mat-selection-list
+
         (selectionChange)="selectionChanged()"
         id="select-all-foods"
         style="min-width: 30px; padding-top: 0px"
       >
         <mat-list-option
+          *ngIf="listLength > 1"
           color="warn"
-          style="height: 51px"
           [selected]="allSelected"
         >
         </mat-list-option>
@@ -31,11 +32,12 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 })
 export class SelectAllComponent {
 
-  @Output() delete: EventEmitter<void> = new EventEmitter<void>();
-  @Output() selectAll: EventEmitter<void> = new EventEmitter<void>();
-
+  @Input() listLength = 0;
   @Input() allSelected = false;
   @Input() anySelected = false;
+
+  @Output() delete: EventEmitter<void> = new EventEmitter<void>();
+  @Output() selectAll: EventEmitter<void> = new EventEmitter<void>();
 
   deleteClicked(): void {
     this.delete.emit();
