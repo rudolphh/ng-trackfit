@@ -18,11 +18,11 @@ export class FoodDataService {
     return this.todaysFoodDataSource.getValue();
   }
 
-  get todaysFood(): Observable<Food[]> {
+  get todaysFood$(): Observable<Food[]> {
     return this.todaysFoodDataSource.asObservable();
   }
 
-  get autocompleteOptions(): Observable<Food[]> {
+  get autocompleteOptions$(): Observable<Food[]> {
     return this.autocompleteFoodDataSource.asObservable();
 
   }
@@ -84,13 +84,8 @@ export class FoodDataService {
     let obs = this.foodService.updateFood(food);
 
     obs.subscribe(savedFood => {
-      console.log('saved');
-
       const index = this.foods.findIndex(item => item.id === food.id);
-      console.log(index)
       this.foods[index] = savedFood;
-      console.log(this.foods)
-
     });
 
     return obs;

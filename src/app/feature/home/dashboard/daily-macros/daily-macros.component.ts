@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { FoodDataService } from 'src/app/feature/food/food-data.service';
+import { FoodDataService } from 'src/app/feature/food/services/food-data.service';
 import { forEachChild } from 'typescript';
 
 @Component({

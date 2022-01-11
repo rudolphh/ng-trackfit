@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Component, OnDestroy } from '@angular/core';
 
-import { FoodDataService } from '../../food/food-data.service';
+import { FoodDataService } from '../../food/services/food-data.service';
 import { HomeDataService } from '../home-data.service';
 
 declare var $: any;

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 import { Food } from "src/app/core/models/food.model";
-import { FoodDataService } from "src/app/feature/food/food-data.service";
+import { FoodDataService } from "src/app/feature/food/services/food-data.service";
 import { HomeDataService } from "../../home-data.service";
 
 @Component({

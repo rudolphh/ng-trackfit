@@ -10,7 +10,7 @@ import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 
-import { FoodDataService } from '../food-data.service';
+import { FoodDataService } from '../services/food-data.service';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import { Validators } from '@angular/forms';
@@ -24,7 +24,7 @@ export class FoodInputComponent implements OnInit {
   @Output() newFoodCreatedEvent: EventEmitter<Food> = new EventEmitter<Food>();
   @ViewChild('nameInput') nameInput!: ElementRef;
   addFoodForm!: FormGroup;
-  autocompleteOptions$!: Observable<Food[]>;
+  autocompleteOptions$$!: Observable<Food[]>;
   macroOptions = false;
 
   constructor(
@@ -49,7 +49,7 @@ export class FoodInputComponent implements OnInit {
       fat: ['']
     });
 
-    this.autocompleteOptions$ = this.foodDataService.autocompleteOptions;
+    this.autocompleteOptions$$ = this.foodDataService.autocompleteOptions$;
 
     const searchText$ = this.addFoodForm.get('name')?.valueChanges.pipe(
       debounceTime(300),

@@ -1,5 +1,5 @@
 import { FoodInputComponent } from './food-input/food-input.component';
-import { FoodService } from './food.service';
+import { FoodService } from './services/food.service';
 import { MacroInputComponent } from './shared/macro-input/macro-input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';

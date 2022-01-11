@@ -10,6 +10,7 @@ import { MeasurementCreateEditComponent } from './measurement-create-edit/measur
 import { MeasurementInputComponent } from './measurement-input/measurement-input.component';
 import { MeasurementListComponent } from './measurement-list/measurement-list.component';
 import { MeasurementRoutingModule } from './measurement-routing.module';
+import { MeasurementService } from './measurement.service';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -32,7 +33,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatListModule,
     MatProgressSpinnerModule,
   ],
-  providers: [],
+  providers: [MeasurementService],
   exports: [MeasurementInputComponent]
 })
 export class MeasurementModule { }

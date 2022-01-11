@@ -19,7 +19,7 @@ import {
 
 import { DatePipe } from '@angular/common';
 import { Food } from 'src/app/core/models/food.model';
-import { FoodDataService } from '../food-data.service';
+import { FoodDataService } from '../services/food-data.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -63,10 +63,8 @@ export class FoodListComponent
       if (e.target === this.foodForm.nativeElement || this.foodForm.nativeElement.contains(e.target)
         || e.target === this.loadButtons.nativeElement || this.loadButtons.nativeElement.contains(e.target)){
         this.closeFormMacroInputs = false;
-        console.log(this.closeFormMacroInputs)
       } else {
         this.closeFormMacroInputs = true;
-        console.log(e.target);
 
         for (const id in this.isHidden) {
           if (this.isHidden.hasOwnProperty(id)) {
@@ -78,13 +76,11 @@ export class FoodListComponent
   }
 
   ngOnInit(): void {
-    this.foodDataService.todaysFood
+    this.foodDataService.todaysFood$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
         this.foodsFormArray.clear();
-        console.log(this.foodsFormArray.controls);
 
-        console.log('ngOnInit: ', foods);
         foods.map((food: Food) => {
           this.addNewFood(food);
         });
