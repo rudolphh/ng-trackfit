@@ -6,8 +6,8 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
-    path: 'home', component: HomeComponent,
-    canActivate: [AuthGuard],
+    path: '', component: HomeComponent,
+    //canActivate: [AuthGuard],
     // children: [
     //   { path: 'new', component: MeasurementCreateEditComponent },
     //   { path: 'edit/:id', component: MeasurementCreateEditComponent }

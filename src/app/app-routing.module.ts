@@ -9,9 +9,8 @@ import { RegisterComponent } from './feature/register/register.component';
 import { SettingsComponent } from './feature/settings/settings.component';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent },
-  { path: 'home', loadChildren: () => import('./feature/home/home.module').then(m => m.HomeModule) },
-  //{ path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  // { path: '', component: LandingComponent },
+  { path: '', loadChildren: () => import('./feature/home/home.module').then(m => m.HomeModule) },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
