@@ -1,4 +1,4 @@
-import { Settings } from "./settings";
+import { UserSettings } from "./userSettings";
 
 export interface User {
   _id ?: number;
@@ -8,7 +8,7 @@ export interface User {
   password ?: string;
   passwordConfirm ?: string;
   role ?: string;
-  settings ?: Settings;
+  settings ?: UserSettings;
   created_at ?: Date;
   updated_at ?: Date;
   token ?: string;

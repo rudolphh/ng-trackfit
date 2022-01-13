@@ -10,6 +10,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     SharedModule
   ],
+  providers: [],
   exports: [SettingsComponent]
 })
 export class SettingsModule { }
