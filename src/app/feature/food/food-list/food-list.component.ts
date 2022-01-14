@@ -13,6 +13,7 @@ import { MatListOption, MatSelectionList } from '@angular/material/list';
 import {
   debounceTime,
   distinctUntilChanged,
+  skip,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
@@ -150,7 +151,7 @@ export class FoodListComponent
   }
 
   addNewFood(food: Food): void {
-    console.log('addNewFood: ', food);
+    //console.log('addNewFood: ', food);
     this.foodsFormArray.push(this.addFoodFormGroup(food));
   }
 

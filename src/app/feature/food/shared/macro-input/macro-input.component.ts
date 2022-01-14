@@ -9,7 +9,7 @@ import { Output } from '@angular/core';
 })
 export class MacroInputComponent {
 
-  @Input() isHidden !: boolean;
+  @Input() isHidden = true;
   @Output() focused: EventEmitter<void> = new EventEmitter<void>();
   @Output() blurred: EventEmitter<void> = new EventEmitter<void>();
 

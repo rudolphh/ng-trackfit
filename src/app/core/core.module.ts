@@ -9,32 +9,36 @@ import { errorInterceptorProviders } from './_helpers/error.interceptor';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { InMemoryDataService } from './services/in-memory-user.service';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 @NgModule({
-  declarations: [
-    NavComponent
-  ],
+  declarations: [NavComponent],
   imports: [
     RouterModule,
     CommonModule,
     HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
+      dataEncapsulation: false,
+      passThruUnknownUrl: true,
+    }),
     MatButtonModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   providers: [
     EnvServiceProvider,
     authInterceptorProviders,
-    errorInterceptorProviders
+    errorInterceptorProviders,
   ],
-  exports: [
-    NavComponent
-  ],
+  exports: [NavComponent],
 })
 export class CoreModule {
-  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
-      throw new Error('CoreModule has already been loaded. You should only import Core modules in the AppModule only.');
+      throw new Error(
+        'CoreModule has already been loaded. You should only import Core modules in the AppModule only.'
+      );
     }
   }
 }

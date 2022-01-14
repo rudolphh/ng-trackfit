@@ -8,11 +8,11 @@ import { Observable, of } from 'rxjs';
 })
 export class VitalsComponent implements OnInit {
 
-  @Input() latestWeight: Observable<number> = of(215);
-  @Input() latestBodyFat: Observable<number> = of(0.2545);
+  @Input() lastWeight$: Observable<number> = of(215);
+  @Input() latestBodyFat$ : Observable<number> = of(0.00);
 
   constructor() {
-
+    this.latestBodyFat$.subscribe(data => console.log(data))
   }
 
   ngOnInit(): void {}

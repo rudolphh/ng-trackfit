@@ -14,12 +14,19 @@
   <!-- body -->
   <div app-card-body class="d-flex flex-wrap justify-content-between">
     <div class="dash-vital">
-      Last Weight<span class="light-text-info ml-2">{{ latestWeight | async }} lbs</span>
+      Last Weight<span
+        *ngIf="lastWeight$ | async as lastWeight"
+        class="light-text-info ml-2"
+        >{{ lastWeight }} lbs</span
+      >
       <i class="fas fa-caret-down light-text-success ml-2"></i>
     </div>
-    <div class="dash-vital">
-      Latest BF<span class="light-text-info ml-2">
-        {{ latestBodyFat | async | percent: "2.1" }}
+    <div class="dash-vital" style="width: 106px">
+      Latest BF<span
+        *ngIf="latestBodyFat$ | async as bodyFat"
+        class="light-text-info ml-2"
+      >
+        {{ bodyFat >= 0.05 ? (bodyFat | percent: "2.1") : "---" }}
       </span>
       <i class="fas fa-caret-down light-text-success ml-2"></i>
     </div>

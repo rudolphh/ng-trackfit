@@ -34,7 +34,7 @@ export class FoodDataService {
     tomorrow.setDate(date.getDate() + 1);
     const tmwString = tomorrow.toISOString();
 
-    let obs = this.foodService.getFoodsByDate(todayString, tmwString)
+    let obs = this.foodService.getFoodsByDate(todayString, tmwString);
 
     obs.subscribe(foods => {
       this.todaysFoodDataSource.next(foods);

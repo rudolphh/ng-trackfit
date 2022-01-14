@@ -10,8 +10,6 @@ import {
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +18,7 @@ import { of } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
-  public user: User = {};
+  public user !: User;
   public attemptedSubmit = false;
   public authError: any;
   loading = false;
@@ -31,7 +29,9 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.user = new User(0, '');
+  }
 
   ngOnInit(): void {
 
@@ -43,14 +43,14 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.fb.group({
       email: [
-        this.user.email,
+        this.user?.email,
         [
           Validators.required,
           Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
         ],
       ],
       password: [
-        this.user.password,
+        this.user?.password,
         [Validators.required, Validators.minLength(6)],
       ],
     });

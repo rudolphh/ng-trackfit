@@ -1,13 +1,16 @@
 <!-- general vitals dash card -->
 <div class="col-md-12 col-lg-5 mb-4 float-left">
-  <div *ngIf="true" class="mb-4">
+  <div *ngIf="!(user$ | async)" class="mb-4">
     <app-check-in></app-check-in>
   </div>
   <div class="clearfix"></div>
 
   <!-- general vitals dash card -->
   <div>
-    <app-vitals [latestBodyFat]="bodyFat$"></app-vitals>
+    <app-vitals
+      [lastWeight$]="bodyWeight$"
+      [latestBodyFat$]="bodyFat$"
+    ></app-vitals>
   </div>
 </div>
 
@@ -26,6 +29,6 @@
 <!-- <div class="clearfix"></div> -->
 
 <!-- general vitals dash card -->
-<div *ngIf="!true" class="col-md-12 col-lg-5 mb-4">
+<div *ngIf="user$ | async" class="col-md-12 col-lg-5 mb-4">
   <app-check-in></app-check-in>
 </div>

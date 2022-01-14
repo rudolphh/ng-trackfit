@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Injectable } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
-import { UserSettings } from 'src/app/core/models/userSettings';
+import { UserSettings } from 'src/app/core/models/user-settings';
 
 @Injectable({ providedIn: 'root'})
 export class SettingsDataService {

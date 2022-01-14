@@ -10,7 +10,7 @@ import { User } from 'src/app/core/models/user';
 })
 export class NavComponent implements OnInit {
 
-  currentUser: User = {};
+  currentUser !: User;
   objectKeys = Object.keys;
 
   constructor(private authService: AuthService) { }

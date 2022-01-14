@@ -1,13 +1,23 @@
 <app-nav></app-nav>
 <main class="py-4">
   <div class="container" id="myContainer">
-
-    <!-- global error -->
     <div class="row justify-content-center">
-      <div class="col-md-12 col-lg-8">
-        <div *ngIf="authError | async" class="alert alert-danger text-center">
+      <div class="col-12">
+        <!-- global messages -->
+        <div
+          *ngIf="authError | async"
+          class="alert alert-dismissible alert-danger text-center"
+        >
+          <span
+            class="close"
+            style="cursor: pointer; color: white"
+            data-dismiss="alert"
+            aria-label="Close"
+            ><span aria-hidden="true">&times;</span></span
+          >
           <strong>Oh snap!&nbsp;</strong> {{ authError | async }}
         </div>
+
       </div>
     </div>
 

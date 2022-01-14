@@ -1,12 +1,12 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { User, UserAdapter } from '../models/user';
 import { catchError, map } from 'rxjs/operators';
 
 import { ApiResponse } from '../models/api-response';
 import { EnvService } from './env.service';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from '../models/user';
 
 const helper = new JwtHelperService();
 
@@ -18,7 +18,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private env: EnvService
+    private env: EnvService,
+    private userAdapter: UserAdapter
     ) {
 
     this.currentUserSubject = new BehaviorSubject<any>(
@@ -43,10 +44,11 @@ export class AuthService {
         map((response) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           if (response.data) {
-            const userReturned: User = response.data as User;
-            userReturned.token = response.token;
-            userReturned.expiresIn = response.expiresIn;
+            const data: User = response.data as User;
+            data.token = response.token;
+            data.expiresIn = response.expiresIn;
 
+            const userReturned = this.userAdapter.adapt(data);
             localStorage.setItem('currentUser', JSON.stringify(userReturned));
             this.currentUserSubject.next(userReturned);
           }

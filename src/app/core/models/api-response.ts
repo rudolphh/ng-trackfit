@@ -1,6 +1,6 @@
 import { Food } from './food.model';
 import { User } from './user';
-import { UserSettings } from './userSettings';
+import { UserSettings } from './user-settings';
 
 export interface ApiResponse {
   success: boolean;

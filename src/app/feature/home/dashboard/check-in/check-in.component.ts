@@ -20,7 +20,7 @@ export class CheckInComponent {
     ]
 
     this.addMeasureForm = this.fb.group({
-      weight: ['', [Validators.required, ...validators]],
+      weight: ['', [Validators.required, Validators.min(80), ...validators]],
       unit: ['imperial'],
       neck: ['', validators],
       waist: ['', validators],

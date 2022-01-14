@@ -4,11 +4,11 @@ export class Measurement {
   constructor(
     public id: number,
     public weight: number,
-    public neck: number,
-    public waist: number,
-    public hips: number,
     public unit: string,
-    public date: Date
+    public date: Date,
+    public neck?: number,
+    public waist?: number,
+    public hips?: number
   ) {}
 }
 
@@ -18,11 +18,11 @@ export class MeasurementAdapter implements Adapter<Measurement> {
     return new Measurement(
       measurement.id,
       measurement.weight,
+      measurement.unit,
+      measurement.date,
       measurement.neck,
       measurement.waist,
-      measurement.hips,
-      measurement.unit,
-      measurement.date
+      measurement.hips
     );
   }
 }

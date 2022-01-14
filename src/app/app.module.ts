@@ -18,6 +18,7 @@ import { SettingsModule } from './feature/settings/settings.module';
     AppComponent
   ],
   imports: [
+    CoreModule,
     BrowserModule, // imports CommonModule as well
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -28,7 +29,6 @@ import { SettingsModule } from './feature/settings/settings.module';
     ForgotPasswordModule,
     MeasurementModule,
     AppRoutingModule,
-    CoreModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

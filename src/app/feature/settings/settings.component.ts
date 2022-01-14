@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
-import { UserSettings } from 'src/app/core/models/userSettings';
+import { UserSettings } from 'src/app/core/models/user-settings';
 
 @Component({
   selector: 'app-settings',
@@ -11,7 +11,7 @@ import { UserSettings } from 'src/app/core/models/userSettings';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  currentUser: User = {};
+  currentUser !: User;
   userSettings!: UserSettings;
 
   constructor(

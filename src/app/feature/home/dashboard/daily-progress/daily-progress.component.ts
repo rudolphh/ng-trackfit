@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 
-import { Food } from "src/app/core/models/food.model";
-import { FoodDataService } from "src/app/feature/food/services/food-data.service";
-import { HomeDataService } from "../../home-data.service";
+import { Food } from 'src/app/core/models/food.model';
+import { FoodDataService } from 'src/app/feature/food/services/food-data.service';
+import { HomeDataService } from '../../home-data.service';
 
 @Component({
   selector: 'app-daily-progress',

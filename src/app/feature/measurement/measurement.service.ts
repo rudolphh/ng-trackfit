@@ -22,14 +22,15 @@ export class MeasurementService {
 
   getAllMeasurements(): Observable<Measurement[]> {
     const user = this.authService.currentUserValue;
-    const requestUrl = `${this.env.apiUrl}/users/${user.id}/measurements`;
+    const baseUrl = user ? `${this.env.apiUrl}/users/${user.id}/measurements`
+      : '/api/measurements';
 
-    return this.http.get<ApiResponse>(requestUrl).pipe(
+    return user ? this.http.get<ApiResponse>(baseUrl).pipe(
       map((response: ApiResponse) => {
         const data = response.data as Measurement[];
         return data.map((m: Measurement) => this.measurementAdapter.adapt(m));
       }),
       catchError((error) => of([]))
-    );
+    ) : this.http.get(baseUrl) as Observable<Measurement[]>;
   }
 }

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { UserSettings, UserSettingsAdapter } from '../models/userSettings';
+import { UserSettings, UserSettingsAdapter } from '../models/user-settings';
 
 import { ApiResponse } from '../models/api-response';
 import { EnvService } from './env.service';
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root'})
 export class UserService {
   constructor(
     private http: HttpClient,
