@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user';
@@ -14,15 +15,63 @@ export class SettingsComponent implements OnInit {
   currentUser !: User;
   userSettings!: UserSettings;
 
+  settingsForm !: FormGroup;
+
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService, private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+
+    this.settingsForm = this.fb.group({
+      gender: [''],
+      birthDate: [''],
+      unit: ['imperial'],
+      heightFeet: [],
+      heightInch: [],
+      heightCent: [],
+      strategy: [],
+      rate: [],
+      remindNum: [],
+      reminderFrequency: []
+    });
+
     this.currentUser = this.authService.currentUserValue;
     this.userService.settings(this.currentUser).subscribe(
-      (userSettings: UserSettings) => this.userSettings = userSettings
+      (userSettings: UserSettings) => {
+        this.userSettings = userSettings;
+        console.log(userSettings);
+        const formValues = {
+          heightFeet: 0,
+          heightInch: 0,
+          heightCent: 0
+        };
+
+        if (userSettings.unit === 'imperial') {
+          formValues.heightFeet = Math.floor(userSettings.height / 12);
+          formValues.heightInch = userSettings.height % 12;
+          formValues.heightCent = userSettings.height * 2.54;
+        }
+        this.settingsForm.setValue({
+          gender: userSettings.gender,
+          birthDate: userSettings.birthDate,
+          unit: userSettings.unit,
+          ...formValues,
+          strategy: userSettings.strategy,
+          rate: userSettings.rate,
+          remindNum: 2,
+          reminderFrequency: userSettings.reminderFrequency
+        });
+      }
     );
+  }
+
+  onSubmit(formDirective: FormGroupDirective): void {
+
+  }
+
+  onUnitChange(unit: string): void {
+    console.log(unit);
   }
 }

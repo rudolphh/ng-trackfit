@@ -40,12 +40,12 @@ export class UserService {
   } // end register
 
   settings(user: User): Observable<UserSettings> {
-    return this.http
+    return user ? this.http
       .get<ApiResponse>(`${this.env.apiUrl}/users/${user.id}/settings`)
       .pipe(
         map((response: ApiResponse) =>
           this.userSettingsAdapter.adapt(response.data as UserSettings)
         )
-      );
+      ) : this.http.get('/api/usersettings') as Observable<UserSettings>;
   }
 }

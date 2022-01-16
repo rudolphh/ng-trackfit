@@ -7,7 +7,7 @@ export class UserSettings {
     public birthDate: Date,
     public height: number,
     public unit: string,
-    public dietType: string,
+    public strategy: string,
     public rate: number,
     public reminderFrequency: string
   ) {}
@@ -22,7 +22,7 @@ export class UserSettingsAdapter implements Adapter<UserSettings> {
       settings.birthDate,
       settings.height,
       settings.unit,
-      settings.dietType,
+      settings.strategy,
       settings.rate,
       settings.reminderFrequency
     );

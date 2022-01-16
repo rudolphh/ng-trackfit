@@ -3,10 +3,7 @@
     <a class="navbar-brand" [routerLink]="currentUser ? '/home' : ''">
       Fitnits
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-    >
+    <button class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -40,7 +37,7 @@
             [routerLinkActive]="'active'"
             class="nav-link"
           >
-            <i class="fas fa-weight flex-right" matTooltip="Measurements"></i>
+            <i class="fas fa-weight" matTooltip="Measurements"></i>
           </button>
         </li>
 
@@ -48,37 +45,43 @@
           <button
             mat-mini-fab
             color="primary"
-            aria-label="Measurements icon"
+            aria-label="nav open"
             id="navbarDropdown"
             class="nav-link active"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-            mat-button [matMenuTriggerFor]="menu"
+            mat-button
+            [matMenuTriggerFor]="menu"
           >
             <i class="fas fa-caret-down"></i>
           </button>
 
-          <mat-menu #menu="matMenu"
+          <mat-menu
+            #menu="matMenu"
             aria-labelledby="navbarDropdown"
             class="bg-primary"
-            style="width: 300px;"
+            style="width: 300px"
           >
-            <a mat-menu-item routerLink="/profile" class="dropdown-item">
+            <!-- <a mat-menu-item routerLink="/profile" class="dropdown-item">
               <i class="fas fa-user-circle"></i>Profile</a
             >
             <a mat-menu-item routerLink="/friends" class="dropdown-item">
               <i class="fas fa-user-friends"></i>Friends</a
             >
-            <div class="dropdown-divider"></div>
+            <div class="dropdown-divider"></div> -->
             <a mat-menu-item routerLink="/settings" class="dropdown-item">
               <i class="fas fa-cog"></i>Settings</a
             >
-            <a mat-menu-item routerLink="/login" (click)="logout()" class="dropdown-item">
+            <a
+              mat-menu-item
+              routerLink="/login"
+              (click)="logout()"
+              class="dropdown-item"
+            >
               <i class="fas fa-sign-out-alt"></i>Logout
             </a>
-
-        </mat-menu>
+          </mat-menu>
         </li>
       </ul>
 
@@ -103,6 +106,17 @@
             >
           </li>
         </ul>
+
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="settings icon"
+          routerLink="/settings"
+          [routerLinkActive]="'true'"
+          class="nav-link ml-4 text-light"
+        >
+          <i class="fas fa-cog" matTooltip="edit settings"></i>
+        </button>
       </ng-template>
     </div>
   </div>

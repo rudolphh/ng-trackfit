@@ -1,9 +1,242 @@
-<div *ngIf="userSettings" >
-  <p>{{ userSettings.dietType }}</p>
-  <p>{{ userSettings.birthDate }}</p>
-  <p>{{ userSettings.gender }}</p>
-  <p>{{ userSettings.height }}</p>
-  <p>{{ userSettings.rate }}</p>
-  <p>{{ userSettings.reminderFrequency }}</p>
-  <p>{{ userSettings.unit }}</p>
+<div class="col-sm-10 offset-sm-1 col-md-12 offset-md-0 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2 mb-4">
+  <app-dash-card>
+    <div app-card-header class="d-flex align-items-center">
+      <span class="light-text-success">User Settings</span>
+      <i
+        class="fas fa-cog ml-auto"
+        matTooltip="edit user settings"
+        matTooltipPosition="left"
+        matTooltipShowDelay="500"
+        matTooltipHideDelay="1000"
+      ></i>
+    </div>
+    <div app-card-body>
+      <form
+        [formGroup]="settingsForm"
+        #formDirective="ngForm"
+        (ngSubmit)="onSubmit(formDirective)"
+        class="d-flex flex-column mt-2"
+      >
+        <div class="d-flex justify-content-center flex-wrap">
+          <!-- gender input -->
+          <div
+            class="d-flex justify-content-center align-items-center mb-4 col-12 col-sm-12 col-md-6"
+          >
+            <span class="light-text-info setting-label"> Gender </span>
+
+            <span class="ml-4">
+              <mat-button-toggle-group
+                #gender="matButtonToggleGroup"
+                class="bg-success"
+                style="height: 51px"
+                name="gender"
+                aria-label="body gender"
+                formControlName="gender"
+              >
+                <mat-button-toggle value="male">Male</mat-button-toggle>
+                <mat-button-toggle value="female">Female</mat-button-toggle>
+              </mat-button-toggle-group>
+            </span>
+          </div>
+          <!-- end gender input -->
+
+          <!-- dob input -->
+          <div class="d-flex justify-content-center mb-1 col-12 col-sm-12 col-md-6">
+            <span class="light-text-info setting-label">
+              <label class="mt-3 pt-1">Birthdate</label>
+            </span>
+
+            <span class="ml-4">
+              <mat-form-field appearance="outline" style="max-width: 150px">
+                <mat-label>Choose a date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="birthDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </span>
+          </div>
+          <!-- end dob input -->
+        <!-- </div> -->
+
+        <!-- <div class="d-flex justify-content-center flex-wrap"> -->
+          <!-- unit input -->
+          <div class="d-flex justify-content-center align-items-center mb-4 col-12 col-sm-12 col-md-6">
+            <span class="light-text-info setting-label">Unit</span>
+
+            <span class="ml-4">
+              <mat-button-toggle-group
+                #unit="matButtonToggleGroup"
+                class="bg-success"
+                style="height: 51px"
+                name="unit"
+                aria-label="unit of measure"
+                formControlName="unit"
+                (change)="onUnitChange($event.value)"
+              >
+                <mat-button-toggle value="metric">Metric</mat-button-toggle>
+                <mat-button-toggle value="imperial">Imperial</mat-button-toggle>
+              </mat-button-toggle-group>
+            </span>
+          </div>
+          <!-- / unit input -->
+
+          <!-- height input -->
+          <div class="d-flex justify-content-center col-12 col-sm-12 col-md-6">
+            <span class="light-text-info setting-label">
+              <label class="mt-3 pt-1">Height</label>
+            </span>
+
+            <span class="ml-4">
+              <div *ngIf="unit.value === 'imperial'">
+                <mat-form-field
+                  appearance="outline"
+                  class="text-center w-100"
+                  style="max-width: 73px"
+                >
+                  <mat-label>Feet</mat-label>
+                  <input
+                    matInput
+                    maxLength="1"
+                    placeholder="0"
+                    formControlName="heightFeet"
+                    appNumbersOnly
+                  />
+                </mat-form-field>
+
+                <mat-form-field
+                  appearance="outline"
+                  class="text-center w-100 ml-1"
+                  style="max-width: 73px"
+                >
+                  <mat-label>Inch</mat-label>
+                  <input
+                    matInput
+                    maxLength="2"
+                    placeholder="0"
+                    formControlName="heightInch"
+                    appNumbersOnly
+                  />
+                </mat-form-field>
+              </div>
+
+              <!-- centimeters -->
+              <div *ngIf="unit.value === 'metric'">
+                <mat-form-field
+                  appearance="outline"
+                  class="text-center w-100"
+                  style="max-width: 150px"
+                >
+                  <mat-label>Centimeters</mat-label>
+                  <input
+                    matInput
+                    maxLength="3"
+                    placeholder="0"
+                    formControlName="heightCent"
+                    appNumbersOnly
+                  />
+                </mat-form-field>
+              </div>
+            </span>
+          </div>
+          <!-- / height input -->
+        <!-- </div> -->
+
+        <!-- <div class="d-flex justify-content-center flex-wrap"> -->
+          <!-- strategy input -->
+          <div class="d-flex justify-content-center align-items-center mb-4 col-12 col-sm-12 col-md-6">
+            <span class="light-text-info setting-label">Strategy</span>
+
+            <span class="ml-4">
+              <mat-button-toggle-group
+                #strategy="matButtonToggleGroup"
+                class="bg-success"
+                style="height: 51px"
+                name="strategy"
+                aria-label="cut or bulk"
+                formControlName="strategy"
+              >
+                <mat-button-toggle value="cut">Cut</mat-button-toggle>
+                <mat-button-toggle value="bulk">Bulk</mat-button-toggle>
+              </mat-button-toggle-group>
+            </span>
+          </div>
+          <!-- / strategy input -->
+
+          <!-- rate input -->
+          <div class="d-flex justify-content-center mb-1 col-12 col-sm-12 col-md-6">
+            <span class="light-text-info">
+              <label class="mt-3 pt-1 setting-label">Rate</label>
+            </span>
+
+            <span class="ml-4" style="width: 150px">
+              <mat-form-field
+                appearance="outline"
+                class="text-center w-100"
+                style="max-width: 100px"
+              >
+                <mat-label>{{ strategy.value | titlecase }} Rate</mat-label>
+                <input
+                  matInput
+                  maxLength="1"
+                  placeholder="0"
+                  formControlName="rate"
+                  appNumbersOnly
+                />
+              </mat-form-field>
+              <span style="position: relative; left: 15px; bottom: 15px">
+                <i class="fas fa-info-circle" style="font-size: 1.5em"></i>
+              </span>
+            </span>
+          </div>
+          <!-- / rate input -->
+        </div>
+
+        <!-- reminder input -->
+        <div class="d-flex justify-content-center mb-4">
+          <span class="light-text-info">
+            <label class="mt-3">Remind Every</label>
+          </span>
+
+          <span class="ml-4 d-flex align-items-start">
+            <mat-form-field
+              id="reminder"
+              appearance="outline"
+              class="text-center w-100"
+              style="max-width: 50px"
+            >
+              <input
+                matInput
+                maxLength="2"
+                placeholder="0"
+                formControlName="remindNum"
+                appNumbersOnly
+              />
+            </mat-form-field>
+
+            <mat-button-toggle-group
+              #strategy="matButtonToggleGroup"
+              class="bg-success ml-1"
+              style="height: 51px"
+              name="strategy"
+              aria-label="cut or bulk"
+              formControlName="reminderFrequency"
+            >
+              <mat-button-toggle value="weekly">Weeks</mat-button-toggle>
+              <mat-button-toggle value="monthly">Months</mat-button-toggle>
+            </mat-button-toggle-group>
+          </span>
+        </div>
+        <!-- / reminder input -->
+      </form>
+      <!-- end form -->
+
+    </div>
+  </app-dash-card>
 </div>

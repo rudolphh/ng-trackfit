@@ -1,4 +1,10 @@
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { SettingsComponent } from './settings.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -8,9 +14,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SettingsComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTooltipModule
   ],
   providers: [],
-  exports: [SettingsComponent]
+  exports: []
 })
 export class SettingsModule { }

@@ -1,0 +1,5 @@
+mat-button-toggle { min-width: 75px; }
+
+::ng-deep #reminder .mat-form-field-wrapper { margin-top: 0}
+
+.setting-label { width: 72px }
