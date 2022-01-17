@@ -9,7 +9,11 @@ export class MeasurementDataService {
 
   private allMeasurementsDataSource = new BehaviorSubject<Measurement[]>([]);
 
-  constructor(private measurementService: MeasurementService) {}
+  constructor(private measurementService: MeasurementService) {
+    this.measurementService.getAllMeasurements().subscribe(data => {
+      this.allMeasurementsDataSource.next(data);
+    });
+  }
 
   getAllMeasurements(): Observable<Measurement[]> {
     let obs = this.measurementService.getAllMeasurements()

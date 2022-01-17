@@ -2,4 +2,7 @@ mat-button-toggle { min-width: 75px; }
 
 ::ng-deep #reminder .mat-form-field-wrapper { margin-top: 0}
 
+::ng-deep #reminder .mat-form-field-outline { height: 51px }
+
 .setting-label { width: 72px }
+

@@ -8,12 +8,14 @@ import { UserSettings } from 'src/app/core/models/user-settings';
 @Injectable({ providedIn: 'root'})
 export class SettingsDataService {
 
-  userSettingsDataSource !: BehaviorSubject<UserSettings>;
+  userSettingsDataSource = new BehaviorSubject<UserSettings>({} as any);
 
   constructor(private authService: AuthService, private userService: UserService) {
     const currentUser = this.authService.currentUserValue;
     this.userService.settings(currentUser).subscribe(
-      (userSettings: UserSettings) => this.userSettingsDataSource.next(userSettings)
+      (userSettings: UserSettings) => {
+        this.userSettingsDataSource.next(userSettings);
+      }
     );
   }
 

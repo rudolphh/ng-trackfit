@@ -1,28 +1,28 @@
 <div
   class="col-sm-10 offset-sm-1 col-md-12 offset-md-0 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2 mb-4"
 >
-  <app-dash-card>
-    <div app-card-header class="d-flex align-items-center">
-      <span class="light-text-success">User Settings</span>
-      <i
-        class="fas fa-cog ml-auto"
-        matTooltip="edit user settings"
-        matTooltipPosition="left"
-        matTooltipShowDelay="500"
-        matTooltipHideDelay="1000"
-      ></i>
-    </div>
-    <div app-card-body>
-      <form
-        [formGroup]="settingsForm"
-        #formDirective="ngForm"
-        (ngSubmit)="onSubmit(formDirective)"
-        class="d-flex flex-column mt-2"
-      >
-        <div class="d-flex justify-content-center flex-wrap">
+  <form
+    [formGroup]="settingsForm"
+    #formDirective="ngForm"
+    (ngSubmit)="onSubmit(formDirective)"
+    class="d-flex flex-column mt-2"
+  >
+    <app-dash-card class="mb-4">
+      <div app-card-header class="d-flex align-items-center">
+        <span class="light-text-success">User</span>
+        <i
+          class="fas fa-user-cog ml-auto"
+          matTooltip="edit user settings"
+          matTooltipPosition="left"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="1000"
+        ></i>
+      </div>
+      <div app-card-body>
+        <div class="d-flex justify-content-center flex-wrap mt-2">
           <!-- gender input -->
           <div
-            class="d-flex justify-content-center align-items-center mb-4 col-12 col-sm-12 col-md-6"
+            class="d-flex justify-content-center align-items-center mb-4 col-12 col-sm-12 col-md-6 mb-4"
           >
             <span class="light-text-info setting-label"> Gender </span>
 
@@ -51,8 +51,11 @@
             </span>
 
             <span class="ml-4">
-              <mat-form-field appearance="outline" style="max-width: 150px"
-              class="text-center light-text-success">
+              <mat-form-field
+                appearance="outline"
+                style="max-width: 150px"
+                class="text-center light-text-success"
+              >
                 <mat-label>Choose a date</mat-label>
                 <input
                   matInput
@@ -68,9 +71,24 @@
             </span>
           </div>
           <!-- end dob input -->
-          <!-- </div> -->
+        </div>
+      </div>
+    </app-dash-card>
 
-          <!-- <div class="d-flex justify-content-center flex-wrap"> -->
+    <app-dash-card class="mb-4">
+      <div app-card-header class="d-flex align-items-center">
+        <span class="light-text-success">Measurement</span>
+        <i
+          class="fas fa-pencil-ruler ml-auto"
+          matTooltip="edit user settings"
+          matTooltipPosition="left"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="1000"
+        ></i>
+      </div>
+
+      <div app-card-body>
+        <div class="d-flex justify-content-center flex-wrap mt-2">
           <!-- unit input -->
           <div
             class="d-flex justify-content-center align-items-center mb-4 col-12 col-sm-12 col-md-6"
@@ -153,9 +171,23 @@
             </span>
           </div>
           <!-- / height input -->
-          <!-- </div> -->
+        </div>
+      </div>
+    </app-dash-card>
 
-          <!-- <div class="d-flex justify-content-center flex-wrap"> -->
+    <app-dash-card class="mb-4">
+      <div app-card-header class="d-flex align-items-center">
+        <span class="light-text-success">Strategy</span>
+        <i
+          class="fas fa-weight ml-auto"
+          matTooltip="edit user settings"
+          matTooltipPosition="left"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="1000"
+        ></i>
+      </div>
+      <div app-card-body>
+        <div class="d-flex justify-content-center flex-wrap mt-2">
           <!-- strategy input -->
           <div
             class="d-flex justify-content-center align-items-center mb-4 col-12 col-sm-12 col-md-6"
@@ -191,7 +223,10 @@
                 appearance="outline"
                 class="text-center w-100"
                 style="max-width: 100px"
-                [ngClass]="{ 'light-text-danger': strategy.value === 'cut', 'light-text-success': strategy.value === 'bulk' }"
+                [ngClass]="{
+                  'light-text-danger': strategy.value === 'cut',
+                  'light-text-success': strategy.value === 'bulk'
+                }"
               >
                 <mat-label>{{ strategy.value | titlecase }} Rate</mat-label>
                 <input
@@ -206,8 +241,12 @@
                 <i
                   class="fas fa-info-circle"
                   style="font-size: 1.5em"
-                  matTooltip="cut reduces calories, bulk increases"
-                  matTooltipPosition="below"
+                  [matTooltip]="
+                    strategy.value === 'cut'
+                      ? 'cut reduces calories'
+                      : 'bulk increases calories'
+                  "
+                  matTooltipPosition="above"
                   matTooltipShowDelay="500"
                   matTooltipHideDelay="1000"
                 ></i>
@@ -216,9 +255,23 @@
           </div>
           <!-- / rate input -->
         </div>
+      </div>
+    </app-dash-card>
 
+    <app-dash-card>
+      <div app-card-header class="d-flex align-items-center">
+        <span class="light-text-success">Notifications</span>
+        <i
+          class="fas fa-bell ml-auto"
+          matTooltip="edit notification settings"
+          matTooltipPosition="left"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="1000"
+        ></i>
+      </div>
+      <div app-card-body>
         <!-- reminder input -->
-        <div class="d-flex justify-content-center mb-4">
+        <div class="d-flex justify-content-center mt-2">
           <span class="light-text-info">
             <label class="mt-3">Remind Every</label>
           </span>
@@ -228,7 +281,7 @@
               id="reminder"
               appearance="outline"
               class="text-center w-100 light-text-success"
-              style="max-width: 50px; height: 51px"
+              style="max-width: 50px"
             >
               <input
                 matInput
@@ -253,8 +306,8 @@
           </span>
         </div>
         <!-- / reminder input -->
-      </form>
-      <!-- end form -->
-    </div>
-  </app-dash-card>
+      </div>
+    </app-dash-card>
+  </form>
+  <!-- end form -->
 </div>

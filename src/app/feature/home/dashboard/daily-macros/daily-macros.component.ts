@@ -23,6 +23,7 @@ export class DailyMacrosComponent implements OnInit {
   }
 
   get currentMacros(): any {
+    console.log('currentMacros');
     return this.foodDataService.foods.reduce(
       (prev, curr) => {
         prev.protein += curr.protein || 0;
@@ -38,7 +39,7 @@ export class DailyMacrosComponent implements OnInit {
   get currentMacroPercent(): any {
     const currentMacroPercent = {};
     for ( const macro in this.currentMacros ) {
-      if(macro){
+      if (macro){
         currentMacroPercent[macro] = this.currentMacros[macro] / this.max[macro] * 100;
       }
     }

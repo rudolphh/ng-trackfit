@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 
 import { AuthService } from 'src/app/core/services/auth.service';
+import { SettingsDataService } from './settings-data.service';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserSettings } from 'src/app/core/models/user-settings';
@@ -19,7 +20,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService, private fb: FormBuilder
+    private authService: AuthService, private fb: FormBuilder,
+    private settingsDataService: SettingsDataService
   ) {}
 
   ngOnInit(): void {
@@ -38,10 +40,12 @@ export class SettingsComponent implements OnInit {
     });
 
     this.currentUser = this.authService.currentUserValue;
-    this.userService.settings(this.currentUser).subscribe(
+    this.settingsDataService.userSettings$.subscribe(
       (userSettings: UserSettings) => {
         this.userSettings = userSettings;
         console.log(userSettings);
+
+        if (Object.keys(userSettings).length !== 0) {
         const formValues = {
           heightFeet: 0,
           heightInch: 0,
@@ -63,6 +67,7 @@ export class SettingsComponent implements OnInit {
           remindNum: 2,
           reminderFrequency: userSettings.reminderFrequency
         });
+      }
       }
     );
   }

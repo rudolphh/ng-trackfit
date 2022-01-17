@@ -43,18 +43,20 @@ export class DashboardComponent implements OnDestroy {
         // every date change we need all other date related data changes to go here
         this.initialDate = date;
 
-        this.isLoading = true;
+        //this.isLoading = true;
 
         this.foodDataService.changeDate(date).subscribe(() => {
           this.isLoading = false;
         });
       });
 
-    this.measurementDataService.getAllMeasurements().subscribe(measurements => {
-      this.bodyWeightSubject$.next(measurements[0].weight);
-      // TODO: calculate bodyfat (with body measurements if any)
-      this.bodyFatSubject$.next(0.01);
-    })
+    this.measurementDataService.measurements$.subscribe(measurements => {
+      if (measurements.length !== 0){
+        this.bodyWeightSubject$.next(measurements[0].weight);
+        // TODO: calculate bodyfat (with body measurements if any)
+        this.bodyFatSubject$.next(0.01);
+      }
+    });
   }
 
 

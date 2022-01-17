@@ -12,7 +12,7 @@ export class VitalsComponent implements OnInit {
   @Input() latestBodyFat$ : Observable<number> = of(0.00);
 
   constructor() {
-    this.latestBodyFat$.subscribe(data => console.log(data))
+    this.latestBodyFat$.subscribe(data => console.log('latestBodyFat$: ', data));
   }
 
   ngOnInit(): void {}
