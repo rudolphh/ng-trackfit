@@ -19,8 +19,7 @@ export class DailyMacrosComponent implements OnInit {
 
   constructor(private foodDataService: FoodDataService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get currentMacros(): any {
     console.log('currentMacros');
