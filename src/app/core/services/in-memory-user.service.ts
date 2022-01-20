@@ -29,7 +29,7 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
 
     const bday = new Date('1982-09-28');
-    bday.setUTCHours(0, 0, 0, 0);
+
     const usersettings: UserSettings = {
       id: 1,
       gender: 'male',
