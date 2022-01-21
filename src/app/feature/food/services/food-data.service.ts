@@ -37,6 +37,7 @@ export class FoodDataService {
     let obs = this.foodService.getFoodsByDate(todayString, tmwString);
 
     obs.subscribe(foods => {
+      console.log('change date food');
       this.todaysFoodDataSource.next(foods);
     });
 
@@ -74,6 +75,7 @@ export class FoodDataService {
 
     obs.subscribe(savedFood => {
       const foods = [savedFood, ...this.todaysFoodDataSource.getValue()];
+      console.log('add food')
       this.todaysFoodDataSource.next(foods);
     });
 

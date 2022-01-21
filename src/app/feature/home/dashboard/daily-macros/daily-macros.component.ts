@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { Food } from 'src/app/core/models/food.model';
 import { FoodDataService } from 'src/app/feature/food/services/food-data.service';
 import { forEachChild } from 'typescript';
 
@@ -11,29 +12,30 @@ export class DailyMacrosComponent implements OnInit {
   @Input() selectedDate!: Date;
   @Input() isLoading = false;
 
+  currentMacros = { protein: 0, carbohydrate: 0, fat: 0 };
   macrosPercent = { protein: 0, carbohydrate: 0, fat: 0 };
   protein = 0;
   carbohydrate = 0;
   fat = 0;
   max = { protein: 212, carbohydrate: 222, fat: 50 };
 
-  constructor(private foodDataService: FoodDataService) {}
+  constructor(private foodDataService: FoodDataService) {
+    this.foodDataService.todaysFood$.subscribe((foods: Food[]) => {
+      console.log('currentMacros');
+      this.currentMacros = foods.reduce(
+        (prev, curr) => {
+          prev.protein += curr.protein || 0;
+          prev.carbohydrate += curr.carbohydrate || 0;
+          prev.fat += curr.fat || 0;
+
+          return prev;
+        },
+        { protein: 0, carbohydrate: 0, fat: 0 }
+      );
+    });
+  }
 
   ngOnInit(): void {}
-
-  get currentMacros(): any {
-    console.log('currentMacros');
-    return this.foodDataService.foods.reduce(
-      (prev, curr) => {
-        prev.protein += curr.protein || 0;
-        prev.carbohydrate += curr.carbohydrate || 0;
-        prev.fat += curr.fat || 0;
-
-        return prev;
-      },
-      { protein: 0, carbohydrate: 0, fat: 0 }
-    );
-  }
 
   get currentMacroPercent(): any {
     const currentMacroPercent = {};
