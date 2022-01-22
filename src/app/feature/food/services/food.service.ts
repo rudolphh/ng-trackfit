@@ -44,13 +44,10 @@ export class FoodService {
           }),
           shareReplay() // for multiple view layer subscriptions
         )
-      : (this.http
-          .get(baseUrl)
-          .pipe(
-            map((foods: any) =>
-              foods.map((food: Food) => food)
-            ), shareReplay()
-          ) as Observable<Food[]>);
+      : (this.http.get(baseUrl).pipe(
+          map((foods: any) => foods.map((food: Food) => food)),
+          shareReplay()
+        ) as Observable<Food[]>);
   }
 
   getFoodsByName(name: string): Observable<Food[]> {
@@ -106,13 +103,17 @@ export class FoodService {
 
   updateFood(food: Food): Observable<Food> {
     const user: User = this.authService.currentUserValue;
-    const baseUrl = `${this.env.apiUrl}/users/${user.id}/foods/${food.id}`;
+    const baseUrl = user
+      ? `${this.env.apiUrl}/users/${user.id}/foods/${food.id}`
+      : '/api/foods';
 
-    return this.http.patch<ApiResponse>(baseUrl, food).pipe(
-      map((response: ApiResponse) => {
-        const data = response.data as Food;
-        return this.foodAdapter.adapt(data);
-      })
-    );
+    return user
+      ? this.http.patch<ApiResponse>(baseUrl, food).pipe(
+          map((response: ApiResponse) => {
+            const data = response.data as Food;
+            return this.foodAdapter.adapt(data);
+          })
+        )
+      : (this.http.put(baseUrl, food) as Observable<Food>);
   }
 }

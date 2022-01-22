@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 
 import { ApiResponse } from 'src/app/core/models/api-response';
-import { Food } from 'src/app/core/models/food.model';
 import { FoodService } from './food.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -12,7 +12,7 @@ export class FoodDataService {
   private todaysFoodDataSource: BehaviorSubject<Food[]> = new BehaviorSubject<Food[]>([]);
   private autocompleteFoodDataSource: BehaviorSubject<Food[]> = new BehaviorSubject<Food[]>([]);
 
-  constructor(private foodService: FoodService) {}
+  constructor(private foodService: FoodService, private foodAdapter: FoodAdapter) {}
 
   get foods(): Food[] {
     return this.todaysFoodDataSource.getValue();
@@ -75,7 +75,7 @@ export class FoodDataService {
 
     obs.subscribe(savedFood => {
       const foods = [savedFood, ...this.todaysFoodDataSource.getValue()];
-      console.log('add food')
+      console.log('add food');
       this.todaysFoodDataSource.next(foods);
     });
 
@@ -86,8 +86,10 @@ export class FoodDataService {
     let obs = this.foodService.updateFood(food);
 
     obs.subscribe(savedFood => {
-      const index = this.foods.findIndex(item => item.id === food.id);
-      this.foods[index] = savedFood;
+      this.todaysFoodDataSource.next(this.foods.map(item => {
+        if (item.id === food.id) { item = this.foodAdapter.adapt(food); }
+        return item;
+      }));
     });
 
     return obs;

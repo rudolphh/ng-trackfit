@@ -27,10 +27,10 @@ export class Food {
 export class FoodAdapter implements Adapter<Food> {
   adapt(food: any): Food {
     return new Food(
-      food._id,
+      food.id,
       food.name,
       +food.calories,
-      new Date(food.date),
+      food.date,
       +food.protein || 0,
       +food.carbohydrate || 0,
       +food.sugars || 0,

@@ -188,7 +188,7 @@ export class FoodListComponent
         debounceTime(1000),
         distinctUntilChanged(),
         switchMap((formValue) => {
-          console.log('update food: ' + formValue);
+          console.log('update food: ', formValue);
           return this.foodDataService.saveFood(formValue as Food);
         }),
         takeUntil(this.unsubscribe$)

@@ -15,10 +15,19 @@ export class DailyProgressComponent implements OnInit {
   @Input() selectedDate!: Date;
   @Input() isLoading = false;
 
+  currentCals = 0;
+
   constructor(
     private homeDataService: HomeDataService,
     private foodDataService: FoodDataService
-  ) {}
+  ) {
+
+    this.foodDataService.todaysFood$.subscribe(foods => {
+      this.currentCals = foods.reduce((prev, curr) => {
+        return prev + curr.calories;
+      }, 0);
+    });
+  }
 
   ngOnInit(): void {
   }
@@ -41,19 +50,12 @@ export class DailyProgressComponent implements OnInit {
     this.foodDataService.addFood(food);
   }
 
-    // for progress bar
-    get currentCalories(): number {
-      return this.foodDataService.foods.reduce((prev, curr) => {
-        return prev + curr.calories;
-      }, 0);
-    }
-
     get remainingCalories(): number {
-      return this.maxCalories - this.currentCalories;
+      return this.maxCalories - this.currentCals;
     }
 
     get percentOfDaily(): number {
-      return (this.currentCalories / this.maxCalories) * 100;
+      return (this.currentCals / this.maxCalories) * 100;
     }
 
     // for remaining

@@ -16,7 +16,7 @@ export class HomeDataService {
     return this.dateDataSource.asObservable();
   }
 
-  setCurrentDate(date: Date) {
+  setCurrentDate(date: Date): void {
     date.setHours(0, 0, 0, 0);
     this.dateDataSource.next(date);
   }
