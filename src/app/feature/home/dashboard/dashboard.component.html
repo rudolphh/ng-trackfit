@@ -1,8 +1,6 @@
 <div class="col-12">
   <!-- global messages -->
-  <div
-    class="alert alert-dismissible alert-success text-center"
-  >
+  <div class="alert alert-dismissible alert-success text-center">
     <span
       class="close"
       style="cursor: pointer; color: white"
@@ -10,15 +8,23 @@
       aria-label="Close"
       ><span aria-hidden="true">&times;</span></span
     >
-    <strong>Demo Mode - </strong> Edit settings to try out.  Register and Login to save
+    <div class="d-flex justify-content-between">
+      <span><a routerLink="/settings">Settings</a> to try out</span>
+      <strong>Demo Mode</strong>
+      <span
+        ><a routerLink="/register">Register</a> /
+        <a routerLink="/login">Login</a> to save</span
+      >
+    </div>
   </div>
-
 </div>
 
 <!-- general vitals dash card -->
 <div class="col-md-12 col-lg-5 mb-4 float-left">
   <div *ngIf="!(user$ | async)" class="mb-4">
-    <app-check-in (newMeasurementCreatedEvent)="measurementAdded($event)"></app-check-in>
+    <app-check-in
+      (newMeasurementCreatedEvent)="measurementAdded($event)"
+    ></app-check-in>
   </div>
   <div class="clearfix"></div>
 

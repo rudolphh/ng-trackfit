@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MeasurementModule } from '../../measurement/measurement.module';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VitalsComponent } from './vitals/vitals.component';
 
@@ -24,6 +25,7 @@ import { VitalsComponent } from './vitals/vitals.component';
   ],
   imports: [
     SharedModule,
+    RouterModule,
     FoodModule,
     FoodListModule,
     MatButtonModule,
