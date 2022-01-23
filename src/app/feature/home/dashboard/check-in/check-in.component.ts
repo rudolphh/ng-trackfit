@@ -1,6 +1,10 @@
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 
-import { Component } from '@angular/core';
+import { Food } from 'src/app/core/models/food.model';
+import { Measurement } from '../../../../core/models/measurement';
+import { MeasurementAdapter } from 'src/app/core/models/measurement';
+import { MeasurementService } from 'src/app/feature/measurement/measurement.service';
 
 @Component({
   selector: 'app-check-in',
@@ -9,14 +13,20 @@ import { Component } from '@angular/core';
 })
 export class CheckInComponent {
 
+  @Output() newMeasurementCreatedEvent: EventEmitter<Measurement> = new EventEmitter<Measurement>();
+  @ViewChild('weightInput') weightInput!: ElementRef;
   addMeasureForm !: FormGroup;
   measureOptions = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private measurementService: MeasurementService,
+    private measurementAdapter: MeasurementAdapter
+    ) {
 
     const validators = [
       Validators.pattern('^[0-9]*$'),
-      Validators.maxLength(4),
+      Validators.maxLength(3),
     ]
 
     this.addMeasureForm = this.fb.group({
@@ -29,9 +39,39 @@ export class CheckInComponent {
 
   }
 
+  resetForm(formDirective: FormGroupDirective): void {
+    Object.keys(this.addMeasureForm.controls).forEach((key) => {
+      this.addMeasureForm.get(key)?.setErrors(null);
+    });
+
+    this.addMeasureForm.reset();
+    formDirective.resetForm();
+
+    this.weightInput.nativeElement.focus();
+  }
+
   onSubmit(formDirective: FormGroupDirective): void {
 
     console.log(this.addMeasureForm.value);
+
+    if (!this.addMeasureForm.valid) {
+      return;
+    }
+    const { weight, unit, neck, waist, hips } = this.addMeasureForm.value; // these are strings
+    const now = Date.now();
+    const newMeasurement = this.measurementAdapter.adapt({
+      id: null,
+      weight,
+      unit,
+      neck,
+      waist,
+      hips,
+      date: now,
+      createdAt: now,
+      updatedAt: now,
+    });
+    this.newMeasurementCreatedEvent.emit(newMeasurement); // output the new food created
+    this.resetForm(formDirective);
   }
 
   toggleMeasureOptions(): void {

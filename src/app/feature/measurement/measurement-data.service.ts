@@ -33,4 +33,16 @@ export class MeasurementDataService {
     return this.allMeasurementsDataSource.asObservable();
   }
 
+  addMeasurement(measurement: Measurement): Observable<Measurement> {
+    let obs = this.measurementService.addMeasurement(measurement);
+
+    obs.subscribe(savedMeasurement => {
+      const measurements = [savedMeasurement, ...this.allMeasurementsDataSource.getValue()];
+      console.log('add measurement to data source');
+      this.allMeasurementsDataSource.next(measurements);
+    });
+
+    return obs;
+  }
+
 }

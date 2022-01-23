@@ -10,7 +10,7 @@
       aria-label="Close"
       ><span aria-hidden="true">&times;</span></span
     >
-    <strong>Demo Mode - </strong> edit settings to try out.  register/login to save
+    <strong>Demo Mode - </strong> Edit settings to try out.  Register and Login to save
   </div>
 
 </div>
@@ -18,7 +18,7 @@
 <!-- general vitals dash card -->
 <div class="col-md-12 col-lg-5 mb-4 float-left">
   <div *ngIf="!(user$ | async)" class="mb-4">
-    <app-check-in></app-check-in>
+    <app-check-in (newMeasurementCreatedEvent)="measurementAdded($event)"></app-check-in>
   </div>
   <div class="clearfix"></div>
 

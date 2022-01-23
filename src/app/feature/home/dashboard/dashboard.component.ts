@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { FoodDataService } from '../../food/services/food-data.service';
 import { HomeDataService } from '../home-data.service';
+import { Measurement } from 'src/app/core/models/measurement';
 import { MeasurementDataService } from '../../measurement/measurement-data.service';
 import { takeUntil } from 'rxjs/operators';
 import { textChangeRangeIsUnchanged } from 'typescript';
@@ -51,6 +52,7 @@ export class DashboardComponent implements OnDestroy {
       });
 
     this.measurementDataService.measurements$.subscribe(measurements => {
+      console.log(measurements);
       if (measurements.length !== 0){
         this.bodyWeightSubject$.next(measurements[0].weight);
         // TODO: calculate bodyfat (with body measurements if any)
@@ -59,6 +61,10 @@ export class DashboardComponent implements OnDestroy {
     });
   }
 
+  measurementAdded(measurement: Measurement) : void {
+    console.log(measurement);
+    this.measurementDataService.addMeasurement(measurement);
+  }
 
   ngOnDestroy(): void {
     this.unsubscribed$.next();

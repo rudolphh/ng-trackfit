@@ -16,13 +16,13 @@ export class Measurement {
 export class MeasurementAdapter implements Adapter<Measurement> {
   adapt(measurement: any): Measurement {
     return new Measurement(
-      measurement.id,
-      measurement.weight,
+      +measurement.id,
+      +measurement.weight,
       measurement.unit,
       measurement.date,
-      measurement.neck,
-      measurement.waist,
-      measurement.hips
+      +measurement.neck,
+      +measurement.waist,
+      +measurement.hips
     );
   }
 }

@@ -13,7 +13,7 @@ export class DailyMacrosComponent implements OnInit {
   @Input() isLoading = false;
 
   currentMacros = { protein: 0, carbohydrate: 0, fat: 0 };
-  macrosPercent = { protein: 0, carbohydrate: 0, fat: 0 };
+  macrosPercent = {};
   protein = 0;
   carbohydrate = 0;
   fat = 0;
