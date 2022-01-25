@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12" *ngIf="!(user$ | async)">
   <!-- global messages -->
   <div class="alert alert-dismissible alert-success text-center">
     <span
@@ -9,17 +9,17 @@
       ><span aria-hidden="true">&times;</span></span
     >
     <div class="d-flex justify-content-between">
-      <span><a routerLink="/settings">Settings</a> to try out</span>
-      <strong>Demo Mode</strong>
-      <span
+      <span>Try <a routerLink="/settings">Settings</a></span>
+      <strong>Demo</strong>
+      <span class="d-none d-lg-block"
         ><a routerLink="/register">Register</a> /
-        <a routerLink="/login">Login</a> to save</span
+        <a routerLink="/login">Login</a></span
       >
     </div>
   </div>
 </div>
 
-<!-- general vitals dash card -->
+<!-- check-in when not logged in -->
 <div class="col-md-12 col-lg-5 mb-4 float-left">
   <div *ngIf="!(user$ | async)" class="mb-4">
     <app-check-in
@@ -29,29 +29,32 @@
   <div class="clearfix"></div>
 
   <!-- general vitals dash card -->
-  <div>
+  <div class="mb-4">
     <app-vitals
       [lastWeight$]="bodyWeight$"
       [latestBodyFat$]="bodyFat$"
     ></app-vitals>
   </div>
+
+  <!-- daily macros -->
+  <div>
+    <app-daily-macros [foods]="foods"></app-daily-macros>
+  </div>
 </div>
 
-<!-- daily vitals dash card -->
+<!-- daily progress -->
 <div class="col-md-12 col-lg-7 mb-4 float-right">
-  <app-daily-progress [selectedDate]="initialDate" [isLoading]="isLoading">
+  <app-daily-progress
+    [selectedDate]="initialDate"
+    [isLoading]="isLoading"
+    [foods]="foods"
+  >
   </app-daily-progress>
 </div>
 
-<div class="col-md-12 col-lg-5 mb-4 float-left">
-  <app-daily-macros
-    [selectedDate]="initialDate"
-    [isLoading]="isLoading"
-  ></app-daily-macros>
-</div>
 <!-- <div class="clearfix"></div> -->
 
-<!-- general vitals dash card -->
+<!-- check-in when logged in -->
 <div *ngIf="user$ | async" class="col-md-12 col-lg-5 mb-4">
   <app-check-in></app-check-in>
 </div>

@@ -89,22 +89,43 @@
 
       <ng-template #showLoginRegister>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a
-              class="nav-link"
+          <li class="nav-item dropdown">
+            <button
+            mat-icon-button
+            style="font-size: 1.5em"
+            color="primary"
+            aria-label="nav open"
+            id="navbarDropdown"
+            class="nav-link active"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            mat-button
+            [matMenuTriggerFor]="authmenu"
+          >
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <mat-menu
+          #authmenu="matMenu"
+          aria-labelledby="navbarDropdown"
+          class="bg-primary"
+          style="width: 300px"
+        >
+            <a mat-menu-item
+              class="dropdown-item"
               routerLink="/login"
               [routerLinkActive]="'active'"
               >Login</a
             >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
+
+
+            <a mat-menu-item
+              class="dropdown-item"
               routerLink="/register"
               [routerLinkActive]="'active'"
               >Register</a
             >
-          </li>
+          </mat-menu>
         </ul>
 
         <button
@@ -115,7 +136,7 @@
           [routerLinkActive]="'true'"
           class="nav-link ml-4 text-light"
         >
-          <i class="fas fa-cog" matTooltip="edit settings"></i>
+          <i class="fas fa-cog" style="font-size: 1.5em" matTooltip="edit settings"></i>
         </button>
       </ng-template>
     </div>

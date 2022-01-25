@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   constructor(
     private measurementDataService: MeasurementDataService
   ) {
-    this.measurementDataService.getAllMeasurements().subscribe((measurements: Measurement[]) => measurements);
+    //this.measurementDataService.getAllMeasurements().subscribe((measurements: Measurement[]) => measurements);
   }
 
   ngOnInit(): void {
