@@ -2,6 +2,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Food } from 'src/app/core/models/food.model';
 import { FoodDataService } from '../../food/services/food-data.service';
 import { HomeDataService } from '../home-data.service';
 import { Measurement } from 'src/app/core/models/measurement';
@@ -22,8 +23,10 @@ export class DashboardComponent implements OnDestroy {
   bodyWeightSubject$ = new BehaviorSubject<number>(0);
   bodyWeight$ = this.bodyWeightSubject$.asObservable();
 
-  bodyFatSubject$ = new BehaviorSubject<number>(0.00);
+  bodyFatSubject$ = new BehaviorSubject<number>(0.0);
   bodyFat$ = this.bodyFatSubject$.asObservable();
+
+  foods !: Food[];
 
   isLoading = false;
 
@@ -46,14 +49,18 @@ export class DashboardComponent implements OnDestroy {
 
         //this.isLoading = true;
 
-        this.foodDataService.changeDate(date).subscribe(() => {
+        this.foodDataService.changeDate(date).subscribe((foods) => {
           this.isLoading = false;
         });
       });
 
-    this.measurementDataService.measurements$.subscribe(measurements => {
+    this.foodDataService.todaysFood$.subscribe((foods) => {
+      this.foods = foods;
+    });
+
+    this.measurementDataService.measurements$.subscribe((measurements) => {
       console.log(measurements);
-      if (measurements.length !== 0){
+      if (measurements.length !== 0) {
         this.bodyWeightSubject$.next(measurements[0].weight);
         // TODO: calculate bodyfat (with body measurements if any)
         this.bodyFatSubject$.next(0.01);
@@ -61,7 +68,7 @@ export class DashboardComponent implements OnDestroy {
     });
   }
 
-  measurementAdded(measurement: Measurement) : void {
+  measurementAdded(measurement: Measurement): void {
     console.log(measurement);
     this.measurementDataService.addMeasurement(measurement);
   }
