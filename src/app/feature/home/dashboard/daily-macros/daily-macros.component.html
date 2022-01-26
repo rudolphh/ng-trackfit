@@ -14,12 +14,12 @@
       <div class="d-flex mb-2 px-1">
         <span>protein</span>
         <div class="ml-auto">
-          <span class="">{{ currentMacros.protein }}</span> /
+          <span class="">{{ protein }}</span> /
           <span class="light-text-info">212 g</span>
         </div>
       </div>
       <app-progress-bar
-        [percent]="currentMacroPercent.protein"
+        [percent]="proteinPercent"
       ></app-progress-bar>
     </div>
 
@@ -27,12 +27,12 @@
       <div class="d-flex mb-2 px-1">
         <span>carbs</span>
         <div class="ml-auto">
-          <span class="">{{ currentMacros.carbohydrate }}</span> /
+          <span class="">{{ carbohydrate }}</span> /
           <span class="light-text-info">222 g</span>
         </div>
       </div>
       <app-progress-bar
-        [percent]="currentMacroPercent.carbohydrate"
+        [percent]="carbohydratePercent"
       ></app-progress-bar>
     </div>
 
@@ -40,12 +40,12 @@
       <div class="d-flex mb-2 px-1">
         <span>fats</span>
         <div class="ml-auto">
-          <span class="">{{ currentMacros.fat }}</span> /
+          <span class="">{{ fat }}</span> /
           <span class="light-text-info">50 g</span>
         </div>
       </div>
       <app-progress-bar
-        [percent]="currentMacroPercent.fat"
+        [percent]="fatPercent"
       ></app-progress-bar>
     </div>
 

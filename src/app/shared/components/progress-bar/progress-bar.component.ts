@@ -14,7 +14,6 @@ import { Component, Input } from '@angular/core';
 export class ProgressBarComponent {
 
   @Input() percent = 0;
-  @Input() remaining = 0;
 
   progressBarColor(): string {
     // background-color: #2aa198; success

@@ -7,30 +7,20 @@ import { HomeDataService } from '../../home-data.service';
 @Component({
   selector: 'app-daily-progress',
   templateUrl: './daily-progress.component.html',
-  styleUrls: ['./daily-progress.component.css']
+  styleUrls: ['./daily-progress.component.css'],
 })
 export class DailyProgressComponent implements OnInit {
-
   @Input() maxCalories = 1800;
+  @Input() foods!: Food[];
   @Input() selectedDate!: Date;
   @Input() isLoading = false;
-
-  currentCals = 0;
 
   constructor(
     private homeDataService: HomeDataService,
     private foodDataService: FoodDataService
-  ) {
+  ) {}
 
-    this.foodDataService.todaysFood$.subscribe(foods => {
-      this.currentCals = foods.reduce((prev, curr) => {
-        return prev + curr.calories;
-      }, 0);
-    });
-  }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   setSelected(date: Date): void {
     this.homeDataService.setCurrentDate(date);
@@ -50,22 +40,28 @@ export class DailyProgressComponent implements OnInit {
     this.foodDataService.addFood(food);
   }
 
-    get remainingCalories(): number {
-      return this.maxCalories - this.currentCals;
-    }
+  get currentCals(): number {
+    return this.foods.reduce((prev, curr) => {
+      return prev + curr.calories;
+    }, 0);
+  }
 
-    get percentOfDaily(): number {
-      return (this.currentCals / this.maxCalories) * 100;
-    }
+  get remainingCalories(): number {
+    return this.maxCalories - this.currentCals;
+  }
 
-    // for remaining
-    remainingColor(): string {
-      return this.percentOfDaily < 50
-        ? 'light-text-success'
-        : this.percentOfDaily < 75
-          ? 'light-text-primary'
-          : this.percentOfDaily < 100
-            ? 'light-text-warning'
-            : 'light-text-danger';
-    }
+  get percentOfDaily(): number {
+    return (this.currentCals / this.maxCalories) * 100;
+  }
+
+  // for remaining
+  remainingColor(): string {
+    return this.percentOfDaily < 50
+      ? 'light-text-success'
+      : this.percentOfDaily < 75
+      ? 'light-text-primary'
+      : this.percentOfDaily < 100
+      ? 'light-text-warning'
+      : 'light-text-danger';
+  }
 }
