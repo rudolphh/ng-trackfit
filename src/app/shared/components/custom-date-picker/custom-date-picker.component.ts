@@ -6,12 +6,19 @@ declare var $: any;
 @Component({
   selector: 'app-custom-date-picker',
   templateUrl: './custom-date-picker.component.html',
-  styleUrls: ['./custom-date-picker.component.css']
+  styleUrls: ['./custom-date-picker.component.css'],
 })
 export class CustomDatePickerComponent implements OnInit {
-
   @Input() currentDate: Date = new Date();
+  @Input() disabled = false;
   @Output() newDateSelectedEvent: EventEmitter<Date> = new EventEmitter<Date>();
+
+  get disabledStyle(): {} {
+    return {
+      'pointer-events': this.disabled ? 'none' : 'auto',
+      opacity: this.disabled ? '0.5' : '1',
+    };
+  }
 
   constructor() {}
 

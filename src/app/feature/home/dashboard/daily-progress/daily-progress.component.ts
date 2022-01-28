@@ -15,6 +15,8 @@ export class DailyProgressComponent implements OnInit {
   @Input() selectedDate!: Date;
   @Input() isLoading = false;
 
+  @Input() inDemo = true;
+
   constructor(
     private homeDataService: HomeDataService,
     private foodDataService: FoodDataService

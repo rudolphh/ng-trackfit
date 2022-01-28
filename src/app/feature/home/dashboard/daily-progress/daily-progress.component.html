@@ -4,6 +4,7 @@
     <app-custom-date-picker
       [currentDate]="selectedDate"
       (newDateSelectedEvent)="setSelected($event)"
+      [disabled]="inDemo"
     ></app-custom-date-picker>
 
     <i
