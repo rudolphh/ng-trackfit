@@ -43,7 +43,7 @@ export class SettingsComponent implements OnInit {
     this.settingsDataService.userSettings$.subscribe(
       (userSettings: UserSettings) => {
         this.userSettings = userSettings;
-        console.log(userSettings);
+        console.log('hello settings', userSettings.gender);
 
         if (Object.keys(userSettings).length !== 0) {
         const formValues = {
@@ -57,7 +57,7 @@ export class SettingsComponent implements OnInit {
           formValues.heightInch = userSettings.height % 12;
           formValues.heightCent = userSettings.height * 2.54;
         }
-        this.settingsForm.setValue({
+        this.settingsForm.patchValue({
           gender: userSettings.gender,
           birthDate: userSettings.birthDate,
           unit: userSettings.unit,
