@@ -35,6 +35,7 @@ export class DashboardComponent implements OnDestroy {
   isLoading = false;
   inDemo = true;
   userSettings!: UserSettings;
+  maxCalories = 1800;
 
   unsubscribed$ = new Subject<void>();
 
@@ -74,7 +75,7 @@ export class DashboardComponent implements OnDestroy {
     ])
       .pipe(takeUntil(this.unsubscribed$))
       .subscribe((data) => {
-        console.log(data);
+        console.log(data)
         const [userSettings, measurements] = data;
         if (measurements.length !== 0) {
           this.bodyWeightSubject$.next(measurements[0].weight);
@@ -83,27 +84,80 @@ export class DashboardComponent implements OnDestroy {
             if (userSettings.gender === 'male') {
               return m.neck && m.waist;
             }
-            return m.neck && m.hips && m.waist;
+            return m.neck && m.waist && m.hips;
           });
 
-          console.log('lastBodyMeasurements', lastBodyMeasurements);
-
-
-          if (lastBodyMeasurements) {
+          // if most recent weight is not in lastBodyMeasurements, then
+          // BMR MUST be calculated without bodyfat; less accurate (Mifflin-StJeor)
+          if (lastBodyMeasurements && lastBodyMeasurements.id === measurements[0].id) {
             // can calculate bodyfat and use to better bmr * rate (cut or bulk)
             // use Katch-McArdle
-            
+
+            let { neck, waist, hips } = lastBodyMeasurements;
+            let { height } = userSettings;
+
+            neck! *= 2.54;
+            waist! *= 2.54;
+            hips! *= 2.54;
+            height *= 2.54;
+
+            let bf;
+            if (userSettings.gender === 'male') {
+              bf = 495 / ( 1.0324 - 0.19077 * Math.log10( waist! - neck! ) + 0.15456 * Math.log10( height ) ) - 450;
+            } else {
+              bf = 495 / ( 1.29579 - 0.35004 * Math.log10( waist! + hips! - neck! ) + 0.22100 * Math.log10( height ) ) - 450;
+            }
+            console.log(bf/100)
+            this.bodyFatSubject$.next(bf/100);
 
           } else {
             // no last bodyfat calc, and use Mifflin-St.Jeor
+            this.bodyFatSubject$.next(0.01);
+
+            let { neck, waist, hips, weight } = measurements[0];
+            let { height, rate, gender, birthDate } = userSettings;
+
+            neck! *= 2.54;
+            waist! *= 2.54;
+            hips! *= 2.54;
+            height *= 2.54;
+
+            // 1kg = 2.20462262 lbs
+            weight /= 2.20462262;
+            let bmr;
+
+            if (gender === 'male'){
+              // For men:
+              // BMR = 10W + 6.25H - 5A + 5
+              bmr = 10 * weight + 6.25 * height - 5 * this.userAge(birthDate) + 5;
+              this.maxCalories = bmr * 1.2 * (1 - rate / 100);
+            }
+
+            // For women:
+            // BMR = 10W + 6.25H - 5A - 161
+
           }
-          this.bodyFatSubject$.next(0.01);
         }
       });
   }
 
+  userAge(dob: Date): number {
+    if (typeof dob === 'string') {
+      dob = new Date(dob);
+    }
+    const monthDiff = Date.now() - dob.getTime();
+
+    // convert the calculated difference in date format
+    const ageDt = new Date(monthDiff);
+
+    // extract year from date
+    const year = ageDt.getUTCFullYear();
+
+    // now calculate the age of the user
+    return Math.abs(year - 1970);
+  }
+
   measurementAdded(measurement: Measurement): void {
-    console.log(measurement);
     this.measurementDataService.addMeasurement(measurement);
   }
 
