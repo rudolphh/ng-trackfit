@@ -22,7 +22,7 @@
     <div class="d-flex justify-content-between">
       <div class="dash-vital mb-3">
         Daily Calories :
-        <span class="light-text-info"> {{ maxCalories }}</span>
+        <span class="light-text-info"> {{ maxCalories | number:'.0-0' }}</span>
       </div>
       <div class="dash-vital">
         Strategy : <span class="light-text-info"> CUT</span>
@@ -41,7 +41,7 @@
     <div class="float-left mt-2">
       Remaining :
       <!-- <span class="light-text-info">{{ remainingCalories }}</span> -->
-      <span [ngClass]="remainingColor()">{{ remainingCalories }}</span>
+      <span [ngClass]="remainingColor()">{{ remainingCalories | number:'.0-0' }}</span>
     </div>
 
     <div [ngStyle]="{ opacity: isLoading ? 0.3 : 1 }">
