@@ -38,6 +38,7 @@ export class InMemoryDataService implements InMemoryDbService {
       unit: 'imperial',
       strategy: 'cut',
       rate: 20,
+      reminderValue: 2,
       reminderFrequency: 'weekly'
     };
 

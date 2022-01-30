@@ -75,9 +75,19 @@ export class DashboardComponent implements OnDestroy {
     ])
       .pipe(takeUntil(this.unsubscribed$))
       .subscribe((data) => {
-        console.log(data)
+
         const [userSettings, measurements] = data;
+        this.userSettings = userSettings;
+        let { height, rate, gender, birthDate } = userSettings;
+        height *= 2.54;
+
+        let bmr;
+        let bf;
+
         if (measurements.length !== 0) {
+          console.log(measurements)
+          let { weight } = measurements[0];
+          weight /= 2.20462262; // 1kg = 2.20462262 lbs
           this.bodyWeightSubject$.next(measurements[0].weight);
 
           const lastBodyMeasurements = measurements.find((m) => {
@@ -87,56 +97,39 @@ export class DashboardComponent implements OnDestroy {
             return m.neck && m.waist && m.hips;
           });
 
-          // if most recent weight is not in lastBodyMeasurements, then
-          // BMR MUST be calculated without bodyfat; less accurate (Mifflin-StJeor)
-          if (lastBodyMeasurements && lastBodyMeasurements.id === measurements[0].id) {
+          if (lastBodyMeasurements) {
             // can calculate bodyfat and use to better bmr * rate (cut or bulk)
-            // use Katch-McArdle
+            console.log('lastBodyMeasurements', lastBodyMeasurements)
+            bf = this.calculateBodyFat(lastBodyMeasurements, userSettings);
+            this.bodyFatSubject$.next(bf / 100);
 
-            let { neck, waist, hips } = lastBodyMeasurements;
-            let { height } = userSettings;
+             // if latest body measurement is last overall measurement
+            if (lastBodyMeasurements?.id === measurements[0].id) {
+              // then use Katch-McArdle
+              let lbm = weight * (100 - bf) / 100;
+              console.log('lbm', lbm);
 
-            neck! *= 2.54;
-            waist! *= 2.54;
-            hips! *= 2.54;
-            height *= 2.54;
-
-            let bf;
-            if (userSettings.gender === 'male') {
-              bf = 495 / ( 1.0324 - 0.19077 * Math.log10( waist! - neck! ) + 0.15456 * Math.log10( height ) ) - 450;
-            } else {
-              bf = 495 / ( 1.29579 - 0.35004 * Math.log10( waist! + hips! - neck! ) + 0.22100 * Math.log10( height ) ) - 450;
+              bmr = 370 + (21.6 * lbm);
+              this.maxCalories = bmr * 1.2 * (1 - rate / 100);
             }
-            console.log(bf/100)
-            this.bodyFatSubject$.next(bf/100);
 
           } else {
-            // no last bodyfat calc, and use Mifflin-St.Jeor
+            // no last bodyfat calc
             this.bodyFatSubject$.next(0.01);
 
-            let { neck, waist, hips, weight } = measurements[0];
-            let { height, rate, gender, birthDate } = userSettings;
-
-            neck! *= 2.54;
-            waist! *= 2.54;
-            hips! *= 2.54;
-            height *= 2.54;
-
-            // 1kg = 2.20462262 lbs
-            weight /= 2.20462262;
-            let bmr;
-
-            if (gender === 'male'){
+            // use Mifflin-StJeor
+            if (gender === 'male') {
               // For men:
               // BMR = 10W + 6.25H - 5A + 5
               bmr = 10 * weight + 6.25 * height - 5 * this.userAge(birthDate) + 5;
+              console.log(this.maxCalories);
               this.maxCalories = bmr * 1.2 * (1 - rate / 100);
             }
 
             // For women:
             // BMR = 10W + 6.25H - 5A - 161
-
           }
+
         }
       });
   }
@@ -155,6 +148,35 @@ export class DashboardComponent implements OnDestroy {
 
     // now calculate the age of the user
     return Math.abs(year - 1970);
+  }
+
+  calculateBodyFat(lastBodyMeasurements: Measurement, userSettings: UserSettings): number {
+    let { neck, waist, hips } = lastBodyMeasurements as any;
+    let { height } = userSettings;
+
+    neck *= 2.54;
+    waist *= 2.54;
+    hips *= 2.54;
+    height *= 2.54;
+
+    let bf;
+    if (userSettings.gender === 'male') {
+      bf =
+        495 /
+          (1.0324 -
+            0.19077 * Math.log10(waist - neck) +
+            0.15456 * Math.log10(height)) -
+        450;
+    } else {
+      bf =
+        495 /
+          (1.29579 -
+            0.35004 * Math.log10(waist + hips - neck) +
+            0.221 * Math.log10(height)) -
+        450;
+    }
+
+    return bf;
   }
 
   measurementAdded(measurement: Measurement): void {

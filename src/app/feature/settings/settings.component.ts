@@ -35,7 +35,7 @@ export class SettingsComponent implements OnInit {
       heightCent: [],
       strategy: [],
       rate: [],
-      remindNum: [],
+      reminderValue: [],
       reminderFrequency: []
     });
 
@@ -64,7 +64,7 @@ export class SettingsComponent implements OnInit {
           ...formValues,
           strategy: userSettings.strategy,
           rate: userSettings.rate,
-          remindNum: 2,
+          reminderValue: userSettings.reminderValue,
           reminderFrequency: userSettings.reminderFrequency
         });
       }

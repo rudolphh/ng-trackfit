@@ -24,6 +24,7 @@
   <div *ngIf="!(user$ | async)" class="mb-4">
     <app-check-in
       (newMeasurementCreatedEvent)="measurementAdded($event)"
+      [userSettings]="userSettings"
     ></app-check-in>
   </div>
   <div class="clearfix"></div>
@@ -58,5 +59,8 @@
 
 <!-- check-in when logged in -->
 <div *ngIf="user$ | async" class="col-md-12 col-lg-5 mb-4">
-  <app-check-in></app-check-in>
+  <app-check-in
+    (newMeasurementCreatedEvent)="measurementAdded($event)"
+    [userSettings]="userSettings"
+  ></app-check-in>
 </div>

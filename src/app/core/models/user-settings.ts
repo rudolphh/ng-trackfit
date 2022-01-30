@@ -9,6 +9,7 @@ export class UserSettings {
     public unit: string,
     public strategy: string,
     public rate: number,
+    public reminderValue: number,
     public reminderFrequency: string
   ) {}
 }
@@ -24,6 +25,7 @@ export class UserSettingsAdapter implements Adapter<UserSettings> {
       settings.unit,
       settings.strategy,
       settings.rate,
+      settings.reminderValue,
       settings.reminderFrequency
     );
   }
