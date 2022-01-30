@@ -11,4 +11,5 @@ export class MeasurementInputComponent {
 
   @Input() form !: FormGroup;
   @Input() isHidden = true;
+  @Input() gender !: string;
 }
