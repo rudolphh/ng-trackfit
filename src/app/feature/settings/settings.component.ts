@@ -13,19 +13,19 @@ import { UserSettings } from 'src/app/core/models/user-settings';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  currentUser !: User;
+  currentUser!: User;
   userSettings!: UserSettings;
 
-  settingsForm !: FormGroup;
+  settingsForm!: FormGroup;
 
   constructor(
     private userService: UserService,
-    private authService: AuthService, private fb: FormBuilder,
+    private authService: AuthService,
+    private fb: FormBuilder,
     private settingsDataService: SettingsDataService
   ) {}
 
   ngOnInit(): void {
-
     this.settingsForm = this.fb.group({
       gender: [''],
       birthDate: [''],
@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
       strategy: [],
       rate: [],
       reminderValue: [],
-      reminderFrequency: []
+      reminderFrequency: [],
     });
 
     this.currentUser = this.authService.currentUserValue;
@@ -46,35 +46,44 @@ export class SettingsComponent implements OnInit {
         console.log('hello settings', userSettings.gender);
 
         if (Object.keys(userSettings).length !== 0) {
-        const formValues = {
-          heightFeet: 0,
-          heightInch: 0,
-          heightCent: 0
-        };
+          const formValues = {
+            heightFeet: 0,
+            heightInch: 0,
+            heightCent: 0,
+          };
 
-        if (userSettings.unit === 'imperial') {
-          formValues.heightFeet = Math.floor(userSettings.height / 12);
-          formValues.heightInch = userSettings.height % 12;
-          formValues.heightCent = userSettings.height * 2.54;
+          if (userSettings.unit === 'imperial') {
+            formValues.heightFeet = Math.floor(userSettings.height / 12);
+            formValues.heightInch = userSettings.height % 12;
+            formValues.heightCent = userSettings.height * 2.54;
+          } else {
+            formValues.heightCent = userSettings.height;
+            const totalInches = formValues.heightCent / 2.54;
+            formValues.heightFeet = Math.floor(totalInches / 12);
+            formValues.heightInch = totalInches % 12;
+          }
+
+          this.settingsForm.patchValue({
+            gender: userSettings.gender,
+            birthDate: userSettings.birthDate,
+            unit: userSettings.unit,
+            ...formValues,
+            strategy: userSettings.strategy,
+            rate: userSettings.rate,
+            reminderValue: userSettings.reminderValue,
+            reminderFrequency: userSettings.reminderFrequency,
+          });
         }
-        this.settingsForm.patchValue({
-          gender: userSettings.gender,
-          birthDate: userSettings.birthDate,
-          unit: userSettings.unit,
-          ...formValues,
-          strategy: userSettings.strategy,
-          rate: userSettings.rate,
-          reminderValue: userSettings.reminderValue,
-          reminderFrequency: userSettings.reminderFrequency
-        });
       }
-      }
-    );
-  }
+    ); // end userSettings$ subscribe
 
-  onSubmit(formDirective: FormGroupDirective): void {
+    this.settingsForm.valueChanges.subscribe((form) => {
+      console.log(form)
+    });
 
   }
+
+  onSubmit(formDirective: FormGroupDirective): void {}
 
   onUnitChange(unit: string): void {
     console.log(unit);

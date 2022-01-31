@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Food, FoodAdapter } from 'src/app/core/models/food.model';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { FoodDataService } from '../services/food-data.service';
 import { MatOptionSelectionChange } from '@angular/material/core';

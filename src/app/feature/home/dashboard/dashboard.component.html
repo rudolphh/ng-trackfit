@@ -39,7 +39,7 @@
 
   <!-- daily macros -->
   <div>
-    <app-daily-macros [foods]="foods"></app-daily-macros>
+    <app-daily-macros [foods$]="foods$"></app-daily-macros>
   </div>
 </div>
 
@@ -48,7 +48,7 @@
   <app-daily-progress
     [selectedDate]="initialDate"
     [isLoading]="isLoading"
-    [foods]="foods"
+    [foods$]="foods$"
     [inDemo]="inDemo"
     [maxCalories]="maxCalories"
   >

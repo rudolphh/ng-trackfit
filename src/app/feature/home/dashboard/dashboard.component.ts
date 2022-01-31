@@ -1,5 +1,6 @@
 import {
   BehaviorSubject,
+  Observable,
   Subject,
   Subscription,
   combineLatest,
@@ -31,7 +32,8 @@ export class DashboardComponent implements OnDestroy {
   bodyWeight$ = this.bodyWeightSubject$.asObservable();
   bodyFatSubject$ = new BehaviorSubject<number>(0.0);
   bodyFat$ = this.bodyFatSubject$.asObservable();
-  foods!: Food[];
+
+  foods$ !: Observable<Food[]>;
   isLoading = false;
   inDemo = true;
   userSettings!: UserSettings;
@@ -65,9 +67,7 @@ export class DashboardComponent implements OnDestroy {
         this.isLoading = false;
       });
 
-    this.foodDataService.todaysFood$.subscribe((foods) => {
-      this.foods = foods;
-    });
+    this.foods$ = this.foodDataService.todaysFood$;
 
     combineLatest([
       this.settingsDataService.userSettings$,

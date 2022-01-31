@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Food } from 'src/app/core/models/food.model';
 import { FoodDataService } from 'src/app/feature/food/services/food-data.service';
 import { HomeDataService } from '../../home-data.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-daily-progress',
@@ -11,18 +12,25 @@ import { HomeDataService } from '../../home-data.service';
 })
 export class DailyProgressComponent implements OnInit {
   @Input() maxCalories = 1800;
-  @Input() foods!: Food[];
+  @Input() foods$!: Observable<Food[]>;
   @Input() selectedDate!: Date;
   @Input() isLoading = false;
 
   @Input() inDemo = true;
+  currentCals = 0;
 
   constructor(
     private homeDataService: HomeDataService,
     private foodDataService: FoodDataService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.foods$.subscribe(foods => {
+      this.currentCals = foods.reduce((prev, curr) => {
+        return prev + curr.calories;
+      }, 0);
+    })
+  }
 
   setSelected(date: Date): void {
     this.homeDataService.setCurrentDate(date);
@@ -40,12 +48,6 @@ export class DailyProgressComponent implements OnInit {
 
     food.date = selectedDateTimeNow;
     this.foodDataService.addFood(food);
-  }
-
-  get currentCals(): number {
-    return this.foods.reduce((prev, curr) => {
-      return prev + curr.calories;
-    }, 0);
   }
 
   get remainingCalories(): number {

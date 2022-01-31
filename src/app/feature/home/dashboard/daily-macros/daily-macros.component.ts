@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { Food } from 'src/app/core/models/food.model';
 import { FoodDataService } from 'src/app/feature/food/services/food-data.service';
-import { forEachChild } from 'typescript';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-daily-macros',
@@ -10,9 +10,8 @@ import { forEachChild } from 'typescript';
 })
 export class DailyMacrosComponent implements OnInit {
 
-  @Input() foods !: Food[];
+  @Input() foods$ !: Observable<Food[]>;
 
-  macrosPercent = { protein: 0, carbohydrate: 0, fat: 0 };
   protein = 0;
   carbohydrate = 0;
   fat = 0;
@@ -20,42 +19,31 @@ export class DailyMacrosComponent implements OnInit {
 
   constructor(private foodDataService: FoodDataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.foods$.subscribe((foods) => {
+      this.protein = 0;
+      this.carbohydrate = 0;
+      this.fat = 0;
 
-  get currentMacros(): any {
-
-    return this.foods.reduce(
-      (prev, curr) => {
-        prev.protein += curr.protein || 0;
-        prev.carbohydrate += curr.carbohydrate || 0;
-        prev.fat += curr.fat || 0;
-
-        return prev;
-      },
-      { protein: 0, carbohydrate: 0, fat: 0 }
-    );
+      foods.forEach(
+        (food: Food) => {
+          this.protein += food.protein || 0;
+          this.carbohydrate += food.carbohydrate || 0;
+          this.fat += food.fat || 0;
+      });
+    });
   }
 
   get proteinPercent(): number {
-    return this.currentMacros.protein / this.max.protein * 100;
+    return this.protein / this.max.protein * 100;
   }
 
   get carbohydratePercent(): number {
-    return this.currentMacros.carbohydrate / this.max.carbohydrate * 100;
+    return this.carbohydrate / this.max.carbohydrate * 100;
   }
 
   get fatPercent(): number {
-    return this.currentMacros.fat / this.max.fat * 100;
+    return this.fat / this.max.fat * 100;
   }
-
-  // get currentMacroPercent(): any {
-  //   const currentMacroPercent = {};
-  //   for ( const macro in this.currentMacros ) {
-  //     if (macro){
-  //       currentMacroPercent[macro] = this.currentMacros[macro] / this.max[macro] * 100;
-  //     }
-  //   }
-  //   return currentMacroPercent;
-  // }
 
 }

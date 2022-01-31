@@ -22,10 +22,26 @@ export class InMemoryDataService implements InMemoryDbService {
         carbohydrate: 38,
         fat: 0,
       },
+      {
+        id: 2,
+        name: 'protein shake',
+        calories: 200,
+        date: new Date(),
+        protein: 40,
+        carbohydrate: 2,
+        fat: 1,
+      },
     ];
 
     const measurements: Measurement[] = [
-      { id: 1, weight: 239, unit: 'imperial', date: new Date() }
+      {
+        id: 1,
+        weight: 239,
+        unit: 'imperial',
+        date: new Date(),
+        neck: 16,
+        waist: 37,
+      },
     ];
 
     const bday = new Date('1982-09-28');
@@ -39,7 +55,7 @@ export class InMemoryDataService implements InMemoryDbService {
       strategy: 'cut',
       rate: 20,
       reminderValue: 2,
-      reminderFrequency: 'weekly'
+      reminderFrequency: 'weekly',
     };
 
     return { user: userResponse, foods, measurements, usersettings };
