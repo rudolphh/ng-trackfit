@@ -1,6 +1,9 @@
 <div [formGroup]="theForm">
 <div formArrayName="foods">
 
+  <!-- <div *ngIf="formArray.controls.length === 0">
+    <span>No foods</span>
+  </div> -->
   <div
     [formArrayName]="arrayIndex"
     *ngFor="
@@ -9,6 +12,7 @@
     "
     cdkDrag
   >
+
   <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
     <smooth-height [trigger]="isHidden[food.value.id]">
       <div
