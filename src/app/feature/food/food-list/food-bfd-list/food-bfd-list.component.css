@@ -15,5 +15,5 @@
 }
 
 .cdk-drag-placeholder {
-  opacity: 0;
+  opacity: 0.5;
 }
