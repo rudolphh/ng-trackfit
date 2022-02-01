@@ -1,3 +1,5 @@
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { FoodBFDListComponent } from './food-bfd-list/food-bfd-list.component';
 import { FoodListComponent } from './food-list.component';
 import { FoodModule } from '../food.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,9 +15,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     SelectAllComponent,
     FoodListComponent,
+    FoodBFDListComponent
   ],
   imports: [
     SharedModule,
+    DragDropModule,
     FoodModule,
     MatButtonModule,
     MatListModule,

@@ -9,11 +9,11 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import {
   debounceTime,
   distinctUntilChanged,
-  skip,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
@@ -50,7 +50,11 @@ export class FoodListComponent
     private renderer: Renderer2
   ) {
     this.foodsForm = this.fb.group({
-      foods: this.fb.array([]),
+      foods: this.fb.array([
+        this.fb.array([]),
+        this.fb.array([]),
+        this.fb.array([])
+      ])
     });
 
     this.renderer.listen('window', 'click', (e: Event) => {
@@ -81,7 +85,7 @@ export class FoodListComponent
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
         this.foodsFormArray.clear();
-
+        this.lunchFoodsFormArray.clear();
         foods.map((food: Food) => {
           this.addNewFood(food);
         });
@@ -96,6 +100,20 @@ export class FoodListComponent
     console.log('on destroy called')
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  // for drag and drop
+  drop(event: CdkDragDrop<FormArray>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data.controls, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data.controls,
+        event.container.data.controls,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 
   // for select-all
@@ -136,18 +154,29 @@ export class FoodListComponent
     });
   }
 
-  get foods(): AbstractControl[] {
-    const foods = this.foodsFormArray.controls;
-    return foods;
-  }
+
 
   // form methods
   get foodsFormArray(): FormArray {
-    return this.foodsForm.get('foods') as FormArray;
+    const foodsArray = this.foodsForm.get('foods') as FormArray;
+    return foodsArray.controls[0] as FormArray;
+  }
+
+  get lunchFoodsFormArray(): FormArray {
+    const foodsArray = this.foodsForm.get('foods') as FormArray;
+    return foodsArray.controls[1] as FormArray;
+  }
+
+  get dinnerFoodsFormArray(): FormArray {
+    const foodsArray = this.foodsForm.get('foods') as FormArray;
+    return foodsArray.controls[2] as FormArray;
   }
 
   get listLength(): number {
-    return this.foodsFormArray.controls.length;
+    const bfastLength = this.foodsFormArray.controls.length;
+    const lunchLength = this.lunchFoodsFormArray.controls.length;
+    const dinnerLength = this.dinnerFoodsFormArray.controls.length;
+    return bfastLength + lunchLength + dinnerLength;
   }
 
   addNewFood(food: Food): void {
@@ -231,16 +260,15 @@ export class FoodListComponent
     this.maxFoodsDisplayed = 3;
   }
 
-  onFocusEvent(event: any, index: any): void {
-    this.isHidden[index] = false;
+  onFocusEvent(event: any): void {
+    this.isHidden[event] = false;
   }
 
-  onBlurEvent(event: any, index: any): void {
+  onBlurEvent(event: any): void {
     // console.log(event.target);
     if (this.closeFormMacroInputs) {
-      this.isHidden[index] = true;
+      this.isHidden[event] = true;
     }
-
   }
 
   trackByfn(index: any, item: any) {

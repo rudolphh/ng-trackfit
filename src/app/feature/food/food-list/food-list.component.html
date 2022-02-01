@@ -13,9 +13,10 @@
 <!-- start foods list divider -->
 <mat-divider class="mt-2 mb-3"></mat-divider>
 
-<div *ngIf="listLength === 0"
+<div
+  *ngIf="listLength === 0 && lunchFoodsFormArray.length === 0"
   class="d-flex justify-content-center my-4 p-3 rounded bg-info text-dark"
-  >
+>
   <span class="d-flex align-items-center font-italic">
     <i
       class="fas fa-exclamation-triangle text-dark mx-2"
@@ -26,121 +27,117 @@
 </div>
 
 <smooth-height [trigger]="maxFoodsDisplayed">
-<form #foodForm [formGroup]="foodsForm">
-  <mat-selection-list #foodsSelect id="food-selection-list">
-    <div
-      formArrayName="foods"
-      *ngFor="
-        let food of foodsFormArray.controls.slice(0, maxFoodsDisplayed);
-        let i = index
-      "
-    >
-    <smooth-height [trigger]="isHidden[food.value.id]">
-      <div
-        [formGroupName]="i"
-        class="d-flex flex-column"
-        style="max-height: 134px"
-      >
-        <div class="d-flex justify-content-between">
-          <span class="mr-2">
-            <mat-form-field style="max-width: 100px" appearance="fill">
-              <mat-label>Time</mat-label>
-              <input
-                (focus)="onFocusEvent($event, food.value.id)"
-                (blur)="onBlurEvent($event, food.value.id)"
-                formControlName="time"
-                type="time"
-                matInput
-                name="time-{{ i }}"
-              />
-            </mat-form-field>
-          </span>
-
-          <span class="flex-grow-1" style="min-width: 0">
-            <mat-form-field class="w-100" appearance="fill">
-              <mat-label>Food</mat-label>
-              <input
-                (focus)="onFocusEvent($event, food.value.id)"
-                (blur)="onBlurEvent($event, food.value.id)"
-                (keydown)="$event.stopPropagation()"
-                formControlName="name"
-                matInput
-                name="name-{{ i }}"
-                placeholder="Ex. Pizza"
-              />
-            </mat-form-field>
-          </span>
-
-          <span class="ml-2">
-            <mat-form-field style="max-width: 90px" appearance="fill">
-              <mat-label>Calories</mat-label>
-              <input
-                (focus)="onFocusEvent($event, food.value.id)"
-                (blur)="onBlurEvent($event, food.value.id)"
-                formControlName="calories"
-                appNumbersOnly
-                matInput
-                name="calories-{{ i }}"
-                maxLength="4"
-                placeholder="250"
-              />
-            </mat-form-field>
-          </span>
-
-          <mat-list-option
-            style="height: 51px"
-            color="warn"
-            class="ml-2"
-            (click)="optionClick()"
-            [value]="food"
+  <form #foodForm [formGroup]="foodsForm">
+    <mat-selection-list #foodsSelect id="food-selection-list">
+      <div cdkDropListGroup>
+        <div class="example-container">
+          <div class="d-flex">
+            <h2>Breakfast</h2>
+            <span class="ml-auto mt-2">8:00 am</span>
+          </div>
+          <div
+            cdkDropList
+            #breakfastList="cdkDropList"
+            [cdkDropListData]="foodsFormArray"
+            (cdkDropListDropped)="drop($event)"
+            style="min-height: 70px"
           >
-          </mat-list-option>
+            <app-food-bfd-list
+              [theForm]="foodsForm"
+              [arrayIndex]="'0'"
+              [formArray]="foodsFormArray"
+              [isHidden]="isHidden"
+              (focusEvent)="onFocusEvent($event)"
+              (blurEvent)="onBlurEvent($event)"
+              (optionClick)="optionClick()"
+            ></app-food-bfd-list>
+          </div>
         </div>
 
-        <app-macro-input
-          [isHidden]="isHidden[food.value.id]"
-          [form]="foodsForm"
-          [foodIndex]="i"
-          (focused)="onFocusEvent($event, food.value.id)"
-          (blurred)="onBlurEvent($event, food.value.id)"
-        ></app-macro-input>
+        <div class="example-container">
+          <div class="d-flex">
+            <h2>Lunch</h2>
+            <span class="ml-auto mt-2">12:00 pm</span>
+          </div>
+          <div
+            cdkDropList
+            #lunchList="cdkDropList"
+            [cdkDropListData]="lunchFoodsFormArray"
+            (cdkDropListDropped)="drop($event)"
+            style="min-height: 70px"
+          >
+            <app-food-bfd-list
+              [theForm]="foodsForm"
+              [arrayIndex]="'1'"
+              [formArray]="lunchFoodsFormArray"
+              [isHidden]="isHidden"
+              (focusEvent)="onFocusEvent($event)"
+              (blurEvent)="onBlurEvent($event)"
+              (optionClick)="optionClick()"
+            ></app-food-bfd-list>
+          </div>
+        </div>
+
+        <div class="example-container">
+          <div class="d-flex">
+            <h2>Dinner</h2>
+            <span class="ml-auto mt-2">5:00 pm</span>
+          </div>
+          <div
+            cdkDropList
+            #dinnerList="cdkDropList"
+            [cdkDropListData]="dinnerFoodsFormArray"
+            (cdkDropListDropped)="drop($event)"
+            style="min-height: 70px"
+          >
+            <app-food-bfd-list
+              [theForm]="foodsForm"
+              [arrayIndex]="'2'"
+              [formArray]="dinnerFoodsFormArray"
+              [isHidden]="isHidden"
+              (focusEvent)="onFocusEvent($event)"
+              (blurEvent)="onBlurEvent($event)"
+              (optionClick)="optionClick()"
+            ></app-food-bfd-list>
+          </div>
+        </div>
       </div>
-    </smooth-height>
-    </div>
-  </mat-selection-list>
-</form>
+    </mat-selection-list>
+  </form>
 </smooth-height>
 
 <!-- end foods list -->
 <mat-divider class="mb-2"></mat-divider>
 
 <div class="d-flex mt-3" #loadButtons>
-  <span class="w-100"
-  [ngClass]="{ 'cdk-visually-hidden': !(listLength > 3 && listLength > maxFoodsDisplayed) }">
+  <span
+    class="w-100"
+    [ngClass]="{
+      'cdk-visually-hidden': !(listLength > 3 && listLength > maxFoodsDisplayed)
+    }"
+  >
     <button
       mat-flat-button
       (click)="loadMore()"
-      class="w-100 d-flex justify-content-center align-items-center
-        bg-transparent font-italic light-text-info
-      "
-      style="height: 51px;"
+      class="w-100 d-flex justify-content-center align-items-center bg-transparent font-italic light-text-info"
+      style="height: 51px"
     >
       load more
       <!-- <i class="fas fa-arrow-circle-down mx-2" style="font-size: 1.5em"></i> -->
     </button>
   </span>
 
-  <span class="ml-auto" [ngClass]="{ 'cdk-visually-hidden': !(maxFoodsDisplayed > 3) }">
+  <span
+    class="ml-auto"
+    [ngClass]="{ 'cdk-visually-hidden': !(maxFoodsDisplayed > 3) }"
+  >
     <button
       mat-flat-button
       (click)="loadReset()"
       class="bg-transparent light-text-success"
       style="height: 51px; max-width: 42px; min-width: 0"
     >
-      <i
-        class="far fa-minus-square"
-        style="font-size: 1.5em"
-      ></i>
+      <i class="far fa-minus-square" style="font-size: 1.5em"></i>
     </button>
   </span>
 </div>

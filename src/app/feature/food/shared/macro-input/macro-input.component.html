@@ -72,6 +72,7 @@
 
   <!-- when used for formarray controls (daily-progress-list)-->
   <div *ngIf="foodIndex >= 0" formArrayName="foods">
+    <div [formArrayName]="fArrayName">
     <div [formGroupName]="foodIndex">
       <div
         class="d-flex"
@@ -138,6 +139,7 @@
           <!-- end calorie input -->
         </span>
       </div>
+    </div>
     </div>
   </div>
 </div>

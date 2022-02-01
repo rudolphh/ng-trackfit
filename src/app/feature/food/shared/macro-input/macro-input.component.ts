@@ -14,6 +14,7 @@ export class MacroInputComponent {
   @Output() blurred: EventEmitter<void> = new EventEmitter<void>();
 
   @Input() form!: FormGroup;
+  @Input() fArrayName !: string;
   @Input() foodIndex!: number;
 
   constructor() {}
