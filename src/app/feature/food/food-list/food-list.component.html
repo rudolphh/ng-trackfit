@@ -32,7 +32,7 @@
       <div cdkDropListGroup>
         <div class="example-container">
           <div class="d-flex light-text-success">
-            <h2>Breakfast</h2>
+            <h3>Breakfast</h3>
             <span class="ml-auto mt-2">8:00 am</span>
           </div>
           <div
@@ -40,6 +40,8 @@
             #breakfastList="cdkDropList"
             [cdkDropListData]="foodsFormArray"
             (cdkDropListDropped)="drop($event)"
+            (cdkDropListEntered)="listEntered($event, foodsFormArray)"
+            (cdkDropListExited)="listExited($event, foodsFormArray)"
             style="min-height: 70px"
           >
             <app-food-bfd-list
@@ -47,6 +49,7 @@
               [arrayIndex]="'0'"
               [formArray]="foodsFormArray"
               [isHidden]="isHidden"
+              [showNone]="breakfastShowNone"
               (focusEvent)="onFocusEvent($event)"
               (blurEvent)="onBlurEvent($event)"
               (optionClick)="optionClick()"
@@ -56,7 +59,7 @@
 
         <div class="example-container">
           <div class="d-flex light-text-primary">
-            <h2>Lunch</h2>
+            <h3>Lunch</h3>
             <span class="ml-auto mt-2">12:00 pm</span>
           </div>
           <div
@@ -64,6 +67,8 @@
             #lunchList="cdkDropList"
             [cdkDropListData]="lunchFoodsFormArray"
             (cdkDropListDropped)="drop($event)"
+            (cdkDropListEntered)="listEntered($event, lunchFoodsFormArray)"
+            (cdkDropListExited)="listExited($event, lunchFoodsFormArray)"
             style="min-height: 70px"
           >
             <app-food-bfd-list
@@ -71,6 +76,7 @@
               [arrayIndex]="'1'"
               [formArray]="lunchFoodsFormArray"
               [isHidden]="isHidden"
+              [showNone]="lunchShowNone"
               (focusEvent)="onFocusEvent($event)"
               (blurEvent)="onBlurEvent($event)"
               (optionClick)="optionClick()"
@@ -80,7 +86,7 @@
 
         <div class="example-container">
           <div class="d-flex light-text-danger">
-            <h2>Dinner</h2>
+            <h3>Dinner</h3>
             <span class="ml-auto mt-2">5:00 pm</span>
           </div>
           <div
@@ -88,6 +94,8 @@
             #dinnerList="cdkDropList"
             [cdkDropListData]="dinnerFoodsFormArray"
             (cdkDropListDropped)="drop($event)"
+            (cdkDropListEntered)="listEntered($event, dinnerFoodsFormArray)"
+            (cdkDropListExited)="listExited($event, dinnerFoodsFormArray)"
             style="min-height: 70px"
           >
             <app-food-bfd-list
@@ -95,6 +103,7 @@
               [arrayIndex]="'2'"
               [formArray]="dinnerFoodsFormArray"
               [isHidden]="isHidden"
+              [showNone]="dinnerShowNone"
               (focusEvent)="onFocusEvent($event)"
               (blurEvent)="onBlurEvent($event)"
               (optionClick)="optionClick()"
@@ -107,7 +116,7 @@
 </smooth-height>
 
 <!-- end foods list -->
-<mat-divider class="mb-2"></mat-divider>
+<mat-divider class="my-2"></mat-divider>
 
 <div class="d-flex mt-3" #loadButtons>
   <span

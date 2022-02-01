@@ -9,7 +9,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import {
   debounceTime,
@@ -42,6 +42,10 @@ export class FoodListComponent
   @ViewChild('loadButtons') loadButtons!: ElementRef;
   closeFormMacroInputs = false;
   isHidden = {};
+
+  breakfastShowNone = false;
+  lunchShowNone = false;
+  dinnerShowNone = false;
 
   constructor(
     private fb: FormBuilder,
@@ -91,6 +95,15 @@ export class FoodListComponent
         });
 
         this.resetDefaults();
+        if (this.foodsFormArray.length === 0) {
+          this.breakfastShowNone = true;
+        } else { this.breakfastShowNone = false; }
+        if (this.lunchFoodsFormArray.length === 0) {
+          this.lunchShowNone = true;
+        } else { this.lunchShowNone = false; }
+        if (this.dinnerFoodsFormArray.length === 0) {
+          this.dinnerShowNone = true;
+        } else { this.dinnerShowNone = false; }
       });
   }
 
@@ -113,6 +126,38 @@ export class FoodListComponent
         event.previousIndex,
         event.currentIndex,
       );
+    }
+  }
+
+  listEntered(event: CdkDragEnter, list: FormArray): void {
+      switch (list) {
+        case this.foodsFormArray:
+          this.breakfastShowNone = false;
+          break;
+        case this.lunchFoodsFormArray:
+          this.lunchShowNone = false;
+          break;
+        case this.dinnerFoodsFormArray:
+          this.dinnerShowNone = false;
+          break;
+        default: return;
+      }
+  }
+
+  listExited(event: CdkDragExit, list: FormArray): void {
+    const formArrayLength = list.length;
+    const itemDraggedFromThisContainer = event.container['_unsortedItems'].has(event.item);
+    switch (list) {
+      case this.foodsFormArray:
+        this.breakfastShowNone = formArrayLength === 0 || (formArrayLength === 1 && itemDraggedFromThisContainer) ? true : false;
+        break;
+      case this.lunchFoodsFormArray:
+        this.lunchShowNone = formArrayLength === 0 || (formArrayLength === 1 && itemDraggedFromThisContainer) ? true : false;
+        break;
+      case this.dinnerFoodsFormArray:
+        this.dinnerShowNone = formArrayLength === 0 || (formArrayLength === 1 && itemDraggedFromThisContainer) ? true : false;
+        break;
+      default: return;
     }
   }
 

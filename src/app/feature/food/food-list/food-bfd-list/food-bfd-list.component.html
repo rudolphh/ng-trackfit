@@ -1,85 +1,85 @@
 <div [formGroup]="theForm">
-<div formArrayName="foods">
+  <div formArrayName="foods">
+    <div
+      *ngIf="showNone"
+      class="d-flex justify-content-center"
+    >
+      <span class="d-flex justify-content-center align-items-center bg-dark border border-success rounded font-italic"
+      style="height: 51px; width: 85%"
+        >No food</span>
+    </div>
+    <div
+      [formArrayName]="arrayIndex"
+      *ngFor="let food of formArray.controls; let i = index"
+      cdkDrag
+    >
+      <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
+      <smooth-height [trigger]="isHidden[food.value.id]">
+        <div
+          [formGroupName]="i"
+          class="d-flex flex-column"
+          style="max-height: 134px"
+        >
+          <div class="d-flex justify-content-between">
+            <a
+              class="d-flex align-items-center mr-3 text-info"
+              style="height: 51px"
+              cdkDragHandle
+            >
+              <i class="fas fa-3x fa-grip-lines-vertical"></i>
+            </a>
 
-  <!-- <div *ngIf="formArray.controls.length === 0">
-    <span>No foods</span>
-  </div> -->
-  <div
-    [formArrayName]="arrayIndex"
-    *ngFor="
-      let food of formArray.controls;
-      let i = index
-    "
-    cdkDrag
-  >
+            <span class="flex-grow-1" style="min-width: 0">
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Food</mat-label>
+                <input
+                  (focus)="onFocusEvent(food.value.id)"
+                  (blur)="onBlurEvent(food.value.id)"
+                  (keydown)="$event.stopPropagation()"
+                  formControlName="name"
+                  matInput
+                  name="name-{{ i }}"
+                  placeholder="Ex. Pizza"
+                />
+              </mat-form-field>
+            </span>
 
-  <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
-    <smooth-height [trigger]="isHidden[food.value.id]">
-      <div
-        [formGroupName]="i"
-        class="d-flex flex-column"
-        style="max-height: 134px"
-      >
-        <div class="d-flex justify-content-between">
-          <a
-            class="d-flex align-items-center mr-3 text-info"
-            style="height: 51px"
-            cdkDragHandle
-          >
-            <i class="fas fa-3x fa-grip-lines-vertical"></i>
-          </a>
+            <span class="ml-2">
+              <mat-form-field style="max-width: 90px" appearance="fill">
+                <mat-label>Calories</mat-label>
+                <input
+                  (focus)="onFocusEvent(food.value.id)"
+                  (blur)="onBlurEvent(food.value.id)"
+                  formControlName="calories"
+                  appNumbersOnly
+                  matInput
+                  name="calories-{{ i }}"
+                  maxLength="4"
+                  placeholder="250"
+                />
+              </mat-form-field>
+            </span>
 
-          <span class="flex-grow-1" style="min-width: 0">
-            <mat-form-field class="w-100" appearance="fill">
-              <mat-label>Food</mat-label>
-              <input
-                (focus)="onFocusEvent(food.value.id)"
-                (blur)="onBlurEvent(food.value.id)"
-                (keydown)="$event.stopPropagation()"
-                formControlName="name"
-                matInput
-                name="name-{{ i }}"
-                placeholder="Ex. Pizza"
-              />
-            </mat-form-field>
-          </span>
+            <mat-list-option
+              style="height: 51px"
+              color="warn"
+              class="ml-2"
+              (click)="optionClicked()"
+              [value]="food"
+            >
+            </mat-list-option>
+          </div>
 
-          <span class="ml-2">
-            <mat-form-field style="max-width: 90px" appearance="fill">
-              <mat-label>Calories</mat-label>
-              <input
-                (focus)="onFocusEvent(food.value.id)"
-                (blur)="onBlurEvent(food.value.id)"
-                formControlName="calories"
-                appNumbersOnly
-                matInput
-                name="calories-{{ i }}"
-                maxLength="4"
-                placeholder="250"
-              />
-            </mat-form-field>
-          </span>
-
-          <mat-list-option
-            style="height: 51px"
-            color="warn"
-            class="ml-2"
-            (click)="optionClicked()"
-            [value]="food"
-          >
-          </mat-list-option>
+          <app-macro-input
+            [isHidden]="isHidden[food.value.id]"
+            [form]="theForm"
+            [fArrayName]="arrayIndex"
+            [foodIndex]="i"
+            (focused)="onFocusEvent(food.value.id)"
+            (blurred)="onBlurEvent(food.value.id)"
+          ></app-macro-input>
         </div>
-
-        <app-macro-input
-          [isHidden]="isHidden[food.value.id]"
-          [form]="theForm"
-          [fArrayName]="arrayIndex"
-          [foodIndex]="i"
-          (focused)="onFocusEvent(food.value.id)"
-          (blurred)="onBlurEvent(food.value.id)"
-        ></app-macro-input>
-      </div>
-    </smooth-height>
+      </smooth-height>
+    </div>
   </div>
-</div>
 </div>

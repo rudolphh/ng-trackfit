@@ -17,6 +17,8 @@ export class FoodBFDListComponent {
   @Output() blurEvent = new EventEmitter<number>();
   @Output() optionClick = new EventEmitter<void>();
 
+  @Input() showNone !: boolean;
+
   onFocusEvent(foodId: any): void {
     this.focusEvent.emit(foodId);
   }
