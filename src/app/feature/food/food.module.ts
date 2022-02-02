@@ -3,6 +3,7 @@ import { FoodService } from './services/food.service';
 import { MacroInputComponent } from './shared/macro-input/macro-input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +23,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     RouterModule,
     MatAutocompleteModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatDividerModule,
     MatExpansionModule,
     MatFormFieldModule,

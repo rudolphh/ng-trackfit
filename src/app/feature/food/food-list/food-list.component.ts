@@ -23,6 +23,12 @@ import { Food } from 'src/app/core/models/food.model';
 import { FoodDataService } from '../services/food-data.service';
 import { Subject } from 'rxjs';
 
+enum MealTime {
+  BREAKFAST = 'breakfast',
+  LUNCH = 'lunch',
+  DINNER = 'dinner',
+}
+
 @Component({
   selector: 'app-food-list',
   templateUrl: './food-list.component.html',
@@ -47,6 +53,10 @@ export class FoodListComponent
   lunchShowNone = false;
   dinnerShowNone = false;
 
+  public get MealTime() {
+    return MealTime;
+  }
+
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
@@ -54,11 +64,11 @@ export class FoodListComponent
     private renderer: Renderer2
   ) {
     this.foodsForm = this.fb.group({
-      foods: this.fb.array([
-        this.fb.array([]),
-        this.fb.array([]),
-        this.fb.array([])
-      ])
+      foods: this.fb.group({
+        breakfast: this.fb.array([]),
+        lunch: this.fb.array([]),
+        dinner: this.fb.array([])
+      })
     });
 
     this.renderer.listen('window', 'click', (e: Event) => {
@@ -88,20 +98,37 @@ export class FoodListComponent
     this.foodDataService.todaysFood$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
-        this.foodsFormArray.clear();
-        this.lunchFoodsFormArray.clear();
+
+        for (const mealTime in this.foodsFormGroup.controls) {
+          if (mealTime) {
+            (this.foodsFormGroup.controls[mealTime] as FormArray).clear();
+          }
+        }
+
         foods.map((food: Food) => {
-          this.addNewFood(food);
+          console.log(food)
+          switch(food.mealTime) {
+            case MealTime.BREAKFAST:
+              this.addNewFood(MealTime.BREAKFAST, food);
+              break;
+            case MealTime.LUNCH:
+              this.addNewFood(MealTime.LUNCH, food);
+              break;
+            case MealTime.DINNER:
+              this.addNewFood(MealTime.DINNER, food);
+              break;
+            default: return;
+          }
         });
 
         this.resetDefaults();
-        if (this.foodsFormArray.length === 0) {
+        if (this.foodsFormArray(MealTime.BREAKFAST).length === 0) {
           this.breakfastShowNone = true;
         } else { this.breakfastShowNone = false; }
-        if (this.lunchFoodsFormArray.length === 0) {
+        if (this.foodsFormArray(MealTime.LUNCH).length === 0) {
           this.lunchShowNone = true;
         } else { this.lunchShowNone = false; }
-        if (this.dinnerFoodsFormArray.length === 0) {
+        if (this.foodsFormArray(MealTime.DINNER).length === 0) {
           this.dinnerShowNone = true;
         } else { this.dinnerShowNone = false; }
       });
@@ -131,13 +158,13 @@ export class FoodListComponent
 
   listEntered(event: CdkDragEnter, list: FormArray): void {
       switch (list) {
-        case this.foodsFormArray:
+        case this.foodsFormArray(MealTime.BREAKFAST):
           this.breakfastShowNone = false;
           break;
-        case this.lunchFoodsFormArray:
+        case this.foodsFormArray(MealTime.LUNCH):
           this.lunchShowNone = false;
           break;
-        case this.dinnerFoodsFormArray:
+        case this.foodsFormArray(MealTime.DINNER):
           this.dinnerShowNone = false;
           break;
         default: return;
@@ -148,13 +175,13 @@ export class FoodListComponent
     const formArrayLength = list.length;
     const itemDraggedFromThisContainer = event.container['_unsortedItems'].has(event.item);
     switch (list) {
-      case this.foodsFormArray:
+      case this.foodsFormArray(MealTime.BREAKFAST):
         this.breakfastShowNone = formArrayLength === 0 || (formArrayLength === 1 && itemDraggedFromThisContainer) ? true : false;
         break;
-      case this.lunchFoodsFormArray:
+      case this.foodsFormArray(MealTime.LUNCH):
         this.lunchShowNone = formArrayLength === 0 || (formArrayLength === 1 && itemDraggedFromThisContainer) ? true : false;
         break;
-      case this.dinnerFoodsFormArray:
+      case this.foodsFormArray(MealTime.DINNER):
         this.dinnerShowNone = formArrayLength === 0 || (formArrayLength === 1 && itemDraggedFromThisContainer) ? true : false;
         break;
       default: return;
@@ -172,16 +199,16 @@ export class FoodListComponent
       (option) => option.value.value
     );
 
-    const allFoods = this.foodsFormArray.controls.map(
-      (option, index) => option.value
-    );
-    const remainingFoods = allFoods.filter(
-      (option) => !selectedFoods.includes(option)
-    );
+    // const allFoods = this.foodsFormArray.controls.map(
+    //   (option, index) => option.value
+    // );
+    // const remainingFoods = allFoods.filter(
+    //   (option) => !selectedFoods.includes(option)
+    // );
 
     const idsToDelete = selectedFoods.map((food) => food.id);
 
-    this.foodDataService.deleteFoods(idsToDelete, remainingFoods);
+    // this.foodDataService.deleteFoods(idsToDelete, remainingFoods);
   }
 
   selectAllChange(): void {
@@ -202,35 +229,29 @@ export class FoodListComponent
 
 
   // form methods
-  get foodsFormArray(): FormArray {
-    const foodsArray = this.foodsForm.get('foods') as FormArray;
-    return foodsArray.controls[0] as FormArray;
+
+  get foodsFormGroup(): FormGroup {
+    return this.foodsForm.get('foods') as FormGroup;
   }
 
-  get lunchFoodsFormArray(): FormArray {
-    const foodsArray = this.foodsForm.get('foods') as FormArray;
-    return foodsArray.controls[1] as FormArray;
-  }
-
-  get dinnerFoodsFormArray(): FormArray {
-    const foodsArray = this.foodsForm.get('foods') as FormArray;
-    return foodsArray.controls[2] as FormArray;
+  foodsFormArray(mealTime: MealTime): FormArray {
+    return this.foodsFormGroup.get(mealTime) as FormArray;
   }
 
   get listLength(): number {
-    const bfastLength = this.foodsFormArray.controls.length;
-    const lunchLength = this.lunchFoodsFormArray.controls.length;
-    const dinnerLength = this.dinnerFoodsFormArray.controls.length;
-    return bfastLength + lunchLength + dinnerLength;
+    const breakfastLength = this.foodsFormArray(MealTime.BREAKFAST).controls.length;
+    const lunchLength = this.foodsFormArray(MealTime.LUNCH).controls.length;
+    const dinnerLength = this.foodsFormArray(MealTime.DINNER).controls.length;
+    return breakfastLength + lunchLength + dinnerLength;
   }
 
-  addNewFood(food: Food): void {
+  addNewFood(mealTime: MealTime, food: Food): void {
     //console.log('addNewFood: ', food);
-    this.foodsFormArray.push(this.addFoodFormGroup(food));
+    this.foodsFormArray(mealTime).push(this.addFoodFormGroup(food));
   }
 
-  removeFood(index: number): void {
-    this.foodsFormArray.removeAt(index);
+  removeFood(mealTime: MealTime, index: number): void {
+    this.foodsFormArray(mealTime).removeAt(index);
   }
 
   createNewFoodFormGroup(food: Food): FormGroup {

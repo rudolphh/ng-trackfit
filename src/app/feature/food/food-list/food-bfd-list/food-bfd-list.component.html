@@ -1,5 +1,5 @@
 <div [formGroup]="theForm">
-  <div formArrayName="foods">
+  <div formGroupName="foods">
     <div
       *ngIf="showNone"
       class="d-flex justify-content-center"
@@ -9,7 +9,7 @@
         >No food</span>
     </div>
     <div
-      [formArrayName]="arrayIndex"
+      [formArrayName]="arrayName"
       *ngFor="let food of formArray.controls; let i = index"
       cdkDrag
     >
@@ -73,7 +73,7 @@
           <app-macro-input
             [isHidden]="isHidden[food.value.id]"
             [form]="theForm"
-            [fArrayName]="arrayIndex"
+            [fArrayName]="arrayName"
             [foodIndex]="i"
             (focused)="onFocusEvent(food.value.id)"
             (blurred)="onBlurEvent(food.value.id)"

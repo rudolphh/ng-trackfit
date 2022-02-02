@@ -35,6 +35,7 @@ export class FoodInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.addFoodForm = this.fb.group({
+      mealTime: ['breakfast'],
       name: ['', [Validators.required]],
       calories: [
         '',
@@ -93,7 +94,7 @@ export class FoodInputComponent implements OnInit {
     if (!this.addFoodForm.valid) {
       return;
     }
-    const { name, calories, protein, carbohydrate, fat } = this.addFoodForm.value; // these are strings
+    const { name, calories, protein, carbohydrate, fat, mealTime } = this.addFoodForm.value; // these are strings
     const now = Date.now();
     const newFood = this.foodAdapter.adapt({
       id: null,
@@ -105,6 +106,7 @@ export class FoodInputComponent implements OnInit {
       date: now,
       createdAt: now,
       updatedAt: now,
+      mealTime
     });
     this.newFoodCreatedEvent.emit(newFood); // output the new food created
     this.resetForm(formDirective);

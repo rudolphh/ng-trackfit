@@ -14,7 +14,7 @@
 <mat-divider class="mt-2 mb-3"></mat-divider>
 
 <div
-  *ngIf="listLength === 0 && lunchFoodsFormArray.length === 0"
+  *ngIf="listLength === 0"
   class="d-flex justify-content-center my-4 p-3 rounded bg-info text-dark"
 >
   <span class="d-flex align-items-center font-italic">
@@ -38,16 +38,16 @@
           <div
             cdkDropList
             #breakfastList="cdkDropList"
-            [cdkDropListData]="foodsFormArray"
+            [cdkDropListData]="foodsFormArray(MealTime.BREAKFAST)"
             (cdkDropListDropped)="drop($event)"
-            (cdkDropListEntered)="listEntered($event, foodsFormArray)"
-            (cdkDropListExited)="listExited($event, foodsFormArray)"
+            (cdkDropListEntered)="listEntered($event, foodsFormArray(MealTime.BREAKFAST))"
+            (cdkDropListExited)="listExited($event, foodsFormArray(MealTime.BREAKFAST))"
             style="min-height: 70px"
           >
             <app-food-bfd-list
               [theForm]="foodsForm"
-              [arrayIndex]="'0'"
-              [formArray]="foodsFormArray"
+              [arrayName]="'breakfast'"
+              [formArray]="foodsFormArray(MealTime.BREAKFAST)"
               [isHidden]="isHidden"
               [showNone]="breakfastShowNone"
               (focusEvent)="onFocusEvent($event)"
@@ -65,16 +65,16 @@
           <div
             cdkDropList
             #lunchList="cdkDropList"
-            [cdkDropListData]="lunchFoodsFormArray"
+            [cdkDropListData]="foodsFormArray(MealTime.LUNCH)"
             (cdkDropListDropped)="drop($event)"
-            (cdkDropListEntered)="listEntered($event, lunchFoodsFormArray)"
-            (cdkDropListExited)="listExited($event, lunchFoodsFormArray)"
+            (cdkDropListEntered)="listEntered($event, foodsFormArray(MealTime.LUNCH))"
+            (cdkDropListExited)="listExited($event, foodsFormArray(MealTime.LUNCH))"
             style="min-height: 70px"
           >
             <app-food-bfd-list
               [theForm]="foodsForm"
-              [arrayIndex]="'1'"
-              [formArray]="lunchFoodsFormArray"
+              [arrayName]="'lunch'"
+              [formArray]="foodsFormArray(MealTime.LUNCH)"
               [isHidden]="isHidden"
               [showNone]="lunchShowNone"
               (focusEvent)="onFocusEvent($event)"
@@ -92,16 +92,16 @@
           <div
             cdkDropList
             #dinnerList="cdkDropList"
-            [cdkDropListData]="dinnerFoodsFormArray"
+            [cdkDropListData]="foodsFormArray(MealTime.DINNER)"
             (cdkDropListDropped)="drop($event)"
-            (cdkDropListEntered)="listEntered($event, dinnerFoodsFormArray)"
-            (cdkDropListExited)="listExited($event, dinnerFoodsFormArray)"
+            (cdkDropListEntered)="listEntered($event, foodsFormArray(MealTime.DINNER))"
+            (cdkDropListExited)="listExited($event, foodsFormArray(MealTime.DINNER))"
             style="min-height: 70px"
           >
             <app-food-bfd-list
               [theForm]="foodsForm"
-              [arrayIndex]="'2'"
-              [formArray]="dinnerFoodsFormArray"
+              [arrayName]="'dinner'"
+              [formArray]="foodsFormArray(MealTime.DINNER)"
               [isHidden]="isHidden"
               [showNone]="dinnerShowNone"
               (focusEvent)="onFocusEvent($event)"

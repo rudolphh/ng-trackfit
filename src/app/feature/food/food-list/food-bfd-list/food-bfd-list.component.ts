@@ -8,7 +8,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 })
 export class FoodBFDListComponent {
 
-  @Input() arrayIndex !: string;
+  @Input() arrayName !: string;
   @Input() formArray !: FormArray;
   @Input() isHidden = {};
   @Input() theForm !: FormGroup;

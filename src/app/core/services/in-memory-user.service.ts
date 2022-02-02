@@ -21,6 +21,7 @@ export class InMemoryDataService implements InMemoryDbService {
         protein: 0,
         carbohydrate: 38,
         fat: 0,
+        mealTime: 'lunch'
       },
       {
         id: 2,
@@ -30,6 +31,7 @@ export class InMemoryDataService implements InMemoryDbService {
         protein: 40,
         carbohydrate: 2,
         fat: 1,
+        mealTime: 'breakfast'
       },
     ];
 

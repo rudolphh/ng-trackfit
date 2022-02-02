@@ -5,8 +5,30 @@
     (ngSubmit)="onSubmit(formDirective)"
     #formDirective="ngForm"
     class="d-flex flex-column"
-    style="max-height: 134px;"
+    style="max-height: 185px"
   >
+    <div class="d-flex">
+      <span class="flex-grow-1" style="min-width: 0">
+        <mat-button-toggle-group
+          #strategy="matButtonToggleGroup"
+          class="bg-success mb-2 w-100"
+          style="height: 51px"
+          name="strategy"
+          aria-label="cut or bulk"
+          formControlName="mealTime"
+        >
+          <mat-button-toggle style="width: 33.3%" value="breakfast"
+            >Breakfast</mat-button-toggle
+          >
+          <mat-button-toggle style="width: 33.3%" value="lunch"
+            >Lunch</mat-button-toggle
+          >
+          <mat-button-toggle style="width: 33.3%" value="dinner"
+            >Dinner</mat-button-toggle
+          >
+        </mat-button-toggle-group>
+      </span>
+    </div>
     <div class="d-flex">
       <span class="flex-grow-1" style="min-width: 0">
         <!-- food input -->
@@ -33,10 +55,11 @@
                   >{{ option.calories }}</span
                 >
                 <span
-                class="light-text-success ml-auto"
-                style="font-size: 0.8em"
-                >{{ option.protein }} - {{ option.carbohydrate }} - {{ option.fat }}</span
-              >
+                  class="light-text-success ml-auto"
+                  style="font-size: 0.8em"
+                  >{{ option.protein }} - {{ option.carbohydrate }} -
+                  {{ option.fat }}</span
+                >
               </div>
             </mat-option>
           </mat-autocomplete>
@@ -74,13 +97,17 @@
       </span>
     </div>
 
-
-    <div *ngIf="!macroOptions" class="d-flex justify-content-center my-1"
+    <div
+      *ngIf="!macroOptions"
+      class="d-flex justify-content-center my-1"
       style="position: relative; bottom: 5px; height: 30px"
     >
-      <a (click)="toggleMacroOptions()" class="light-text-success"
-        style="cursor: pointer;"
-      >Macronutrients <span class="light-text-info">(optional)</span></a>
+      <a
+        (click)="toggleMacroOptions()"
+        class="light-text-success"
+        style="cursor: pointer"
+        >Macronutrients <span class="light-text-info">(optional)</span></a
+      >
     </div>
 
     <app-macro-input
@@ -88,7 +115,6 @@
       [form]="addFoodForm"
       [foodIndex]="-1"
     ></app-macro-input>
-
   </form>
   <!-- end form -->
 </div>

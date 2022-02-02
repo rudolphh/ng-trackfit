@@ -7,6 +7,7 @@ export class Food {
     public name: string,
     public calories: number,
     public date: Date,
+    public mealTime: string,
     public protein?: number,
     public carbohydrate?: number,
     public sugars?: number,
@@ -16,7 +17,7 @@ export class Food {
     public trans?: number,
     public sodium?: number,
     public createdAt?: Date,
-    public updatedAt?: Date
+    public updatedAt?: Date,
   ) {}
 }
 
@@ -31,6 +32,7 @@ export class FoodAdapter implements Adapter<Food> {
       food.name,
       +food.calories,
       food.date,
+      food.mealTime,
       +food.protein || 0,
       +food.carbohydrate || 0,
       +food.sugars || 0,
