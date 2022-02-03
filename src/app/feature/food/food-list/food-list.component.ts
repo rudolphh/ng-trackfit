@@ -106,7 +106,7 @@ export class FoodListComponent
         }
 
         foods.map((food: Food) => {
-          console.log(food)
+          //console.log(food)
           switch(food.mealTime) {
             case MealTime.BREAKFAST:
               this.addNewFood(MealTime.BREAKFAST, food);
@@ -122,15 +122,9 @@ export class FoodListComponent
         });
 
         this.resetDefaults();
-        if (this.foodsFormArray(MealTime.BREAKFAST).length === 0) {
-          this.breakfastShowNone = true;
-        } else { this.breakfastShowNone = false; }
-        if (this.foodsFormArray(MealTime.LUNCH).length === 0) {
-          this.lunchShowNone = true;
-        } else { this.lunchShowNone = false; }
-        if (this.foodsFormArray(MealTime.DINNER).length === 0) {
-          this.dinnerShowNone = true;
-        } else { this.dinnerShowNone = false; }
+        this.breakfastShowNone = this.foodsFormArray(MealTime.BREAKFAST).length === 0 ? true : false;
+        this.lunchShowNone = this.foodsFormArray(MealTime.LUNCH).length === 0 ? true : false;
+        this.dinnerShowNone = this.foodsFormArray(MealTime.DINNER).length === 0 ? true: false;
       });
   }
 
@@ -227,7 +221,6 @@ export class FoodListComponent
   }
 
 
-
   // form methods
 
   get foodsFormGroup(): FormGroup {
@@ -273,6 +266,7 @@ export class FoodListComponent
       protein: [food.protein, numberValidators],
       carbohydrate: [food.carbohydrate, numberValidators],
       fat: [food.fat, numberValidators],
+      mealTime: [food.mealTime, Validators.required],
     });
   }
 

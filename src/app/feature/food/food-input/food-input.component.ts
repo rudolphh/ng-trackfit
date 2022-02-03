@@ -85,6 +85,9 @@ export class FoodInputComponent implements OnInit {
 
     this.addFoodForm.reset();
     formDirective.resetForm();
+    this.addFoodForm.patchValue({
+      mealTime: 'breakfast' // for now
+    });
 
     this.foodDataService.updateAutocompleteOptions('');
     this.nameInput.nativeElement.focus();
