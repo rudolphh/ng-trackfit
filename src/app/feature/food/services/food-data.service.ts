@@ -27,6 +27,10 @@ export class FoodDataService {
 
   }
 
+  set todaysFood(foods: Food[]) {
+    this.todaysFoodDataSource.next(foods);
+  }
+
   changeDate(date: Date): Observable<Food[]> {
     const todayString = date.toISOString();
 
@@ -74,7 +78,7 @@ export class FoodDataService {
 
     obs.subscribe(savedFood => {
       const foods = [savedFood, ...this.todaysFoodDataSource.getValue()];
-      console.log('add food');
+      console.log('add food', foods);
       this.todaysFoodDataSource.next(foods);
     });
 

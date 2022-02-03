@@ -106,7 +106,7 @@ export class FoodListComponent
         }
 
         foods.map((food: Food) => {
-          //console.log(food)
+          console.log('reloading', food)
           switch(food.mealTime) {
             case MealTime.BREAKFAST:
               this.addNewFood(MealTime.BREAKFAST, food);
@@ -136,6 +136,23 @@ export class FoodListComponent
     this.unsubscribe$.complete();
   }
 
+  idToMealTime(cdkDropListId: string): MealTime {
+    switch(cdkDropListId) {
+      case 'cdk-drop-list-0': return MealTime.BREAKFAST;
+      case 'cdk-drop-list-1': return MealTime.LUNCH;
+      case 'cdk-drop-list-2': return MealTime.DINNER;
+    }
+    return MealTime.BREAKFAST;
+  }
+
+  saveOrder(): Food[] {
+    const breakfast = this.foodsFormArray(MealTime.BREAKFAST);
+    const lunch = this.foodsFormArray(MealTime.LUNCH);
+    const dinner = this.foodsFormArray(MealTime.DINNER);
+    const allControls = breakfast.controls.concat(lunch.controls, dinner.controls);
+    return allControls.map(control => control.value );
+  }
+
   // for drag and drop
   drop(event: CdkDragDrop<FormArray>): void {
     if (event.previousContainer === event.container) {
@@ -147,6 +164,9 @@ export class FoodListComponent
         event.previousIndex,
         event.currentIndex,
       );
+      const food = event.container.data.controls[event.currentIndex].value;
+      food.mealTime = this.idToMealTime(event.container.id);
+      this.foodDataService.todaysFood = this.saveOrder();
     }
   }
 
