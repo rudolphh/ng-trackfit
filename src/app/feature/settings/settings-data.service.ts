@@ -2,6 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Injectable } from '@angular/core';
+import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserSettings } from 'src/app/core/models/user-settings';
 
@@ -9,10 +10,11 @@ import { UserSettings } from 'src/app/core/models/user-settings';
 export class SettingsDataService {
 
   userSettingsDataSource = new BehaviorSubject<UserSettings>({} as any);
+  currentUser !: User;
 
   constructor(private authService: AuthService, private userService: UserService) {
-    const currentUser = this.authService.currentUserValue;
-    this.userService.settings(currentUser).subscribe(
+    this.currentUser = this.authService.currentUserValue;
+    this.userService.settings(this.currentUser).subscribe(
       (userSettings: UserSettings) => {
         this.userSettingsDataSource.next(userSettings);
       }
@@ -29,6 +31,15 @@ export class SettingsDataService {
 
   setUserSettings(userSettings: UserSettings): void {
     this.userSettingsDataSource.next(userSettings);
+  }
+
+  updateUserSettings(userSettings: UserSettings): Observable<UserSettings> {
+    console.log('user', this.currentUser);
+    let obs = this.userService.updateSettings(this.currentUser, userSettings);
+
+    obs.subscribe(settings => this.userSettingsDataSource.next(userSettings));
+
+    return obs;
   }
 
 }

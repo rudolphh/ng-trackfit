@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UserSettings, UserSettingsAdapter } from '../models/user-settings';
+import { map, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ApiResponse } from '../models/api-response';
 import { EnvService } from './env.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
-import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root'})
 export class UserService {
@@ -46,6 +46,17 @@ export class UserService {
         map((response: ApiResponse) =>
           this.userSettingsAdapter.adapt(response.data as UserSettings)
         )
-      ) : this.http.get('/api/usersettings') as Observable<UserSettings>;
+      ) : (this.http.get('/api/usersettings') as Observable<UserSettings[]>)
+        .pipe(map((userSettingsArr: UserSettings[]) => userSettingsArr[0]));
+  }
+
+  updateSettings(user: User, settings: UserSettings): Observable<UserSettings> {
+    return user ? this.http
+      .patch<ApiResponse>(`${this.env.apiUrl}/users/${user.id}/settings`, settings)
+      .pipe(
+        map((response: ApiResponse) => this.userSettingsAdapter.adapt(response.data as UserSettings)),
+        shareReplay()
+      )
+      : (this.http.post('/api/usersettings', settings) as Observable<UserSettings>).pipe(shareReplay())
   }
 }

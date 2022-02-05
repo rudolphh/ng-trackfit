@@ -38,17 +38,18 @@ export class InMemoryDataService implements InMemoryDbService {
     const measurements: Measurement[] = [
       {
         id: 1,
-        weight: 239,
+        weight: 220,
         unit: 'imperial',
         date: new Date(),
-        neck: 16,
-        waist: 37,
+        neck: 16.5,
+        waist: 38,
+        //hips: 60
       },
     ];
 
     const bday = new Date('1982-09-28');
 
-    const usersettings: UserSettings = {
+    const usersettings: UserSettings[] = [{
       id: 1,
       gender: 'male',
       birthDate: bday,
@@ -58,7 +59,7 @@ export class InMemoryDataService implements InMemoryDbService {
       rate: 20,
       reminderValue: 2,
       reminderFrequency: 'weekly',
-    };
+    }];
 
     return { user: userResponse, foods, measurements, usersettings };
   }

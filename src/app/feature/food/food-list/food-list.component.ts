@@ -106,7 +106,7 @@ export class FoodListComponent
         }
 
         foods.map((food: Food) => {
-          console.log('reloading', food)
+          //console.log('reloading', food)
           switch(food.mealTime) {
             case MealTime.BREAKFAST:
               this.addNewFood(MealTime.BREAKFAST, food);
@@ -166,6 +166,7 @@ export class FoodListComponent
       );
       const food = event.container.data.controls[event.currentIndex].value;
       food.mealTime = this.idToMealTime(event.container.id);
+      console.log(food);
       this.foodDataService.todaysFood = this.saveOrder();
     }
   }
