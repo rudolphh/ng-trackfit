@@ -21,7 +21,7 @@ export class InMemoryDataService implements InMemoryDbService {
         protein: 0,
         carbohydrate: 38,
         fat: 0,
-        mealTime: 'lunch'
+        mealTime: 'dinner'
       },
       {
         id: 2,
@@ -38,7 +38,7 @@ export class InMemoryDataService implements InMemoryDbService {
     const measurements: Measurement[] = [
       {
         id: 1,
-        weight: 220,
+        weight: 218,
         unit: 'imperial',
         date: new Date(),
         neck: 16.5,
