@@ -13,11 +13,11 @@ export class NumbersOnlyDirective {
 
  @HostListener('keydown', ['$event'])
  onKeyDown(e: KeyboardEvent): void {
-
    if (
      // Allow: Delete, Backspace, Tab, Escape, Enter, etc
      this.navigationKeys.indexOf(e.key) > -1 ||
      (e.key === 'Enter') || (e.key === 'Tab') || (e.shiftKey && e.key === 'Tab') ||
+     (e.key === '.') || (e.key === 'ArrowLeft') || (e.key === 'ArrowRight') ||
      (e.key === 'a' && e.ctrlKey === true) || // Allow: Ctrl+A
      (e.key === 'c' && e.ctrlKey === true) || // Allow: Ctrl+C
      (e.key === 'v' && e.ctrlKey === true) || // Allow: Ctrl+V
