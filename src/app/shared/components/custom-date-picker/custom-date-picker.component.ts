@@ -16,7 +16,7 @@ export class CustomDatePickerComponent implements OnInit {
   get disabledStyle(): {} {
     return {
       'pointer-events': this.disabled ? 'none' : 'auto',
-      opacity: this.disabled ? '0.5' : '1',
+      opacity: this.disabled ? '0.6' : '1',
     };
   }
 
