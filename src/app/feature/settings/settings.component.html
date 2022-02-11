@@ -103,7 +103,6 @@
                 name="unit"
                 aria-label="unit of measure"
                 formControlName="unit"
-                (change)="onUnitChange($event.value)"
               >
                 <mat-button-toggle value="metric">Metric</mat-button-toggle>
                 <mat-button-toggle value="imperial">Imperial</mat-button-toggle>
@@ -161,7 +160,7 @@
                   <mat-label>Centimeters</mat-label>
                   <input
                     matInput
-                    maxLength="3"
+                    maxLength="5"
                     placeholder="0"
                     formControlName="heightCent"
                     appNumbersOnly

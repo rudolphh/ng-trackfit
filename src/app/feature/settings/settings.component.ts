@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SettingsDataService } from './settings-data.service';
@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit, OnDestroy{
     private userService: UserService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private settingsDataService: SettingsDataService
+    private settingsDataService: SettingsDataService,
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +33,7 @@ export class SettingsComponent implements OnInit, OnDestroy{
       gender: [''],
       birthDate: [''],
       unit: ['imperial'],
+      height: [],
       heightFeet: [],
       heightInch: [],
       heightCent: [],
@@ -46,23 +47,27 @@ export class SettingsComponent implements OnInit, OnDestroy{
     this.settingsDataService.userSettings$.subscribe(
       (userSettings: UserSettings) => {
         this.userSettings = userSettings;
-console.log('this.userSettings', this.userSettings)
+
         if (Object.keys(userSettings).length !== 0) {
           const formValues = {
+            height: 0,
             heightFeet: 0,
             heightInch: 0,
             heightCent: 0,
           };
 
+          formValues.height = userSettings.height;
           if (userSettings.unit === 'imperial') {
-            formValues.heightFeet = Math.floor(userSettings.height / 12);
-            formValues.heightInch = userSettings.height % 12;
-            formValues.heightCent = userSettings.height * 2.54;
+            const inches = userSettings.height;
+            formValues.heightFeet = Math.floor(inches / 12);
+            formValues.heightInch = Math.round(inches % 12);
+            formValues.heightCent = inches * 2.54;
           } else {
-            formValues.heightCent = userSettings.height;
-            const totalInches = formValues.heightCent / 2.54;
+            const cm = userSettings.height;
+            const totalInches = cm / 2.54;
             formValues.heightFeet = Math.floor(totalInches / 12);
-            formValues.heightInch = totalInches % 12;
+            formValues.heightInch = Math.round(totalInches % 12);
+            formValues.heightCent = cm;
           }
 
           this.settingsForm.patchValue({
@@ -70,7 +75,10 @@ console.log('this.userSettings', this.userSettings)
             gender: userSettings.gender,
             birthDate: userSettings.birthDate,
             unit: userSettings.unit,
-            ...formValues,
+            height: +formValues.height,
+            heightCent: +formValues.heightCent,
+            heightFeet: +formValues.heightFeet,
+            heightInch: +formValues.heightInch,
             strategy: userSettings.strategy,
             rate: userSettings.rate,
             reminderValue: userSettings.reminderValue,
@@ -82,22 +90,38 @@ console.log('this.userSettings', this.userSettings)
     this.settingsForm.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged(),
-      switchMap((formValue: any) => {
-        formValue.height = formValue.heightCent;
-        delete formValue.heightCent;
-        delete formValue.heightFeet;
-        delete formValue.heightInch;
-        console.log('update settings: ', formValue);
+      mergeMap((formValue: any) => {
 
-        return this.settingsDataService.updateUserSettings(formValue as UserSettings);
+        if (formValue.unit === 'imperial') {
+          formValue.height = +formValue.heightFeet * 12 + +formValue.heightInch;
+        } else {
+          formValue.height = +formValue.heightCent;
+        }
+        return this.settingsDataService.updateUserSettings(this.formatSettings(formValue as UserSettings));
       }),
       takeUntil(this.unsubscribe$)
     )
     .subscribe((form) => {
-      console.log('form', form);
       //this.settingsDataService.setUserSettings(form);
     });
 
+  }
+
+  formatSettings(userSettings: any): any {
+    return {
+      id: +userSettings.id,
+      gender: userSettings.gender,
+      birthDate: userSettings.birthDate,
+      unit: userSettings.unit,
+      height: +userSettings.height,
+      heightCent: +userSettings.heightCent,
+      heightFeet: +userSettings.heightFeet,
+      heightInch: +userSettings.heightInch,
+      strategy: userSettings.strategy,
+      rate: +userSettings.rate,
+      reminderValue: +userSettings.reminderValue,
+      reminderFrequency: userSettings.reminderFrequency,
+    }
   }
 
   onSubmit(formDirective: FormGroupDirective): void {}

@@ -34,7 +34,6 @@ export class SettingsDataService {
   }
 
   updateUserSettings(userSettings: UserSettings): Observable<UserSettings> {
-    console.log('user', this.currentUser);
     let obs = this.userService.updateSettings(this.currentUser, userSettings);
 
     obs.subscribe(settings => this.userSettingsDataSource.next(userSettings));
