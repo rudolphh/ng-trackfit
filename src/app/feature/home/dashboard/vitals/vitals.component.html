@@ -1,10 +1,10 @@
 <app-dash-card>
   <!-- header -->
   <div app-card-header class="d-flex align-items-center">
-    <span class="light-text-primary">Vitals</span>
+    <span class="light-text-success">Vitals</span>
     <i
       class="fas fa-heartbeat ml-auto"
-      matTooltip="View Measurements"
+      matTooltip="General Progress"
       matTooltipPosition="left"
       matTooltipShowDelay="500"
       matTooltipHideDelay="1000"
@@ -12,17 +12,18 @@
   </div>
 
   <!-- body -->
-  <div app-card-body class="d-flex flex-wrap justify-content-between">
+  <div app-card-body class="d-flex flex-column flex-wrap justify-content-between">
+    <div class="mt-1 mb-4 d-flex justify-content-between">
     <div class="dash-vital">
-      Last Weight<span
+      <span class="light-text-primary">Weight</span><span
         *ngIf="lastWeight$ | async as lastWeight"
         class="light-text-info ml-2"
-        >{{ lastWeight }} lbs</span
+        >{{ lastWeight }} {{ userSettings.unit === 'imperial' ? 'lbs' : 'kg'}}</span
       >
       <i class="fas fa-caret-down light-text-success ml-2"></i>
     </div>
     <div class="dash-vital" >
-      Latest BF<span
+      <span class="light-text-primary">Body Fat</span><span
         *ngIf="latestBodyFat$ | async as bodyFat"
         class="light-text-info ml-2"
       >
@@ -31,4 +32,25 @@
       <i class="fas fa-caret-down light-text-success ml-2"></i>
     </div>
   </div>
+  <div class="mt-2 mb-2 d-flex justify-content-between">
+    <div class="dash-vital">
+      <span class="light-text-primary">LBM</span><span
+        *ngIf="leanBodyMass$ | async as leanBodyMass"
+        class="light-text-info ml-2"
+        >{{ leanBodyMass >= 0.05 ? (leanBodyMass | number: ".1-1") + (userSettings.unit === 'imperial' ? ' lbs' : ' kg') : "---" }}</span
+      >
+      <i class="fas fa-caret-down light-text-success ml-2"></i>
+    </div>
+    <div class="dash-vital" >
+      <span class="light-text-primary">BMR</span><span
+        *ngIf="bmr$ | async as bmr"
+        class="light-text-info ml-2"
+      >
+        {{ (bmr | number: ".0-0") + ' cals' }}
+      </span>
+      <i class="fas fa-caret-down light-text-success ml-2"></i>
+    </div>
+  </div>
+  </div>
+
 </app-dash-card>
