@@ -28,10 +28,15 @@ declare var $: any;
 export class DashboardComponent implements OnDestroy {
   user$ = this.authService.currentUser;
   initialDate!: Date;
-  bodyWeightSubject$ = new BehaviorSubject<number>(0);
+  private bodyWeightSubject$ = new BehaviorSubject<number>(0);
   bodyWeight$ = this.bodyWeightSubject$.asObservable();
-  bodyFatSubject$ = new BehaviorSubject<number>(0.0);
+  private bodyFatSubject$ = new BehaviorSubject<number>(0.0);
   bodyFat$ = this.bodyFatSubject$.asObservable();
+  private leanBodyMassSubject$ = new BehaviorSubject<number>(0);
+  leanBodyMass$ = this.leanBodyMassSubject$.asObservable();
+
+  private bmrSubject$ = new BehaviorSubject<number>(0);
+  bmr$ = this.bmrSubject$.asObservable();
 
   foods$ !: Observable<Food[]>;
   isLoading = false;
@@ -102,14 +107,17 @@ export class DashboardComponent implements OnDestroy {
             console.log('lastBodyMeasurements', lastBodyMeasurements)
             bf = this.calculateBodyFat(lastBodyMeasurements, userSettings);
             this.bodyFatSubject$.next(bf / 100);
+            console.log('bf', bf);
 
              // if latest body measurement is last overall measurement
             if (lastBodyMeasurements?.id === measurements[0].id) {
               // then use Katch-McArdle
-              let lbm = weight * (100 - bf) / 100;
+              let lbm = weight * (100 - bf) / 100;// calculated in metric (kg)
+              this.leanBodyMassSubject$.next(this.userSettings.unit === 'imperial' ? lbm * 2.20462262 : lbm);
               console.log('lbm', lbm);
 
               bmr = 370 + (21.6 * lbm);
+              this.bmrSubject$.next(bmr);
               this.maxCalories = bmr * 1.2 * (1 - rate / 100);
             }
 
@@ -122,6 +130,8 @@ export class DashboardComponent implements OnDestroy {
               // For men:
               // BMR = 10W + 6.25H - 5A + 5
               bmr = 10 * weight + 6.25 * height - 5 * this.userAge(birthDate) + 5;
+              this.bmrSubject$.next(bmr);
+
               console.log(this.maxCalories);
               this.maxCalories = bmr * 1.2 * (1 - rate / 100);
             }
@@ -154,10 +164,12 @@ export class DashboardComponent implements OnDestroy {
     let { neck, waist, hips } = lastBodyMeasurements as any;
     let { height } = userSettings;
 
-    neck *= 2.54;
-    waist *= 2.54;
-    hips *= 2.54;
-    height *= 2.54;
+    if(userSettings.unit === 'imperial'){
+      neck *= 2.54;
+      waist *= 2.54;
+      hips *= 2.54;
+      height *= 2.54;
+    }
 
     let bf;
     if (userSettings.gender === 'male') {

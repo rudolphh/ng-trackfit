@@ -9,11 +9,16 @@
       ><span aria-hidden="true">&times;</span></span
     >
     <div class="d-flex justify-content-between">
-      <span>Try <a routerLink="/settings">Settings</a></span>
-      <strong>Demo</strong>
+      <span><i
+          class="fas fa-cog mr-2"
+          matTooltip="edit settings"
+        ></i>
+        <a routerLink="/settings" class="alert-link text-light">Settings</a>
+      </span>
+      <strong class="text-light">Demo</strong>
       <span class="d-none d-lg-block"
-        ><a routerLink="/register">Register</a> /
-        <a routerLink="/login">Login</a></span
+        ><a routerLink="/register" class="alert-link mr-1 text-light">Register</a> or
+        <a routerLink="/login" class="alert-link ml-1 text-light">Login</a></span
       >
     </div>
   </div>
@@ -32,8 +37,11 @@
   <!-- general vitals dash card -->
   <div class="mb-4">
     <app-vitals
+      [userSettings]="userSettings"
       [lastWeight$]="bodyWeight$"
       [latestBodyFat$]="bodyFat$"
+      [leanBodyMass$]="leanBodyMass$"
+      [bmr$]="bmr$"
     ></app-vitals>
   </div>
 
