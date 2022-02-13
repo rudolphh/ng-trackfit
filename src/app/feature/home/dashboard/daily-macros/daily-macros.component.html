@@ -9,10 +9,12 @@
       matTooltipHideDelay="1000"
     ></i>
   </div>
+
   <div app-card-body>
+
     <div class="pt-3 mb-4">
       <div class="d-flex mb-2 px-1">
-        <span>protein</span>
+        <span class="text-light">Protein</span>
         <div class="ml-auto">
           <span class="">{{ protein }}</span> /
           <span class="light-text-info">212 g</span>
@@ -25,7 +27,7 @@
 
     <div class="pt-3 mb-4">
       <div class="d-flex mb-2 px-1">
-        <span>carbs</span>
+        <span class="text-light">Carbs</span>
         <div class="ml-auto">
           <span class="">{{ carbohydrate }}</span> /
           <span class="light-text-info">222 g</span>
@@ -38,7 +40,7 @@
 
     <div class="pt-3 mb-4">
       <div class="d-flex mb-2 px-1">
-        <span>fats</span>
+        <span class="text-light">Fats</span>
         <div class="ml-auto">
           <span class="">{{ fat }}</span> /
           <span class="light-text-info">50 g</span>
@@ -47,6 +49,14 @@
       <app-progress-bar
         [percent]="fatPercent"
       ></app-progress-bar>
+    </div>
+
+    <div class="pt-3">
+      <app-macro-input
+        [isHidden]="false"
+        [form]="macroPercentForm"
+        [foodIndex]="-1"
+      ></app-macro-input>
     </div>
 
   </div>
