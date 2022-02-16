@@ -5,7 +5,7 @@
     (ngSubmit)="onSubmit(formDirective)"
     #formDirective="ngForm"
     class="d-flex flex-column"
-    style="max-height: 185px"
+    style="max-height: 190px"
   >
     <div class="d-flex">
       <span class="flex-grow-1" style="min-width: 0">
@@ -29,7 +29,7 @@
         </mat-button-toggle-group>
       </span>
     </div>
-    <div class="d-flex">
+    <div class="d-flex" style="height: 51px">
       <span class="flex-grow-1" style="min-width: 0">
         <!-- food input -->
         <mat-form-field class="w-100" appearance="fill">
@@ -99,8 +99,7 @@
 
     <div
       *ngIf="!macroOptions"
-      class="d-flex justify-content-center my-1"
-      style="position: relative; bottom: 5px; height: 30px"
+      class="d-flex justify-content-center my-3"
     >
       <a
         (click)="toggleMacroOptions()"
@@ -110,11 +109,13 @@
       >
     </div>
 
-    <app-macro-input
-      [isHidden]="!macroOptions"
-      [form]="addFoodForm"
-      [foodIndex]="-1"
-    ></app-macro-input>
+    <div *ngIf="macroOptions" class="mt-1 mb-4">
+      <app-macro-input
+        [isHidden]="!macroOptions"
+        [form]="addFoodForm"
+        [foodIndex]="-1"
+      ></app-macro-input>
+    </div>
   </form>
   <!-- end form -->
 </div>
