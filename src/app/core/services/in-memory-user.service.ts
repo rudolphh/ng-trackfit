@@ -13,26 +13,26 @@ export class InMemoryDataService implements InMemoryDbService {
     };
 
     const foods: Food[] = [
-      {
-        id: 1,
-        name: 'soda',
-        calories: 150,
-        date: new Date(),
-        protein: 0,
-        carbohydrate: 38,
-        fat: 0,
-        mealTime: 'dinner'
-      },
-      {
-        id: 2,
-        name: 'protein shake',
-        calories: 200,
-        date: new Date(),
-        protein: 40,
-        carbohydrate: 2,
-        fat: 1,
-        mealTime: 'breakfast'
-      },
+      // {
+      //   id: 1,
+      //   name: 'soda',
+      //   calories: 150,
+      //   date: new Date(),
+      //   protein: 0,
+      //   carbohydrate: 38,
+      //   fat: 0,
+      //   mealTime: 'dinner'
+      // },
+      // {
+      //   id: 2,
+      //   name: 'protein shake',
+      //   calories: 200,
+      //   date: new Date(),
+      //   protein: 40,
+      //   carbohydrate: 2,
+      //   fat: 1,
+      //   mealTime: 'breakfast'
+      // },
     ];
 
     const measurements: Measurement[] = [
