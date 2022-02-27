@@ -14,13 +14,12 @@ import { MeasurementModule } from '../../measurement/measurement.module';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { VitalsComponent } from './vitals/vitals.component';
+import { VitalsModule } from './vitals/vitals.module';
 
 @NgModule({
   declarations: [
     CheckInComponent,
     DashboardComponent,
-    VitalsComponent,
     DailyProgressComponent,
     DailyMacrosComponent
   ],
@@ -36,6 +35,7 @@ import { VitalsComponent } from './vitals/vitals.component';
     MatTooltipModule,
     MeasurementModule,
     MatProgressBarModule,
+    VitalsModule,
   ],
   providers: [],
   exports: [

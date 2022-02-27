@@ -1,14 +1,11 @@
 import {
-  BehaviorSubject,
   Observable,
   Subject,
-  Subscription,
   combineLatest,
-  forkJoin,
   of,
 } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { mergeMap, switchMap, take, takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy } from '@angular/core';
+import { mergeMap, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Food } from 'src/app/core/models/food.model';
@@ -18,6 +15,7 @@ import { Measurement } from 'src/app/core/models/measurement';
 import { MeasurementDataService } from '../../measurement/measurement-data.service';
 import { SettingsDataService } from '../../settings/settings-data.service';
 import { UserSettings } from 'src/app/core/models/user-settings';
+import { VitalsDataService } from './vitals/vitals-data.service';
 
 declare var $: any;
 @Component({
@@ -27,17 +25,7 @@ declare var $: any;
 })
 export class DashboardComponent implements OnDestroy {
   user$ = this.authService.currentUser;
-  initialDate!: Date;
-  private bodyWeightSubject$ = new BehaviorSubject<number>(0);
-  bodyWeight$ = this.bodyWeightSubject$.asObservable();
-  private bodyFatSubject$ = new BehaviorSubject<number>(0.0);
-  bodyFat$ = this.bodyFatSubject$.asObservable();
-  private leanBodyMassSubject$ = new BehaviorSubject<number>(0);
-  leanBodyMass$ = this.leanBodyMassSubject$.asObservable();
-
-  private bmrSubject$ = new BehaviorSubject<number>(0);
-  bmr$ = this.bmrSubject$.asObservable();
-
+  currentDate!: Date;
   foods$ !: Observable<Food[]>;
   isLoading = false;
   inDemo = true;
@@ -46,12 +34,18 @@ export class DashboardComponent implements OnDestroy {
 
   unsubscribed$ = new Subject<void>();
 
+  bodyWeight$ = this.vitalsDataService.bodyWeight$;
+  bodyFat$ = this.vitalsDataService.bodyFat$;
+  leanBodyMass$ = this.vitalsDataService.leanBodyMass$;
+  bmr$ = this.vitalsDataService.bmr$;
+
   constructor(
     private homeDataService: HomeDataService,
     private foodDataService: FoodDataService,
     private authService: AuthService,
     private measurementDataService: MeasurementDataService,
-    private settingsDataService: SettingsDataService
+    private settingsDataService: SettingsDataService,
+    private vitalsDataService: VitalsDataService
   ) {
     this.inDemo = this.authService.currentUserValue ? false : true;
 
@@ -59,11 +53,12 @@ export class DashboardComponent implements OnDestroy {
       .pipe(
         takeUntil(this.unsubscribed$),
         mergeMap((date: Date) => {
-          this.initialDate = date;
+          this.currentDate = date;
           this.isLoading = true;
           return of(date);
         }),
         switchMap((date: Date) => {
+          console.log(date);
           return this.foodDataService.changeDate(date);
         })
       )
@@ -93,7 +88,7 @@ export class DashboardComponent implements OnDestroy {
           console.log(measurements)
           let { weight } = measurements[0];
           weight /= 2.20462262; // 1kg = 2.20462262 lbs
-          this.bodyWeightSubject$.next(measurements[0].weight);
+          this.vitalsDataService.setBodyWeight(measurements[0].weight);
 
           const lastBodyMeasurements = measurements.find((m) => {
             if (userSettings.gender === 'male') {
@@ -106,31 +101,31 @@ export class DashboardComponent implements OnDestroy {
             // can calculate bodyfat and use to better bmr * rate (cut or bulk)
             console.log('lastBodyMeasurements', lastBodyMeasurements)
             bf = this.calculateBodyFat(lastBodyMeasurements, userSettings);
-            this.bodyFatSubject$.next(bf / 100);
+            this.vitalsDataService.setBodyFat(bf / 100);
             console.log('bf', bf);
 
              // if latest body measurement is last overall measurement
             if (lastBodyMeasurements?.id === measurements[0].id) {
               // then use Katch-McArdle
               let lbm = weight * (100 - bf) / 100;// calculated in metric (kg)
-              this.leanBodyMassSubject$.next(this.userSettings.unit === 'imperial' ? lbm * 2.20462262 : lbm);
+              this.vitalsDataService.setLeanBodyMass(this.userSettings.unit === 'imperial' ? lbm * 2.20462262 : lbm);
               console.log('lbm', lbm);
 
               bmr = 370 + (21.6 * lbm);
-              this.bmrSubject$.next(bmr);
+              this.vitalsDataService.setBMR(bmr);
               this.maxCalories = bmr * 1.2 * (1 - rate / 100);
             }
 
           } else {
             // no last bodyfat calc
-            this.bodyFatSubject$.next(0.01);
+            this.vitalsDataService.setBodyFat(0.01);
 
             // use Mifflin-StJeor
             if (gender === 'male') {
               // For men:
               // BMR = 10W + 6.25H - 5A + 5
               bmr = 10 * weight + 6.25 * height - 5 * this.userAge(birthDate) + 5;
-              this.bmrSubject$.next(bmr);
+              this.vitalsDataService.setBMR(bmr);
 
               console.log(this.maxCalories);
               this.maxCalories = bmr * 1.2 * (1 - rate / 100);
