@@ -79,7 +79,7 @@ export class FoodListComponent
        * And the menu itself is checked here, and it's where we check just outside of
        * the menu and button the condition abbove must close the menu
        */
-      if (e.target === this.foodForm.nativeElement || this.foodForm.nativeElement.contains(e.target)
+      if (e.target === this.foodForm?.nativeElement || this.foodForm?.nativeElement.contains(e.target)
         || e.target === this.loadButtons.nativeElement || this.loadButtons.nativeElement.contains(e.target)){
         this.closeFormMacroInputs = false;
       } else {
@@ -98,7 +98,7 @@ export class FoodListComponent
     this.foodDataService.todaysFood$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((foods: Food[]) => {
-
+        console.log('food-list foods', foods)
         for (const mealTime in this.foodsFormGroup.controls) {
           if (mealTime) {
             (this.foodsFormGroup.controls[mealTime] as FormArray).clear();

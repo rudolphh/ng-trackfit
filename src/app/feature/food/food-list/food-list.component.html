@@ -26,7 +26,7 @@
   </span>
 </div>
 
-<smooth-height [trigger]="maxFoodsDisplayed">
+<smooth-height [trigger]="maxFoodsDisplayed" *ngIf="listLength > 0">
   <form #foodForm [formGroup]="foodsForm">
     <mat-selection-list #foodsSelect id="food-selection-list">
       <div cdkDropListGroup>
