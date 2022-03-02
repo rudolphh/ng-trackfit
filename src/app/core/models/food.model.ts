@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 export class Food {
   constructor(
-    public id: number,
+    public id: any,
     public name: string,
     public calories: number,
     public date: Date,
