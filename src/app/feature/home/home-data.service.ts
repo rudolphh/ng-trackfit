@@ -1,6 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { FoodDataService } from '../food/services/food-data.service';
 import { Injectable } from '@angular/core';
 
 @Injectable({
