@@ -33,7 +33,7 @@ export class DailyProgressComponent implements OnInit {
   }
 
   setSelected(date: Date): void {
-    this.homeDataService.setCurrentDate(date);
+    this.foodDataService.changeDate(date);
   }
 
   addFood(food: Food): void {

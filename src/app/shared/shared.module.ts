@@ -33,7 +33,7 @@ import { SmoothHeightComponent } from './components/smooth-height/smooth-height.
      MatNativeDateModule,
      MatProgressBarModule,
    ],
-   providers: [MatDatepickerModule],
+   providers: [],
    exports: [
      CustomDatePickerComponent,
      DashCardComponent,
