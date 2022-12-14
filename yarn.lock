@@ -4288,6 +4288,13 @@
   dependencies:
     "source-map-support" "^0.5.5"
 
+"karma-spec-reporter@^0.0.34":
+  "integrity" "sha512-l5H/Nh9q4g2Ysx2CDU2m+NIPyLQpCVbk9c4V02BTZHw3NM6RO1dq3eRpKXCSSdPt4RGfhHk8jDt3XYkGp+5PWg=="
+  "resolved" "https://registry.npmjs.org/karma-spec-reporter/-/karma-spec-reporter-0.0.34.tgz"
+  "version" "0.0.34"
+  dependencies:
+    "colors" "1.4.0"
+
 "karma@*", "karma@^6.3.0", "karma@>=0.9", "karma@~6.3.3":
   "integrity" "sha512-E/MqdLM9uVIhfuyVnrhlGBu4miafBdXEAEqCmwdEMh3n17C7UWC/8Kvm3AYKr91gc7scutekZ0xv6rxRaUCtnw=="
   "resolved" "https://registry.npmjs.org/karma/-/karma-6.3.9.tgz"
