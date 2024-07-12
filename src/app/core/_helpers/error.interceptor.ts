@@ -17,6 +17,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                 location.reload();
             }
 
+            // Log the entire error object to inspect its structure
+            console.error('Error object:', err);
+
             let errorMsg = '';
             if (err.error instanceof ErrorEvent) {
               console.log('this is client side error');
@@ -24,13 +27,13 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
             else {
               console.log('this is server side error');
-              errorMsg = `Error Code: ${err.status},  Message: ${err.message}`;
+              console.log(err);
+              errorMsg = `Error Code: ${err.status},  Message: ${err.error?.message}`;
             }
             console.log(errorMsg);
 
-            const error = err.error?.message || err.statusText || 'An unknown error occurred';
 
-            return throwError(error);
+            return throwError(errorMsg);
         }));
     }
 }
