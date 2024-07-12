@@ -1,4 +1,4 @@
-/* Existing global styles */
+/* You can add global styles to this file, and also import other style files */
 
 body {
   margin: 0;
@@ -15,25 +15,25 @@ body {
 
 @media (min-width: 576px) {
   #myContainer {
-    max-width: 97.5%; /* This gives it the precise width to match the Bootstrap defaults */
+      max-width: 97.5%; /*this gives it the precise width to match the Bootstrap defaults*/
   }
 }
 
 @media (min-width: 768px) {
   #myContainer {
-    max-width: 720px; /* This gives it the precise width to match the Bootstrap defaults */
+      max-width: 720px; /*this gives it the precise width to match the Bootstrap defaults*/
   }
 }
 
 @media (min-width: 992px) {
   #myContainer {
-    max-width: 97.5%; /* This gives it the precise width to match the Bootstrap defaults */
+      max-width: 97.5%; /*this gives it the precise width to match the Bootstrap defaults*/
   }
 }
 
 @media (min-width: 1200px) {
   #myContainer {
-    max-width: 1140px; /* This gives it the precise width to match the Bootstrap defaults */
+      max-width: 1140px; /*this gives it the precise width to match the Bootstrap defaults*/
   }
 }
 
@@ -58,7 +58,7 @@ body {
 }
 
 .light-text-success {
-  color: #38d5c9 !important;
+  color: #38d5c9 !important
 }
 
 .light-text-warning {
@@ -70,7 +70,7 @@ body {
 }
 
 .light-text-info {
-  color: #7ebbe7 !important;
+  color: #7ebbe7 !important
 }
 
 .mat-form-field-outline {
@@ -92,45 +92,11 @@ body {
 /* mat-button-toggle */
 
 .mat-button-toggle-appearance-standard {
-  background-color: #073642;
+  background-color: #073642
 }
 
 .mat-button-toggle-checked {
   background-color: #2aa198;
 }
 
-.mat-form-field-suffix { align-self: center; }
-
-/* Styles for check-in component */
-.form-content {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.weight-input {
-  flex-grow: 1;
-  min-width: 0;
-}
-
-.toggle-group,
-.submit-button {
-  margin-left: 0.5rem;
-  height: 51px;
-}
-
-@media (max-width: 576px) {
-  .form-content {
-    flex-direction: column;
-  }
-
-  .weight-input,
-  .toggle-group,
-  .submit-button {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .submit-button {
-    margin-top: 0.5rem;
-  }
-}
+.mat-form-field-suffix{ align-self: center; }

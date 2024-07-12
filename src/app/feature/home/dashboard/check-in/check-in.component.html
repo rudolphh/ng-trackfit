@@ -19,11 +19,13 @@
       style="max-height: 120px"
       [ngStyle]="{ height: !measureOptions ? '90px' : '100%' }"
     >
-      <div class="form-content">
-        <span class="flex-grow-1 weight-input">
+      <div class="d-flex">
+        <span class="flex-grow-1" style="min-width: 0">
           <!-- calorie input -->
           <mat-form-field class="w-100" appearance="fill">
-            <mat-label>Weight ({{ unitValue }})</mat-label>
+            <mat-label
+              >Weight ({{ unitValue }})</mat-label
+            >
             <input
               #weightInput
               matInput
@@ -36,7 +38,7 @@
           <!-- end calorie input -->
         </span>
 
-        <span class="ml-2 toggle-group">
+        <span class="ml-2">
           <!-- food input -->
           <mat-button-toggle-group
             #unit="matButtonToggleGroup"
@@ -52,7 +54,7 @@
           <!-- end food input -->
         </span>
 
-        <span class="ml-2 submit-button">
+        <span class="ml-2">
           <!-- submit button -->
           <button
             id="addMeasureBtn"
