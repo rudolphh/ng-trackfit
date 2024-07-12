@@ -1,7 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-  overflow-y: hidden;
+  margin: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers (Chrome, Safari, etc.) */
+}
+
+/* Optional: Customize scrollbar appearance for Firefox */
+body {
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
 }
 
 @media (min-width: 576px) {
