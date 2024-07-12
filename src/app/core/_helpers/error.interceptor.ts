@@ -28,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
             console.log(errorMsg);
 
-            const error = err.error.message || err.statusText;
+            const error = err.error?.message || err.statusText || 'An unknown error occurred';
 
             return throwError(error);
         }));
