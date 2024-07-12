@@ -19,6 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
             // Log the entire error object to inspect its structure
             console.error('Error object:', err);
+            console.log('Error object:', err);
 
             let errorMsg = '';
             if (err.error instanceof ErrorEvent) {
