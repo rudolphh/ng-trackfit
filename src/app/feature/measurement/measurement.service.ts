@@ -41,6 +41,7 @@ export class MeasurementService {
 
   addMeasurement(measurement: Measurement): Observable<Measurement> {
     const user = this.authService.currentUserValue;
+    console.log(user);
     const baseUrl = user
       ? `${this.env.apiUrl}/users/${user.id}/measurements`
       : '/api/measurements';
