@@ -72,10 +72,12 @@ export class CheckInComponent implements AfterViewChecked {
     }
     const { weight, unit, neck, waist, hips } = this.addMeasureForm.value; // these are strings
     const now = Date.now();
+    const strategy = this.userSettings.strategy;
     const newMeasurement = this.measurementAdapter.adapt({
       id: null,
       weight,
       unit,
+      strategy,
       neck,
       waist,
       hips,
